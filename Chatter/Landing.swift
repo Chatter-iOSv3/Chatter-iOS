@@ -10,17 +10,11 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 
-class Landing: UIViewController, SwitchRecChatterViewDelegate, SwitchChatterButtonToUtilitiesDelegate {
+class Landing: UIViewController {
     @IBOutlet weak var recordView: UIView!
-    @IBOutlet weak var chatterFeedView: UIView!
-    @IBOutlet weak var chatterButton: UIButton!
-    @IBOutlet weak var recordingUtilities: UIView!
-    @IBOutlet weak var recordingUtilitiesTrashButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.recordingUtilities.alpha = 0.0
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -31,19 +25,11 @@ class Landing: UIViewController, SwitchRecChatterViewDelegate, SwitchChatterButt
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ChatterFeed {
-            destination.switchDelegate = self
-        }
-        
-        if let destination = segue.destination as? LandingRecord {
-            destination.switchDelegate = self
-        }
+
     }
     
     @IBAction func hearChatter(sender: UIButton) {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
-        SwitchRecChatterView(toPage: "chatterView")
         
         // Notify ChatterFeed to start Chatter queue
         NotificationCenter.default.post(name: .queueNextChatter, object: nil)
@@ -67,35 +53,6 @@ class Landing: UIViewController, SwitchRecChatterViewDelegate, SwitchChatterButt
     
     @IBAction func trashRecording(sender: UIButton) {
         NotificationCenter.default.post(name: .trashing, object: nil)
-    }
-    
-    
-    func SwitchRecChatterView(toPage: String) {
-        if (toPage == "recordView") {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.chatterFeedView.alpha = 0.0
-                self.recordView.alpha = 1.0
-            })
-        }   else {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.chatterFeedView.alpha = 1.0
-                self.recordView.alpha = 0.0
-            })
-        }
-    }
-    
-    func SwitchChatterButtonToUtilities(toFunction: String) {
-        if (toFunction == "recording") {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.chatterButton.alpha = 0.0
-                self.recordingUtilities.alpha = 1.0
-            })
-        }   else if (toFunction == "finished") {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.chatterButton.alpha = 1.0
-                self.recordingUtilities.alpha = 0.0
-            })
-        }
     }
     
 }

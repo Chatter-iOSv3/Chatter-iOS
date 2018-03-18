@@ -25,10 +25,7 @@ protocol SwitchChatterButtonToUtilitiesDelegate
 
 class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate{
     
-    @IBOutlet weak var topNavView: UIView!
-    @IBOutlet weak var recButton: UIButton!
-    @IBOutlet weak var recordingFilters: UIScrollView!
-    @IBOutlet weak var circularProgressRing: UICircularProgressRingView!
+    @IBOutlet weak var recordProgress: UIProgressView!
     
     // Initialize FB storage + DB
     let storage = Storage.storage()
@@ -46,18 +43,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        topNavView.addBorder(toSide: .Bottom, withColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor, andThickness: 1.0)
-        self.recordingFilters.alpha = 0.0
-        
-        // Notification center, listening for recording utilities actions
-        NotificationCenter.default.addObserver(self, selector: #selector(trashRecording(notification:)), name: .trashing, object: nil)
-        
-        
         // Initialize Firebase DB Reference
         ref = Database.database().reference()
-    }
-
-    override func viewDidLayoutSubviews() {
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,96 +52,82 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func startRecord(sender: AnyObject) {
-    
-        if (!finishedRecording) {
-            if (sender.state == UIGestureRecognizerState.began) {
-                
-                // Initial Animation
-                recButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                
-                UIView.animate(withDuration: 1.25,
-                               delay: 0,
-                               usingSpringWithDamping: CGFloat(0.30),
-                               initialSpringVelocity: CGFloat(6.5),
-                               options: UIViewAnimationOptions.allowUserInteraction,
-                               animations: {
-                                self.recButton.transform = CGAffineTransform.identity
-                },
-                               completion: { Void in()  }
-                )
-                
-                // Toggle on utilities
-                switchDelegate?.SwitchChatterButtonToUtilities(toFunction: "recording")
-                
-                // Code to start recording
-                startRecording()
-                
-                self.circularProgressRing.setProgress(value: 100, animationDuration: 30.0) {
-                    if (self.circularProgressRing.currentValue == 100) {
-                        UIView.animate(withDuration: 0.5, animations: {
-                            self.recordingFilters.alpha = 1.0
-                        })
-                        // Ending Animation
-                        self.recButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                        
-                        UIView.animate(withDuration: 1.25,
-                                       delay: 0,
-                                       usingSpringWithDamping: CGFloat(0.60),
-                                       initialSpringVelocity: CGFloat(6.0),
-                                       options: UIViewAnimationOptions.allowUserInteraction,
-                                       animations: {
-                                        self.recButton.transform = CGAffineTransform.identity
-                        },
-                                       completion: { Void in()  }
-                        )
-                        
-                        //Code to stop recording
-                        self.finishRecording()
-                        self.finishedRecording = true
-                        
-                        // Code to start playback
-                        self.playSound()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-                            self.circularProgressRing.setProgress(value: 0, animationDuration: 0.6) {print("CLOSING")}
-                        }
-                    }
-                }
-            }   else if (sender.state == UIGestureRecognizerState.ended && !self.finishedRecording) {
-                // Case if recording ends before time limit
-                self.circularProgressRing.setProgress(value: 0, animationDuration: 0.5) {
-                    print("FINISHED RECORDING.")
-                    UIView.animate(withDuration: 0.5, animations: {
-                        self.recordingFilters.alpha = 1.0
-                    })
-                    
-                    //Code to stop recording
-                    self.finishRecording()
-                    self.finishedRecording = true
-                    
-                    // Code to start playback
-                    self.playSound()
-                }
-            }
+    @IBAction func startRecord(_ sender: AnyObject) {
+        if sender.state == UIGestureRecognizerState.began
+        {
+            print("LONG CLICK RECOGNIZED")
         }
+        else if (sender.state == UIGestureRecognizerState.ended)
+        {
+            print("ENDED RECORDING")
+        }
+//        if (!finishedRecording) {
+//            if (sender.state == UIGestureRecognizerState.began) {
+//                // Code to start recording
+//                startRecording()
+//
+//                self.circularProgressRing.setProgress(value: 100, animationDuration: 30.0) {
+//                    if (self.circularProgressRing.currentValue == 100) {
+//                        UIView.animate(withDuration: 0.5, animations: {
+//                            self.recordingFilters.alpha = 1.0
+//                        })
+//                        // Ending Animation
+//                        self.recButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+//
+//                        UIView.animate(withDuration: 1.25,
+//                                       delay: 0,
+//                                       usingSpringWithDamping: CGFloat(0.60),
+//                                       initialSpringVelocity: CGFloat(6.0),
+//                                       options: UIViewAnimationOptions.allowUserInteraction,
+//                                       animations: {
+//                                        self.recButton.transform = CGAffineTransform.identity
+//                        },
+//                                       completion: { Void in()  }
+//                        )
+//
+//                        //Code to stop recording
+//                        self.finishRecording()
+//                        self.finishedRecording = true
+//
+//                        // Code to start playback
+//                        self.playSound()
+//                    }
+//                }
+//            }   else if (sender.state == UIGestureRecognizerState.ended && !self.finishedRecording) {
+//                // Case if recording ends before time limit
+//                self.circularProgressRing.setProgress(value: 0, animationDuration: 0.5) {
+//                    print("FINISHED RECORDING.")
+//                    UIView.animate(withDuration: 0.5, animations: {
+//                        self.recordingFilters.alpha = 1.0
+//                    })
+//
+//                    //Code to stop recording
+//                    self.finishRecording()
+//                    self.finishedRecording = true
+//
+//                    // Code to start playback
+//                    self.playSound()
+//                }
+//            }
+//        }
+        
     }
 
-    @IBAction func animateButton(sender: UIButton) {
-        
-        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        
-        UIView.animate(withDuration: 1.25,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.30),
-                       initialSpringVelocity: CGFloat(6.0),
-                       options: UIViewAnimationOptions.allowUserInteraction,
-                       animations: {
-                        sender.transform = CGAffineTransform.identity
-        },
-                       completion: { Void in()  }
-        )
-    }
+//    @IBAction func animateButton(sender: UIButton) {
+//
+//        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+//
+//        UIView.animate(withDuration: 1.25,
+//                       delay: 0,
+//                       usingSpringWithDamping: CGFloat(0.30),
+//                       initialSpringVelocity: CGFloat(6.0),
+//                       options: UIViewAnimationOptions.allowUserInteraction,
+//                       animations: {
+//                        sender.transform = CGAffineTransform.identity
+//        },
+//                       completion: { Void in()  }
+//        )
+//    }
     
     @IBAction func openMenu(sender: AnyObject) {
         performSegue(withIdentifier: "openMenu", sender: nil)
@@ -259,19 +232,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 }
             }
             
-            // Saving animation
-            recButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            UIView.animate(withDuration: 1.5,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.6),
-                           initialSpringVelocity: CGFloat(50.0),
-                           options: UIViewAnimationOptions.allowUserInteraction,
-                           animations: {
-                            self.recButton.transform = CGAffineTransform.identity
-            },
-                           completion: { Void in()  }
-            )
-            
             // Stop the looping
             self.player?.stop()
             
@@ -280,11 +240,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             // Reset recording
             self.finishedRecording = false
-            
-            // Return to recording view
-            UIView.animate(withDuration: 0.5, animations: {
-                self.recordingFilters.alpha = 0.0
-            })
         }
     }
     
@@ -374,16 +329,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     // Recording Utilities ---------------------------------------------------------
     
     @objc func trashRecording(notification: NSNotification) {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.recordingFilters.alpha = 0.0
-        })
         isRecording = false
         
         // Stop the looping
         self.player?.stop()
-        
-        // Trash the recording
-        switchDelegate?.SwitchChatterButtonToUtilities(toFunction: "finished")
         
         // Reset recording
         finishedRecording = false
@@ -417,7 +366,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         return result
     }
-
 }
 
 extension LandingRecord: UIViewControllerTransitioningDelegate {

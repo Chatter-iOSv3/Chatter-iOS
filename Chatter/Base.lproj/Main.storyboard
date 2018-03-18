@@ -215,29 +215,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bey-IL-j7m">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="521"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="Iur-Jm-rHX" kind="embed" identifier="goToChatterFeed" id="nr3-aK-Izv"/>
-                                </connections>
-                            </containerView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6fh-DD-DJL">
-                                <rect key="frame" x="0.0" y="519" width="375" height="148"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obj-pV-nxO">
-                                        <rect key="frame" x="159" y="45" width="57" height="57"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="Trash"/>
-                                        <connections>
-                                            <action selector="animateButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HmH-93-Diw"/>
-                                            <action selector="trashRecordingWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="k0B-u5-rXK"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmY-9n-csp">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -245,18 +222,6 @@
                                     <segue destination="Nqu-23-wci" kind="embed" identifier="goToRecord" id="pE9-7b-dQX"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FC0-h2-JjX">
-                                <rect key="frame" x="0.0" y="518" width="375" height="149"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.66632966391073589" green="0.45810505762773263" blue="0.91730084196891193" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="Tap for Chatter">
-                                    <color key="titleColor" red="0.86230302073177278" green="0.86230302073177278" blue="0.86230302073177278" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="hearChatterWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KPS-Js-4J0"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -264,10 +229,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Qlb-CN-K2L"/>
                     <connections>
-                        <outlet property="chatterButton" destination="FC0-h2-JjX" id="bRe-vN-Sej"/>
-                        <outlet property="chatterFeedView" destination="bey-IL-j7m" id="2iW-uS-s21"/>
                         <outlet property="recordView" destination="kmY-9n-csp" id="Ub2-VA-MWw"/>
-                        <outlet property="recordingUtilities" destination="6fh-DD-DJL" id="X9t-GB-u9v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -364,118 +326,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ssI-eQ-NMU">
-                                <rect key="frame" x="0.0" y="20" width="375" height="62"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqd-zU-KWI">
+                                <rect key="frame" x="16" y="32" width="41" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chatter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGu-cv-qO2">
-                                        <rect key="frame" x="131" y="26" width="112" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
-                                        <color key="textColor" red="0.73277722599999995" green="0.50140917789999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvV-bQ-HtT">
-                                        <rect key="frame" x="311" y="20" width="49" height="46"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="Chatterbox"/>
-                                        <connections>
-                                            <action selector="animateButtonWithSender:" destination="Nqu-23-wci" eventType="touchUpInside" id="OKP-M6-Ioc"/>
-                                            <segue destination="TN5-vY-749" kind="popoverPresentation" popoverAnchorView="pvV-bQ-HtT" id="xYG-hn-DLy">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqd-zU-KWI">
-                                        <rect key="frame" x="20" y="21" width="41" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="RobotProfile"/>
-                                        <connections>
-                                            <action selector="animateButtonWithSender:" destination="Nqu-23-wci" eventType="touchUpInside" id="Bhu-gf-Abl"/>
-                                            <action selector="openMenuWithSender:" destination="Nqu-23-wci" eventType="touchUpInside" id="40x-EK-z9c"/>
-                                            <segue destination="7Of-1v-8UD" kind="presentation" identifier="openMenu" id="Xx8-X8-aRC"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pFj-NK-jcw">
-                                <rect key="frame" x="0.0" y="436" width="375" height="85"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pEc-HC-7HS">
-                                        <rect key="frame" x="39" y="35" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d21-0k-Cry">
-                                        <rect key="frame" x="164" y="35" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJz-EA-dyK">
-                                        <rect key="frame" x="307" y="35" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                    </button>
-                                </subviews>
-                            </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ucb-ct-SQ3" customClass="UICircularProgressRingView" customModule="UICircularProgressRing">
-                                <rect key="frame" x="47" y="168" width="281" height="293"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="value">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="minValue">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="outerRingColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
-                                        <real key="value" value="-90"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="innerRingWidth">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="innerRingColor">
-                                        <color key="value" red="1" green="0.36268647244803021" blue="0.147757664866627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showFloatingPoint" value="NO"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowValueText" value="NO"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
-                                        <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q14-6C-HdF" userLabel="recButton">
-                                <rect key="frame" x="60" y="187" width="255" height="255"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="recButton" label="recButton"/>
-                                <gestureRecognizers/>
-                                <fontDescription key="fontDescription" name="LucidaGrande" family="Lucida Grande" pointSize="48"/>
-                                <state key="normal" image="PurpleButton"/>
+                                <state key="normal" title="Button" image="RobotProfile"/>
                                 <connections>
-                                    <action selector="saveRecordingWithSender:" destination="Nqu-23-wci" eventType="touchUpInside" id="ZKx-0T-qQh"/>
-                                    <outletCollection property="gestureRecognizers" destination="bAT-5e-8Me" appends="YES" id="hzd-YL-Cph"/>
+                                    <action selector="openMenuWithSender:" destination="Nqu-23-wci" eventType="touchUpInside" id="40x-EK-z9c"/>
+                                    <segue destination="7Of-1v-8UD" kind="presentation" identifier="openMenu" id="Xx8-X8-aRC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTt-I9-zNO">
+                                <rect key="frame" x="0.0" y="81" width="375" height="528"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ciM-xQ-qpJ" appends="YES" id="G9U-Eh-shu"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Vw-fV-Qbd">
+                                <rect key="frame" x="42" y="633" width="291" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="0.22065518700444986" blue="0.21965440295321037" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="Did-Uw-ajx"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="masteryProgress.transform = masteryProgress.transform.scaledBy(x: 1, y: 20)" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="pY2-y6-ZZA" appends="YES" id="hfY-cE-DKS"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="circularProgressRing" destination="ucb-ct-SQ3" id="QVL-kg-XmG"/>
-                        <outlet property="recButton" destination="q14-6C-HdF" id="LKP-Ma-Mob"/>
-                        <outlet property="recordingFilters" destination="pFj-NK-jcw" id="Bn3-Ls-kqI"/>
-                        <outlet property="topNavView" destination="ssI-eQ-NMU" id="qH2-4C-n6n"/>
+                        <outlet property="recordProgress" destination="7Vw-fV-Qbd" id="Cvi-Sb-qVg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -490,97 +375,13 @@
                         <action selector="edgePanGesture:" destination="Nqu-23-wci" id="cJx-Af-wwy"/>
                     </connections>
                 </screenEdgePanGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="3000" minimumPressDuration="0.20000000000000001" id="bAT-5e-8Me">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ciM-xQ-qpJ">
                     <connections>
-                        <action selector="startRecordWithSender:" destination="Nqu-23-wci" id="S01-2G-pFO"/>
+                        <action selector="startRecord:" destination="Nqu-23-wci" id="NMW-yp-Vx9"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2392.8000000000002" y="-633.73313343328346"/>
-        </scene>
-        <!--Chatter Box-->
-        <scene sceneID="m6T-8o-SLC">
-            <objects>
-                <viewController id="TN5-vY-749" customClass="ChatterBox" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="mzi-GN-vM6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dt-pq-9mr">
-                                <rect key="frame" x="16" y="39" width="42" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="LeftPointingArrow"/>
-                                <connections>
-                                    <action selector="animateButtonWithSender:" destination="TN5-vY-749" eventType="touchUpInside" id="b81-mm-At3"/>
-                                    <segue destination="VWf-RC-Qzv" kind="show" id="H6O-gC-yCt"/>
-                                </connections>
-                            </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nhs-bE-zbe">
-                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="obx-uO-nye">
-                                <rect key="frame" x="314" y="38" width="45" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Compose"/>
-                                <connections>
-                                    <action selector="animateButtonWithSender:" destination="TN5-vY-749" eventType="touchUpInside" id="bPZ-y5-G78"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inbox" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhS-cA-dEl">
-                                <rect key="frame" x="142" y="45" width="90" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
-                                <color key="textColor" red="0.73277722599999995" green="0.50140917789999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="QHy-P5-6IW"/>
-                    </view>
-                    <connections>
-                        <outlet property="chatterBoxView" destination="mzi-GN-vM6" id="Wk4-iV-r1b"/>
-                        <outlet property="chatterScrollView" destination="nhs-bE-zbe" id="IL2-wg-di4"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="blC-9l-wV3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3375" y="-634"/>
-        </scene>
-        <!--Chatter Feed-->
-        <scene sceneID="KGV-XE-T2d">
-            <objects>
-                <viewController id="Iur-Jm-rHX" customClass="ChatterFeed" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ilS-dB-JN4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="521"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mD0-KG-g80">
-                                <rect key="frame" x="0.0" y="68" width="375" height="453"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eeb-8Z-trk">
-                                <rect key="frame" x="8" y="20" width="41" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <state key="normal" image="LeftPointingArrow"/>
-                                <connections>
-                                    <action selector="animateButtonWithSender:" destination="Iur-Jm-rHX" eventType="touchUpInside" id="35j-OG-fkH"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="XH5-Kt-gTi"/>
-                    </view>
-                    <connections>
-                        <outlet property="chatterFeedView" destination="ilS-dB-JN4" id="Vva-kK-ena"/>
-                        <outlet property="chatterScrollView" destination="mD0-KG-g80" id="sNa-4u-ucr"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="04Q-5P-4FY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2393" y="93"/>
+            <point key="canvasLocation" x="2373.5" y="-340.5"/>
         </scene>
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">
@@ -1017,6 +818,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="5rT-aR-JqV"/>
                     </view>
                     <connections>
                         <outlet property="addFollowingButton" destination="KkL-5s-fAm" id="hP3-fs-NBb"/>
@@ -1093,21 +895,15 @@
     </scenes>
     <resources>
         <image name="Add" width="50" height="50"/>
-        <image name="Chatterbox" width="50" height="50"/>
         <image name="Check" width="50" height="50"/>
         <image name="Compose" width="45" height="45"/>
         <image name="Friends" width="50" height="50"/>
         <image name="Invitations" width="50" height="50"/>
         <image name="LeftPointingArrow" width="25" height="25"/>
         <image name="Profile" width="40" height="40"/>
-        <image name="PurpleButton" width="300" height="300"/>
         <image name="RedX" width="50" height="50"/>
         <image name="RobotProfile" width="50" height="50"/>
         <image name="Saved" width="40" height="40"/>
-        <image name="Trash" width="57" height="57"/>
         <image name="X" width="50" height="50"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="LRn-rX-MYf"/>
-    </inferredMetricsTieBreakers>
 </document>

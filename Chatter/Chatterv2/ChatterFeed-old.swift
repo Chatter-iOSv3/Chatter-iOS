@@ -1,8 +1,8 @@
 //
-//  DiscoverFeed.swift
+//  ChatterFeed.swift
 //  Chatter
 //
-//  Created by Austen Ma on 2/24/18.
+//  Created by Austen Ma on 2/28/18.
 //  Copyright © 2018 Austen Ma. All rights reserved.
 //
 
@@ -10,7 +10,16 @@ import Foundation
 import UIKit
 import Firebase
 
-class ChatterFeed: UIViewController {
+protocol SwitchRecChatterViewDelegate
+{
+    func SwitchRecChatterView(toPage: String)
+}
+
+class ChatterFeedOld: UIViewController {
+    @IBOutlet weak var chatterScrollView: UIScrollView!
+    @IBOutlet var chatterFeedView: UIView!
+    
+    var switchDelegate:SwitchRecChatterViewDelegate?
     
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -35,53 +44,53 @@ class ChatterFeed: UIViewController {
         let userID = Auth.auth().currentUser?.uid
         
         // Setting up UI Constructors --------------------------------------------------------------------------
-//        chatterScrollView.contentSize = chatterFeedView.frame.size
+        chatterScrollView.contentSize = chatterFeedView.frame.size
         
-//        let imageWidth:CGFloat = 300
-//        var imageHeight:CGFloat = 300
-//        var yPosition:CGFloat = 0
-//        var scrollViewContentSize:CGFloat=0;
-        
+        let imageWidth:CGFloat = 300
+        var imageHeight:CGFloat = 300
+        var yPosition:CGFloat = 0
+        var scrollViewContentSize:CGFloat=0;
+
         // Upon initialization, this will fire for EACH child in chatterFeed, and observe for each NEW -------------------------------------
-//        self.ref.child("users").child(userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
-//            // ************* Remember to add conditional to filter/delete based on date **************
-//
-//            let value = snapshot.value as? NSDictionary
-//
-//            let id = value?["id"] as? String ?? ""
-//            let userDetails = value?["userDetails"] as? String ?? ""
-//
-//            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//            let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
-//
-//            let newView = ChatterFeedSegmentView()
-//            //            newView.layer.borderWidth = 1
-//            //            newView.layer.borderColor = UIColor.purple.cgColor
-//            newView.contentMode = UIViewContentMode.scaleAspectFit
-//            newView.frame.size.width = imageWidth
-//            newView.frame.size.height = imageHeight
-//            newView.center = self.view.center
-//            newView.frame.origin.y = yPosition
+        self.ref.child("users").child(userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
+            // ************* Remember to add conditional to filter/delete based on date **************
             
-//            // Generate audio file on UIView instance
-//            newView.generateAudioFile(audioURL: localURL, id: id)
+            let value = snapshot.value as? NSDictionary
             
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-//                newView.generateWaveForm(audioURL: localURL)
-//            }
+            let id = value?["id"] as? String ?? ""
+            let userDetails = value?["userDetails"] as? String ?? ""
             
-//            self.chatterScrollView.addSubview(newView)
-//            let spacer:CGFloat = 0
-//            yPosition+=imageHeight + spacer
-//            scrollViewContentSize+=imageHeight + spacer
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
+            
+            let newView = ChatterFeedSegmentView()
+//            newView.layer.borderWidth = 1
+//            newView.layer.borderColor = UIColor.purple.cgColor
+            newView.contentMode = UIViewContentMode.scaleAspectFit
+            newView.frame.size.width = imageWidth
+            newView.frame.size.height = imageHeight
+            newView.center = self.view.center
+            newView.frame.origin.y = yPosition
+            
+            // Generate audio file on UIView instance
+            newView.generateAudioFile(audioURL: localURL, id: id)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
+                newView.generateWaveForm(audioURL: localURL)
+            }
+            
+            self.chatterScrollView.addSubview(newView)
+            let spacer:CGFloat = 0
+            yPosition+=imageHeight + spacer
+            scrollViewContentSize+=imageHeight + spacer
             
             // Calculates running total of how long the scrollView needs to be with the variables
-//            self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
+            self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
             
-//            imageHeight = 300
+            imageHeight = 300
             
-//            self.chatterFeedSegmentArray.append(newView)
-//        })
+            self.chatterFeedSegmentArray.append(newView)
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -143,7 +152,7 @@ class ChatterFeed: UIViewController {
         self.chatterFeedSegmentArray[self.prevIdx].player?.stop()
         
         sender.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        
+
         UIView.animate(withDuration: 1.25,
                        delay: 0,
                        usingSpringWithDamping: CGFloat(0.20),
@@ -154,6 +163,7 @@ class ChatterFeed: UIViewController {
         },
                        completion: { Void in()  }
         )
+
+        switchDelegate?.SwitchRecChatterView(toPage: "recordView")
     }
 }
-
