@@ -13,53 +13,51 @@ import AudioToolbox
 import UICircularProgressRing
 import Firebase
 
-protocol MenuActionDelegate {
-    func openSegue(_ segueName: String, sender: AnyObject?)
-    func reopenMenu()
-}
-
-protocol SwitchChatterButtonToUtilitiesDelegate
-{
-    func SwitchChatterButtonToUtilities(toFunction: String)
-}
-
-class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate{
+class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate{
     
     @IBOutlet weak var recordProgress: UIProgressView!
     
     // Initialize FB storage + DB
     let storage = Storage.storage()
     var ref: DatabaseReference!
- 
-    var switchDelegate:SwitchChatterButtonToUtilitiesDelegate?
     
     var isRecording = false
     var audioRecorder: AVAudioRecorder?
     var player : AVAudioPlayer?
+    
     var finishedRecording = false
-
-    let interactor = Interactor()
+    var recordProgressValue = 0.00
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Initialize Firebase DB Reference
         ref = Database.database().reference()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        // Changing progress bar height
+        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 3)
     }
     
-    @IBAction func startRecord(_ sender: AnyObject) {
-        if sender.state == UIGestureRecognizerState.began
-        {
-            print("LONG CLICK RECOGNIZED")
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? RecordEditModal {
+            destination.trashDelegate = self
         }
-        else if (sender.state == UIGestureRecognizerState.ended)
-        {
-            print("ENDED RECORDING")
+    }
+
+    @IBAction func startRecord(_ sender: AnyObject) {
+        if (!finishedRecording) {
+            if sender.state == UIGestureRecognizerState.began
+            {
+                // Start the progress view
+                print("STARTING PROGRESS")
+                self.startRecordProgress()
+            }
+            else if (sender.state == UIGestureRecognizerState.ended)
+            {
+                print("ENDED RECORDING")
+                self.finishedRecording = true
+                self.stopRecordProgress()
+            }
         }
 //        if (!finishedRecording) {
 //            if (sender.state == UIGestureRecognizerState.began) {
@@ -128,23 +126,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
 //                       completion: { Void in()  }
 //        )
 //    }
-    
-    @IBAction func openMenu(sender: AnyObject) {
-        performSegue(withIdentifier: "openMenu", sender: nil)
-    }
-    
-    @IBAction func edgePanGesture(_ sender: UIScreenEdgePanGestureRecognizer) {
-        let translation = sender.translation(in: view)
-        
-        let progress = MenuHelper.calculateProgress(translation, viewBounds: view.bounds, direction: .right)
-        
-        MenuHelper.mapGestureStateToInteractor(
-            sender.state,
-            progress: progress,
-            interactor: interactor){
-                self.performSegue(withIdentifier: "openMenu", sender: nil)
-        }
-    }
     
     @IBAction func saveRecording(sender: AnyObject) {
         if (finishedRecording) {
@@ -235,19 +216,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             // Stop the looping
             self.player?.stop()
             
-            // Trash the recording
-            self.switchDelegate?.SwitchChatterButtonToUtilities(toFunction: "finished")
-            
             // Reset recording
             self.finishedRecording = false
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationViewController = segue.destination as? Menu {
-            destinationViewController.transitioningDelegate = self
-            destinationViewController.interactor = interactor
-            destinationViewController.menuActionDelegate = self
         }
     }
     
@@ -326,16 +296,48 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         }
     }
     
-    // Recording Utilities ---------------------------------------------------------
+    // Recording Methods ---------------------------------------------------------
     
-    @objc func trashRecording(notification: NSNotification) {
-        isRecording = false
-        
+    func trashRecording() {
+
         // Stop the looping
         self.player?.stop()
         
         // Reset recording
         finishedRecording = false
+    }
+    
+    @objc func startRecordProgress() {
+        
+        if (self.recordProgressValue < 1.0 && !finishedRecording) {
+            self.recordProgressValue = self.recordProgressValue + 0.05
+            
+            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations: {
+                self.recordProgress.setProgress(Float(self.recordProgressValue), animated: true)
+            }, completion: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.startRecordProgress()
+            }
+        }
+        else if (finishedRecording) {
+            print("STOPPED RECORDING")
+        }
+        else {
+            print("TIME LIMIT REACHED")
+            self.recordProgressValue = 0.0
+            self.stopRecordProgress()
+        }
+        
+    }
+    
+    func stopRecordProgress() {
+        print("STOPPING")
+        self.recordProgressValue = 0.00
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
+            self.recordProgress.setProgress(0.0, animated: true)
+        }, completion: nil)
+        performSegue(withIdentifier: "showRecordEdit", sender: nil)
     }
     
     // OTHER UTILITIES --------------------------------------------------
@@ -365,34 +367,5 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         let result = formatter.string(from: date)
         
         return result
-    }
-}
-
-extension LandingRecord: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PresentMenuAnimator()
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissMenuAnimator()
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
-    }
-    
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
-    }
-}
-
-extension LandingRecord: MenuActionDelegate {
-    func openSegue(_ segueName: String, sender: AnyObject?) {
-        dismiss(animated: true){
-            self.performSegue(withIdentifier: segueName, sender: sender)
-        }
-    }
-    func reopenMenu(){
-        performSegue(withIdentifier: "openMenu", sender: nil)
     }
 }

@@ -21,6 +21,7 @@
 		1A2E99A720420A29009A674C /* ChatterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E99A620420A29009A674C /* ChatterUITests.swift */; };
 		1A2E99B92042389F009A674C /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99B82042389F009A674C /* Buttons.xcassets */; };
 		1A2E99BB20424449009A674C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99BA20424449009A674C /* GoogleService-Info.plist */; };
+		1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */; };
 		1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A40B9CC20426F10006D61CC /* ChatterFeed.swift */; };
 		1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */; };
 		1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D42055EE85009E1DC9 /* MenuView.swift */; };
@@ -35,10 +36,6 @@
 		1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD422043FA0200AF1B8A /* Menu.swift */; };
 		1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD44204549B500AF1B8A /* SignUp.swift */; };
 		1AFE56542047CB2400C9E8A2 /* ChatterFeed-old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE56532047CB2400C9E8A2 /* ChatterFeed-old.swift */; };
-		1AFE565A2047E4F100C9E8A2 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE56592047E4F100C9E8A2 /* Interactor.swift */; };
-		1AFE565C2047E55700C9E8A2 /* MenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE565B2047E55700C9E8A2 /* MenuHelper.swift */; };
-		1AFE565E2047E5A900C9E8A2 /* PresentMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE565D2047E5A900C9E8A2 /* PresentMenuAnimator.swift */; };
-		1AFE56602047E9B400C9E8A2 /* DismissMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE565F2047E9B400C9E8A2 /* DismissMenuAnimator.swift */; };
 		1AFE56622047ED3700C9E8A2 /* ChatterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE56612047ED3700C9E8A2 /* ChatterBox.swift */; };
 		AF4FA6DA594A85DC9B70B7D2 /* Pods_ChatterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9D8BCD24EE5675E742D301 /* Pods_ChatterUITests.framework */; };
 		F7F97D61357C0531696CE30E /* Pods_Chatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7CA2CF98C485F75FBAEEE9E /* Pods_Chatter.framework */; };
@@ -82,6 +79,7 @@
 		1A2E99A820420A29009A674C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A2E99B82042389F009A674C /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		1A2E99BA20424449009A674C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditModal.swift; sourceTree = "<group>"; };
 		1A40B9CC20426F10006D61CC /* ChatterFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeed.swift; sourceTree = "<group>"; };
 		1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersView.swift; sourceTree = "<group>"; };
 		1A4DA0D42055EE85009E1DC9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -96,10 +94,6 @@
 		1AF2BD422043FA0200AF1B8A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		1AF2BD44204549B500AF1B8A /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		1AFE56532047CB2400C9E8A2 /* ChatterFeed-old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatterFeed-old.swift"; sourceTree = "<group>"; };
-		1AFE56592047E4F100C9E8A2 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		1AFE565B2047E55700C9E8A2 /* MenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHelper.swift; sourceTree = "<group>"; };
-		1AFE565D2047E5A900C9E8A2 /* PresentMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentMenuAnimator.swift; sourceTree = "<group>"; };
-		1AFE565F2047E9B400C9E8A2 /* DismissMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissMenuAnimator.swift; sourceTree = "<group>"; };
 		1AFE56612047ED3700C9E8A2 /* ChatterBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterBox.swift; sourceTree = "<group>"; };
 		3D9D8BCD24EE5675E742D301 /* Pods_ChatterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6901F8A5DD49CBAE0EFE9F07 /* Pods-ChatterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatterUITests/Pods-ChatterUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -177,6 +171,7 @@
 				1A2E998820420A29009A674C /* Landing.swift */,
 				1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
+				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
 				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
 				1A271485204939650058B33D /* ChatterFeedSegment.swift */,
 				1AF2BD422043FA0200AF1B8A /* Menu.swift */,
@@ -188,10 +183,6 @@
 				1A928A7B20563A4F001434D0 /* InvitesView.swift */,
 				1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */,
 				1AA4C6A02056181300AD3980 /* FollowModal.swift */,
-				1AFE565F2047E9B400C9E8A2 /* DismissMenuAnimator.swift */,
-				1AFE56592047E4F100C9E8A2 /* Interactor.swift */,
-				1AFE565B2047E55700C9E8A2 /* MenuHelper.swift */,
-				1AFE565D2047E5A900C9E8A2 /* PresentMenuAnimator.swift */,
 				1A27148720493A4C0058B33D /* CustomSlider.swift */,
 				1AD7925B20510C8B007131CB /* DrawWaveForm.swift */,
 			);
@@ -551,12 +542,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AFE56602047E9B400C9E8A2 /* DismissMenuAnimator.swift in Sources */,
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
 				1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */,
 				1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */,
-				1AFE565A2047E4F100C9E8A2 /* Interactor.swift in Sources */,
 				1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
@@ -565,12 +554,11 @@
 				1AFE56622047ED3700C9E8A2 /* ChatterBox.swift in Sources */,
 				1A2E998920420A29009A674C /* Landing.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
-				1AFE565C2047E55700C9E8A2 /* MenuHelper.swift in Sources */,
 				1A27148820493A4C0058B33D /* CustomSlider.swift in Sources */,
 				1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */,
-				1AFE565E2047E5A900C9E8A2 /* PresentMenuAnimator.swift in Sources */,
 				1A0254A62058F3580045B763 /* FollowingView.swift in Sources */,
 				1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */,
+				1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */,
 				1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */,
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,

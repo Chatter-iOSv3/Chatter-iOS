@@ -17,7 +17,7 @@ class LandingPageViewController: UIPageViewController {
     
     fileprivate lazy var pages: [UIViewController] = {
         return [
-//            self.getViewController(withIdentifier: "Menu"),
+            self.getViewController(withIdentifier: "Menu"),
             self.getViewController(withIdentifier: "LandingPage"),
             self.getViewController(withIdentifier: "DiscoverFeed")
         ]
@@ -34,7 +34,7 @@ class LandingPageViewController: UIPageViewController {
         self.dataSource = self
         self.delegate   = self
         
-        setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
+        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
     }
 
 }
