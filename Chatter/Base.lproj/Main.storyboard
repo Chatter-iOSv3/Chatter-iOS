@@ -340,6 +340,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="recordButton" destination="lTt-I9-zNO" id="OOq-XL-gin"/>
                         <outlet property="recordProgress" destination="7Vw-fV-Qbd" id="Cvi-Sb-qVg"/>
                         <segue destination="eOO-cO-i87" kind="presentation" identifier="showRecordEdit" id="Y4N-fK-DMH"/>
                     </connections>
@@ -385,11 +386,30 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bh1-3l-62Y">
-                                        <rect key="frame" x="8" y="5" width="25" height="27"/>
+                                        <rect key="frame" x="15" y="5" width="25" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="X"/>
                                         <connections>
+                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="rZQ-Ea-yci"/>
                                             <action selector="closeRecordEdit:" destination="eOO-cO-i87" eventType="touchUpInside" id="z4o-JU-lRo"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFN-bh-V59">
+                                        <rect key="frame" x="15" y="52" width="311" height="65"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.60320021898429665" green="0.85191521072989429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="S0k-QU-hH6" appends="YES" id="AB1-H0-2gc"/>
+                                        </connections>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Dw-R7-UzT">
+                                        <rect key="frame" x="296" y="3" width="35" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="RightArrowCircle"/>
+                                        <connections>
+                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="QMZ-he-DJi"/>
+                                            <action selector="saveRecordingWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="N99-5W-Cba"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -401,9 +421,19 @@
                     </view>
                     <connections>
                         <outlet property="recordEditModalView" destination="vhA-YC-GwT" id="iqZ-ny-RSR"/>
+                        <outlet property="recordWaveFormView" destination="eFN-bh-V59" id="1BW-nO-7K9"/>
+                        <outlet property="saveRecordingButton" destination="8Dw-R7-UzT" id="oeC-9u-9Xw"/>
+                        <segue destination="h3C-9L-WbR" kind="unwind" identifier="unwindToLandingRecord" unwindAction="unwindToLandingRecordWithSegue:" id="e2w-Uf-oOW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1U-aM-KqC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="h3C-9L-WbR" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="S0k-QU-hH6">
+                    <connections>
+                        <action selector="playRecordingWithSender:" destination="eOO-cO-i87" id="g73-6D-xb2"/>
+                        <outlet property="delegate" destination="eFN-bh-V59" id="Woa-Ck-UcI"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3453.5999999999999" y="-340.47976011994007"/>
         </scene>
@@ -865,6 +895,7 @@
         <image name="LeftPointingArrow" width="25" height="25"/>
         <image name="Profile" width="40" height="40"/>
         <image name="RedX" width="50" height="50"/>
+        <image name="RightArrowCircle" width="40" height="40"/>
         <image name="Saved" width="40" height="40"/>
         <image name="X" width="50" height="50"/>
     </resources>

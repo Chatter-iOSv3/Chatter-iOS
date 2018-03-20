@@ -10,16 +10,11 @@ import Foundation
 import UIKit
 import AVFoundation
 import AudioToolbox
-import UICircularProgressRing
-import Firebase
 
 class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate{
     
     @IBOutlet weak var recordProgress: UIProgressView!
-    
-    // Initialize FB storage + DB
-    let storage = Storage.storage()
-    var ref: DatabaseReference!
+    @IBOutlet weak var recordButton: UIButton!
     
     var isRecording = false
     var audioRecorder: AVAudioRecorder?
@@ -27,20 +22,20 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     var finishedRecording = false
     var recordProgressValue = 0.00
+    var recordedURL: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize Firebase DB Reference
-        ref = Database.database().reference()
-        
         // Changing progress bar height
         recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 3)
+        recordProgress.alpha = 0.0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? RecordEditModal {
             destination.trashDelegate = self
+            destination.recordedUrl = self.recordedURL
         }
     }
 
@@ -49,175 +44,23 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             if sender.state == UIGestureRecognizerState.began
             {
                 // Start the progress view
-                print("STARTING PROGRESS")
                 self.startRecordProgress()
+                
+                // Background darkening
+                UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+                    self.recordButton.backgroundColor = UIColor(red: 92/255, green: 0/255, blue: 173/255, alpha: 1.0)
+                    self.recordProgress.alpha = 1.0
+                }, completion:nil)
+                
+                // Start recording
+                startRecording()
             }
             else if (sender.state == UIGestureRecognizerState.ended)
             {
-                print("ENDED RECORDING")
-                self.finishedRecording = true
+                // Stop recording
                 self.stopRecordProgress()
+                self.finishRecording()
             }
-        }
-//        if (!finishedRecording) {
-//            if (sender.state == UIGestureRecognizerState.began) {
-//                // Code to start recording
-//                startRecording()
-//
-//                self.circularProgressRing.setProgress(value: 100, animationDuration: 30.0) {
-//                    if (self.circularProgressRing.currentValue == 100) {
-//                        UIView.animate(withDuration: 0.5, animations: {
-//                            self.recordingFilters.alpha = 1.0
-//                        })
-//                        // Ending Animation
-//                        self.recButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-//
-//                        UIView.animate(withDuration: 1.25,
-//                                       delay: 0,
-//                                       usingSpringWithDamping: CGFloat(0.60),
-//                                       initialSpringVelocity: CGFloat(6.0),
-//                                       options: UIViewAnimationOptions.allowUserInteraction,
-//                                       animations: {
-//                                        self.recButton.transform = CGAffineTransform.identity
-//                        },
-//                                       completion: { Void in()  }
-//                        )
-//
-//                        //Code to stop recording
-//                        self.finishRecording()
-//                        self.finishedRecording = true
-//
-//                        // Code to start playback
-//                        self.playSound()
-//                    }
-//                }
-//            }   else if (sender.state == UIGestureRecognizerState.ended && !self.finishedRecording) {
-//                // Case if recording ends before time limit
-//                self.circularProgressRing.setProgress(value: 0, animationDuration: 0.5) {
-//                    print("FINISHED RECORDING.")
-//                    UIView.animate(withDuration: 0.5, animations: {
-//                        self.recordingFilters.alpha = 1.0
-//                    })
-//
-//                    //Code to stop recording
-//                    self.finishRecording()
-//                    self.finishedRecording = true
-//
-//                    // Code to start playback
-//                    self.playSound()
-//                }
-//            }
-//        }
-        
-    }
-
-//    @IBAction func animateButton(sender: UIButton) {
-//
-//        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-//
-//        UIView.animate(withDuration: 1.25,
-//                       delay: 0,
-//                       usingSpringWithDamping: CGFloat(0.30),
-//                       initialSpringVelocity: CGFloat(6.0),
-//                       options: UIViewAnimationOptions.allowUserInteraction,
-//                       animations: {
-//                        sender.transform = CGAffineTransform.identity
-//        },
-//                       completion: { Void in()  }
-//        )
-//    }
-    
-    @IBAction func saveRecording(sender: AnyObject) {
-        if (finishedRecording) {
-            
-            print("SAVING")
-            
-            // Initialize FB storage ref
-            let storageRef = storage.reference()
-            let userID = Auth.auth().currentUser?.uid
-            
-            // Get audio url and generate a unique ID for the audio file
-            let audioUrl = getAudioFileUrl()
-            let audioID = randomString(length: 10)
-            let fullAudioID = "\(userID ?? "") | \(audioID)"
-            
-            // Saving the recording to FB
-            let audioRef = storageRef.child("audio/\(fullAudioID)")
-            
-            audioRef.putFile(from: audioUrl, metadata: nil) { metadata, error in
-                if let error = error {
-                    print(error)
-                } else {
-                    // Metadata contains file metadata such as size, content-type, and download URL.
-//                    let downloadURL = metadata!.downloadURL()
-                    
-                    // Write to the ChatterFeed string in FB-DB
-                    self.ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
-                        // Retrieve existing ChatterFeed
-                        let value = snapshot.value as? NSDictionary
-                        let currChatterFeedCount = (value!["chatterFeed"] as AnyObject).count
-                        
-                        // Generating chatterFeed # identifier
-                        var countIdentifier: Int
-                        if ((currChatterFeedCount) != nil) {
-                            countIdentifier = currChatterFeedCount!
-                        }   else {
-                            countIdentifier = 0
-                        }
-                        
-                        // Construct new ChatterFeed segment
-                        var chatterFeedSegment = Dictionary<String, Any>()
-                        chatterFeedSegment = ["id": fullAudioID, "userDetails": userID!, "dateCreated": self.getCurrentDate()]
-
-                        let childUpdates = ["\(countIdentifier)": chatterFeedSegment]
-                        
-                        // Get the list of follower
-                        let follower = value!["follower"] as! NSDictionary
-                        
-                        // Update your Chatter feed, then feed in all follower
-                        self.ref.child("users").child(userID!).child("chatterFeed").updateChildValues(childUpdates) {error, ref in
-                            
-                            // Iterate through each follower and update their feed
-                            for follower in follower {
-                                let followerID = follower.key as? String
-                                self.ref.child("users").child(followerID!).child("chatterFeed").observeSingleEvent(of: .value, with: { (followerSnapshot) in
-                                    let followerValue = followerSnapshot.value as? Any
-                                    let followerChatterFeedCount = (followerValue! as AnyObject).count
-                                    
-                                    // Generating follower chatterFeed # identifier
-                                    var followerCountIdentifier: Int
-                                    if ((followerChatterFeedCount) != nil) {
-                                        followerCountIdentifier = followerChatterFeedCount!
-                                    }   else {
-                                        followerCountIdentifier = 0
-                                    }
-                                    
-                                    // Construct follower ChatterFeed segment
-                                    var followerChatterFeedSegment = Dictionary<String, Any>()
-                                    followerChatterFeedSegment = ["id": fullAudioID, "userDetails": userID!, "dateCreated": self.getCurrentDate()]
-                                    
-                                    let followerChildUpdates = ["\(followerCountIdentifier)": followerChatterFeedSegment]
-                                    
-                                    self.ref.child("users").child(followerID!).child("chatterFeed").updateChildValues(followerChildUpdates) {error, ref in
-                                        print("UPDATE PROCESS COMPLETE: \(followerID)")
-                                    }
-                                })
-                            }
-                        }
-                        
-                        print("LOCAL SAVE SUCCESS")
-                    
-                    }) { (error) in
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-            
-            // Stop the looping
-            self.player?.stop()
-            
-            // Reset recording
-            self.finishedRecording = false
         }
     }
     
@@ -268,6 +111,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         }
     }
     
+    @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
+    
     // Audio Playback ------------------------------------------------
     
     func playSound(){
@@ -305,6 +150,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         // Reset recording
         finishedRecording = false
+        
+        // Return screen to bright background
+        self.recordProgress.alpha = 0.0
+        UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+            self.recordButton.backgroundColor = UIColor(red: 170/255, green: 73/255, blue: 252/255, alpha: 1.0)
+        }, completion:nil)
     }
     
     @objc func startRecordProgress() {
@@ -321,7 +172,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             }
         }
         else if (finishedRecording) {
-            print("STOPPED RECORDING")
+            print("ALREADY FINISHED RECORDING")
         }
         else {
             print("TIME LIMIT REACHED")
@@ -334,38 +185,13 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     func stopRecordProgress() {
         print("STOPPING")
         self.recordProgressValue = 0.00
+        self.finishedRecording = true
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.recordProgress.setProgress(0.0, animated: true)
         }, completion: nil)
+        
+        // Send recorded URL to modal and show modal
+        self.recordedURL = getAudioFileUrl()
         performSegue(withIdentifier: "showRecordEdit", sender: nil)
-    }
-    
-    // OTHER UTILITIES --------------------------------------------------
-    
-    func randomString(length: Int) -> String {
-        
-        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let len = UInt32(letters.length)
-        
-        var randomString = ""
-        
-        for _ in 0 ..< length {
-            let rand = arc4random_uniform(len)
-            var nextChar = letters.character(at: Int(rand))
-            randomString += NSString(characters: &nextChar, length: 1) as String
-        }
-        
-        return randomString
-    }
-    
-    func getCurrentDate() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-        
-        formatter.dateFormat = "dd.MM.yyyy"
-        
-        let result = formatter.string(from: date)
-        
-        return result
     }
 }

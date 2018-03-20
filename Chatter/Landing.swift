@@ -51,14 +51,9 @@ class Landing: UIViewController {
         )
     }
     
-    @IBAction func trashRecording(sender: UIButton) {
-        NotificationCenter.default.post(name: .trashing, object: nil)
-    }
-    
 }
 
 extension Notification.Name {
-    static let trashing = Notification.Name("trashing")
     static let queueNextChatter = Notification.Name("queueNextChatter")
     static let chatterFinishedAndQueue = Notification.Name("chatterFinishedAndQueue")
     static let chatterChangedAndQueue = Notification.Name("chatterChangedAndQueue")
