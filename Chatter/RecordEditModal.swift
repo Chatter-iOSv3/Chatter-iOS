@@ -6,9 +6,10 @@
 //  Copyright © 2018 Austen Ma. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Foundation
 import AVFoundation
+import AudioToolbox
 import Firebase
 
 protocol TrashRecordingDelegate
@@ -24,6 +25,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     var trashDelegate:TrashRecordingDelegate?
     
+    var audioID: String?
+    
     // Initialize Audio player vars
     var player : AVAudioPlayer?
     var recordedUrl: URL?
@@ -37,8 +40,13 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         
         ref = Database.database().reference()
         
+        self.audioID = randomString(length: 10)
+        
         recordEditModalView.layer.cornerRadius = 30
         recordWaveFormView.layer.cornerRadius = 20
+        
+        // Generate Audio Wave form
+        self.generateWaveForm(audioURL: self.recordedUrl!)
     }
     
     @IBAction func playRecording(sender: Any) {
@@ -76,8 +84,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         
         // Get audio url and generate a unique ID for the audio file
         let audioUrl = self.recordedUrl!
-        let audioID = randomString(length: 10)
-        let fullAudioID = "\(userID ?? "") | \(audioID)"
+        let fullAudioID = "\(userID ?? "") | \(self.audioID)"
         
         // Saving the recording to FB
         let audioRef = storageRef.child("audio/\(fullAudioID)")
@@ -169,6 +176,53 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         },
                        completion: { Void in()  }
         )
+    }
+    
+    // Waveform Methods -------------------------------------------------------
+    
+    func generateAudioFile(audioURL: URL, id: String) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        
+        let audioRef = storageRef.child("audio/\(id)")
+        audioRef.write(toFile: audioURL) { url, error in
+            if let error = error {
+                print("****** \(error)")
+            } else {
+                self.recordedUrl = url
+                
+                do {
+                    self.player = try AVAudioPlayer(contentsOf: self.recordedUrl!)
+                } catch let error as NSError {
+                    //self.player = nil
+                    print(error.localizedDescription)
+                } catch {
+                    print("AVAudioPlayer init failed")
+                }
+                
+            }
+        }
+    }
+    
+    func generateWaveForm(audioURL: URL) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // change 1 to desired number of seconds
+            let file = try! AVAudioFile(forReading: audioURL)//Read File into AVAudioFile
+            let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: file.fileFormat.sampleRate, channels: file.fileFormat.channelCount, interleaved: false)//Format of the file
+            
+            let buf = AVAudioPCMBuffer(pcmFormat: format!, frameCapacity: UInt32(file.length))//Buffer
+            try! file.read(into: buf!)//Read Floats
+            
+            let waveForm = DrawWaveform()
+            waveForm.frame.size.width = self.recordWaveFormView.frame.width
+            waveForm.frame.size.height = self.recordWaveFormView.frame.height
+            waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
+            
+            //Store the array of floats in the struct
+            waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
+            
+            self.recordWaveFormView.addSubview(waveForm)
+        }
     }
     
     // OTHER UTILITIES --------------------------------------------------

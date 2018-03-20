@@ -59,7 +59,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             {
                 // Stop recording
                 self.stopRecordProgress()
-                self.finishRecording()
             }
         }
     }
@@ -98,14 +97,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         return audioUrl
     }
     
-    func finishRecording() {
-        audioRecorder?.stop()
-        isRecording = false
-    }
-    
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag {
-            finishRecording()
+            // Code
         }else {
             // Recording interrupted by other reasons like call coming, reached time limit.
         }
@@ -186,6 +180,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         print("STOPPING")
         self.recordProgressValue = 0.00
         self.finishedRecording = true
+        audioRecorder?.stop()
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.recordProgress.setProgress(0.0, animated: true)
         }, completion: nil)

@@ -35,7 +35,7 @@ class DrawWaveform: UIView {
         aPath2.move(to: CGPoint(x:0.0 , y:rect.height ))
         
         // PLACEHOLDER, SETTING RANDOM COLORS FOR NOW ************************
-        let randomColor = generateRandomColor()
+//        let randomColor = generateRandomColor()
         
         //Loop the array
         for _ in self.points{
@@ -54,7 +54,7 @@ class DrawWaveform: UIView {
             f += 1
         }
         
-        randomColor.set()
+        UIColor.white.set()
         aPath.stroke()
         //If you want to fill it as well
         aPath.fill()
@@ -80,11 +80,11 @@ class DrawWaveform: UIView {
         }
         
         //If you want to stroke it with a Orange color
-        //UIColor.orange.set()
-        randomColor.set()
+        UIColor.white.set()
         
         //Reflection and make it transparent
-        aPath2.stroke(with: CGBlendMode.normal, alpha: 0.5)
+//        aPath2.stroke(with: CGBlendMode.normal, alpha: 0.5)
+        aPath2.stroke()
         
         //If you want to fill it as well
         aPath2.fill()
@@ -112,7 +112,7 @@ class DrawWaveform: UIView {
         //                   floatArrPtr, 1, sampleCount);
         //print(floatArr)
         
-        var multiplier = 10.0
+        var multiplier = 180.0
         print(multiplier)
         if multiplier < 1{
             multiplier = 1.0

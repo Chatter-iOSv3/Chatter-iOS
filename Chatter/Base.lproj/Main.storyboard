@@ -236,10 +236,10 @@
             </objects>
             <point key="canvasLocation" x="1480.8" y="-340.47976011994007"/>
         </scene>
-        <!--Discover Feed-->
+        <!--View Controller-->
         <scene sceneID="iSk-eK-G1I">
             <objects>
-                <viewController storyboardIdentifier="DiscoverFeed" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" customClass="DiscoverFeed" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiscoverFeed" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fzc-fi-7xH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
