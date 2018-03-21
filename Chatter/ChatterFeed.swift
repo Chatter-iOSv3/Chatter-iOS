@@ -1,19 +1,25 @@
 //
-//  DiscoverFeed.swift
+//  ChatterFeed.swift
 //  Chatter
 //
-//  Created by Austen Ma on 2/24/18.
+//  Created by Austen Ma on 2/28/18.
 //  Copyright © 2018 Austen Ma. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import Firebase
+import AVFoundation
+import AudioToolbox
 
 class ChatterFeed: UIViewController {
+    @IBOutlet weak var chatterScrollView: UIScrollView!
+    @IBOutlet var chatterFeedView: UIView!
     
     var ref: DatabaseReference!
     let storage = Storage.storage()
+    var userID: String?
+    var storageRef: Any?
     
     var chatterFeedSegmentArray: [ChatterFeedSegmentView] = []
     // Current queue position of Feed
@@ -25,111 +31,73 @@ class ChatterFeed: UIViewController {
         
         chatterFeedSegmentArray = []
         
-        // Listens for Hear Chatter queue from Landing
-        NotificationCenter.default.addObserver(self, selector: #selector(queueNextChatter(notification:)), name: .queueNextChatter, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(chatterFinishedAndQueue(notification:)), name: .chatterFinishedAndQueue, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(chatterChangedAndQueue(notification:)), name: .chatterChangedAndQueue, object: nil)
-        
         ref = Database.database().reference()
-        let storageRef = storage.reference()
-        let userID = Auth.auth().currentUser?.uid
+        self.storageRef = storage.reference()
+        self.userID = Auth.auth().currentUser?.uid
         
         // Setting up UI Constructors --------------------------------------------------------------------------
-//        chatterScrollView.contentSize = chatterFeedView.frame.size
+        chatterScrollView.contentSize = chatterFeedView.frame.size
         
-//        let imageWidth:CGFloat = 300
-//        var imageHeight:CGFloat = 300
-//        var yPosition:CGFloat = 0
-//        var scrollViewContentSize:CGFloat=0;
+        self.retrieveChatterFeedAndRender()
+    }
+    
+    func retrieveChatterFeedAndRender() {
+        let imageWidth:CGFloat = 300
+        var imageHeight:CGFloat = 300
+        var yPosition:CGFloat = 0
+        var scrollViewContentSize:CGFloat=0;
         
         // Upon initialization, this will fire for EACH child in chatterFeed, and observe for each NEW -------------------------------------
-//        self.ref.child("users").child(userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
-//            // ************* Remember to add conditional to filter/delete based on date **************
-//
-//            let value = snapshot.value as? NSDictionary
-//
-//            let id = value?["id"] as? String ?? ""
-//            let userDetails = value?["userDetails"] as? String ?? ""
-//
-//            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//            let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
-//
-//            let newView = ChatterFeedSegmentView()
-//            //            newView.layer.borderWidth = 1
-//            //            newView.layer.borderColor = UIColor.purple.cgColor
-//            newView.contentMode = UIViewContentMode.scaleAspectFit
-//            newView.frame.size.width = imageWidth
-//            newView.frame.size.height = imageHeight
-//            newView.center = self.view.center
-//            newView.frame.origin.y = yPosition
+        self.ref.child("users").child(self.userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
+            // ************* Remember to add conditional to filter/delete based on date **************
             
-//            // Generate audio file on UIView instance
-//            newView.generateAudioFile(audioURL: localURL, id: id)
+            let value = snapshot.value as? NSDictionary
             
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-//                newView.generateWaveForm(audioURL: localURL)
-//            }
+            let id = value?["id"] as? String ?? ""
+            let userDetails = value?["userDetails"] as? String ?? ""
             
-//            self.chatterScrollView.addSubview(newView)
-//            let spacer:CGFloat = 0
-//            yPosition+=imageHeight + spacer
-//            scrollViewContentSize+=imageHeight + spacer
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
+            
+            let newView = ChatterFeedSegmentView()
+            //            newView.layer.borderWidth = 1
+            //            newView.layer.borderColor = UIColor.purple.cgColor
+            newView.contentMode = UIViewContentMode.scaleAspectFit
+            newView.frame.size.width = imageWidth
+            newView.frame.size.height = imageHeight
+            newView.center = self.view.center
+            newView.frame.origin.y = yPosition
+            
+            // Generate audio file on UIView instance
+            newView.generateAudioFile(audioURL: localURL, id: id)
+            
+            // Calculate waveForm multiplier before async
+            let multiplier = self.calculateMultiplierWithAudio(audioUrl: localURL)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
+                newView.generateWaveForm(audioURL: localURL, multiplier: multiplier)
+            }
+            
+            self.chatterScrollView.addSubview(newView)
+            let spacer:CGFloat = 0
+            yPosition+=imageHeight + spacer
+            scrollViewContentSize+=imageHeight + spacer
             
             // Calculates running total of how long the scrollView needs to be with the variables
-//            self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
+            self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
             
-//            imageHeight = 300
+            imageHeight = 300
             
-//            self.chatterFeedSegmentArray.append(newView)
-//        })
+            self.chatterFeedSegmentArray.append(newView)
+        })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @objc func queueNextChatter(notification: NSNotification) {
-        // Takes in an identifier, related to its position in overall array
-        print(self.chatterFeedSegmentArray)
+    func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
+        let asset = AVURLAsset(url: audioUrl)
+        let audioDuration = asset.duration
+        let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
         
-        // Stop audio from previous Chatter
-        if (self.chatterFeedSegmentArray[self.prevIdx].player?.isPlaying)! {
-            self.chatterFeedSegmentArray[self.prevIdx].player?.stop()
-        }
-        
-        self.chatterFeedSegmentArray[self.currentIdx].playAudio()
-        
-        self.prevIdx = self.currentIdx
-        // Auto-Queuing from Hear Chatter button
-        if (self.currentIdx + 1 < self.chatterFeedSegmentArray.count) {
-            // Queue next Chatter
-            self.currentIdx += 1
-        }   else {
-            // Reset Feed
-            self.currentIdx = 0
-        }
-    }
-    
-    @objc func chatterFinishedAndQueue(notification: NSNotification) {
-        self.queueNextChatter(notification: notification)
-    }
-    
-    @objc func chatterChangedAndQueue(notification: NSNotification) {
-        // Find out which Idx has been tapped
-        let tappedPlayer = notification.userInfo!["player"] as! ChatterFeedSegmentView
-        
-        for (index, player) in self.chatterFeedSegmentArray.enumerated() {
-            if (player == tappedPlayer) {
-                print("FOUND PLAYER: \(index)")
-                
-                // Set to current index
-                self.currentIdx = index
-                
-                // Queue Next
-                self.queueNextChatter(notification: notification)
-            }
-        }
+        return Float(audioDurationSeconds * 9.5)
     }
     
     deinit {

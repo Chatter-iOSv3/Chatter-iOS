@@ -30,7 +30,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     // Initialize Audio player vars
     var player : AVAudioPlayer?
     var recordedUrl: URL?
-    var multiplier: Int?
+    var multiplier: Float?
     
     // Initialize Firebase vars
     let storage = Storage.storage()
@@ -232,12 +232,12 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     // OTHER UTILITIES --------------------------------------------------
     
-    func calculateMultiplierWithAudio(audioUrl: URL) -> Int {
+    func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
         let asset = AVURLAsset(url: audioUrl)
         let audioDuration = asset.duration
         let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
         
-        return Int(audioDurationSeconds * 9)
+        return Float(audioDurationSeconds * 9.5)
     }
     
     func randomString(length: Int) -> String {

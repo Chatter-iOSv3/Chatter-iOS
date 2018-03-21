@@ -15,7 +15,7 @@ class DrawWaveform: UIView {
     var arrayFloatValues:[Float] = []
     var points:[CGFloat] = []
     
-    var multiplier: Int?
+    var multiplier: Float?
     
     //This is where we're going to draw the waveform
     override func draw(_ rect: CGRect) {

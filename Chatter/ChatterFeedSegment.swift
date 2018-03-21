@@ -20,15 +20,6 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//
-//        do {
-//            player = try AVAudioPlayer(contentsOf: self.recordingURL)
-//        } catch let error as NSError {
-//            //self.player = nil
-//            print(error.localizedDescription)
-//        } catch {
-//            print("AVAudioPlayer init failed")
-//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,9 +41,6 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         player?.currentTime = 0
         //            player?.volume = 10.0
         player?.play()
-        
-        // When finished playing, it should notify the main ChatterFeed VC
-        player?.delegate = self as? AVAudioPlayerDelegate
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -90,7 +78,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         }
     }
     
-    func generateWaveForm(audioURL: URL) {
+    func generateWaveForm(audioURL: URL, multiplier: Float) {
         let file = try! AVAudioFile(forReading: audioURL)//Read File into AVAudioFile
         let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: file.fileFormat.sampleRate, channels: file.fileFormat.channelCount, interleaved: false)//Format of the file
         
@@ -100,8 +88,10 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         let waveForm = DrawWaveform()
         waveForm.frame.size.width = 300
         waveForm.frame.size.height = 300
-        waveForm.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-        waveForm.backgroundColor = UIColor.white
+        waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
+        
+        // Set multiplier
+        waveForm.multiplier = multiplier
         
         //Store the array of floats in the struct
         waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))

@@ -27,9 +27,19 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.recordButton.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
+        
         // Changing progress bar height
-        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 3)
+        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
         recordProgress.alpha = 0.0
+        
+        // Set the rounded edge for the outer bar
+        recordProgress.layer.cornerRadius = 2.5
+        recordProgress.clipsToBounds = true
+        
+        // Set the rounded edge for the inner bar
+        recordProgress.layer.sublayers![1].cornerRadius = 2.5
+        recordProgress.subviews[1].clipsToBounds = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -48,7 +58,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 
                 // Background darkening
                 UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
-                    self.recordButton.backgroundColor = UIColor(red: 92/255, green: 0/255, blue: 173/255, alpha: 1.0)
+                    self.recordButton.backgroundColor = UIColor(red: 68/255, green: 14/255, blue: 112/255, alpha: 1.0)
                     self.recordProgress.alpha = 1.0
                 }, completion:nil)
                 
@@ -148,7 +158,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Return screen to bright background
         self.recordProgress.alpha = 0.0
         UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
-            self.recordButton.backgroundColor = UIColor(red: 170/255, green: 73/255, blue: 252/255, alpha: 1.0)
+            self.recordButton.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
         }, completion:nil)
     }
     

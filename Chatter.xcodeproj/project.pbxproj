@@ -35,7 +35,6 @@
 		1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */; };
 		1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD422043FA0200AF1B8A /* Menu.swift */; };
 		1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD44204549B500AF1B8A /* SignUp.swift */; };
-		1AFE56542047CB2400C9E8A2 /* ChatterFeed-old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE56532047CB2400C9E8A2 /* ChatterFeed-old.swift */; };
 		1AFE56622047ED3700C9E8A2 /* ChatterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFE56612047ED3700C9E8A2 /* ChatterBox.swift */; };
 		AF4FA6DA594A85DC9B70B7D2 /* Pods_ChatterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9D8BCD24EE5675E742D301 /* Pods_ChatterUITests.framework */; };
 		F7F97D61357C0531696CE30E /* Pods_Chatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7CA2CF98C485F75FBAEEE9E /* Pods_Chatter.framework */; };
@@ -93,7 +92,6 @@
 		1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
 		1AF2BD422043FA0200AF1B8A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		1AF2BD44204549B500AF1B8A /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
-		1AFE56532047CB2400C9E8A2 /* ChatterFeed-old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatterFeed-old.swift"; sourceTree = "<group>"; };
 		1AFE56612047ED3700C9E8A2 /* ChatterBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterBox.swift; sourceTree = "<group>"; };
 		3D9D8BCD24EE5675E742D301 /* Pods_ChatterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6901F8A5DD49CBAE0EFE9F07 /* Pods-ChatterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatterUITests/Pods-ChatterUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 		1A82D8C6205E361100B56BB6 /* Chatterv2 */ = {
 			isa = PBXGroup;
 			children = (
-				1AFE56532047CB2400C9E8A2 /* ChatterFeed-old.swift */,
 				1AFE56612047ED3700C9E8A2 /* ChatterBox.swift */,
 			);
 			path = Chatterv2;
@@ -549,7 +546,6 @@
 				1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
-				1AFE56542047CB2400C9E8A2 /* ChatterFeed-old.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
 				1AFE56622047ED3700C9E8A2 /* ChatterBox.swift in Sources */,
 				1A2E998920420A29009A674C /* Landing.swift in Sources */,

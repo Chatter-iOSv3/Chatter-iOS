@@ -236,17 +236,27 @@
             </objects>
             <point key="canvasLocation" x="1480.8" y="-340.47976011994007"/>
         </scene>
-        <!--View Controller-->
+        <!--Chatter Feed-->
         <scene sceneID="iSk-eK-G1I">
             <objects>
-                <viewController storyboardIdentifier="DiscoverFeed" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DiscoverFeed" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" customClass="ChatterFeed" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fzc-fi-7xH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-jG-5uY">
+                                <rect key="frame" x="0.0" y="63" width="375" height="604"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" red="0.66621039370000001" green="0.46572189339999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="ZoW-pJ-fa9"/>
                     </view>
+                    <connections>
+                        <outlet property="chatterFeedView" destination="fzc-fi-7xH" id="KvX-g0-z5i"/>
+                        <outlet property="chatterScrollView" destination="jlf-jG-5uY" id="Jk6-L9-jKd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORO-TI-ClC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
