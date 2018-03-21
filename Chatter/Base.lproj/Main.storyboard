@@ -80,7 +80,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.73277722599999995" green="0.50140917789999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.61584327439999997" green="0.33384654200000002" blue="0.9446041127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="ovn-v2-vD1"/>
                     </view>
                     <connections>
@@ -249,7 +249,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="0.66621039370000001" green="0.46572189339999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.61584327439999997" green="0.33384654200000002" blue="0.9446041127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="ZoW-pJ-fa9"/>
                     </view>

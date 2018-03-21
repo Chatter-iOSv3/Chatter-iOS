@@ -15,11 +15,14 @@ import Firebase
 class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     var shouldSetupConstraints = true
     var recordingURL: URL!
-    var playButton: UIButton!
     var player: AVAudioPlayer?
+    var multiplier: Float?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
+        self.addGestureRecognizer(playGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +37,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         super.updateConstraints()
     }
     
-    @objc func playAudio() {
+    @objc func playAudio(_ sender:UITapGestureRecognizer) {
         print("playing \(self.recordingURL)")
         
         player?.prepareToPlay()
@@ -46,12 +49,6 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("FINISHED PLAYING")
         NotificationCenter.default.post(name: .chatterFinishedAndQueue, object: nil)
-    }
-    
-    @objc func changeChatter() {
-        let currPlayer: [String:ChatterFeedSegmentView] = ["player": self]
-        
-        NotificationCenter.default.post(name: .chatterChangedAndQueue, object: nil, userInfo: currPlayer)
     }
     
     func generateAudioFile(audioURL: URL, id: String) {
@@ -67,6 +64,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
                 
                 do {
                     self.player = try AVAudioPlayer(contentsOf: self.recordingURL)
+                    self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.recordingURL)
                 } catch let error as NSError {
                     //self.player = nil
                     print(error.localizedDescription)
@@ -78,7 +76,15 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         }
     }
     
-    func generateWaveForm(audioURL: URL, multiplier: Float) {
+    func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
+        let asset = AVURLAsset(url: audioUrl)
+        let audioDuration = asset.duration
+        let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+        
+        return Float(audioDurationSeconds * 9.5)
+    }
+    
+    func generateWaveForm(audioURL: URL) {
         let file = try! AVAudioFile(forReading: audioURL)//Read File into AVAudioFile
         let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: file.fileFormat.sampleRate, channels: file.fileFormat.channelCount, interleaved: false)//Format of the file
         
@@ -91,18 +97,11 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
         // Set multiplier
-        waveForm.multiplier = multiplier
+        waveForm.multiplier = self.multiplier
         
         //Store the array of floats in the struct
         waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
         
         self.addSubview(waveForm)
-        
-        // Then add button to be on outer subview layer
-        // Add play button
-        let playButton = UIButton(frame: CGRect(x: 10, y: 10, width: 300, height: 400))
-        playButton.addTarget(self, action: #selector(changeChatter), for: .touchUpInside)
-        playButton.backgroundColor = UIColor(white: 1, alpha: 0.0)
-        self.addSubview(playButton)
     }
 }

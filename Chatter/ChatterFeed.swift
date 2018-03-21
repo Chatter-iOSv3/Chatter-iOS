@@ -71,11 +71,8 @@ class ChatterFeed: UIViewController {
             // Generate audio file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
             
-            // Calculate waveForm multiplier before async
-            let multiplier = self.calculateMultiplierWithAudio(audioUrl: localURL)
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-                newView.generateWaveForm(audioURL: localURL, multiplier: multiplier)
+                newView.generateWaveForm(audioURL: localURL)
             }
             
             self.chatterScrollView.addSubview(newView)
@@ -90,14 +87,6 @@ class ChatterFeed: UIViewController {
             
             self.chatterFeedSegmentArray.append(newView)
         })
-    }
-    
-    func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
-        let asset = AVURLAsset(url: audioUrl)
-        let audioDuration = asset.duration
-        let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
-        
-        return Float(audioDurationSeconds * 9.5)
     }
     
     deinit {
