@@ -244,10 +244,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-jG-5uY">
-                                <rect key="frame" x="0.0" y="63" width="375" height="604"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAZ-9y-hCb">
+                                <rect key="frame" x="0.0" y="96" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-jG-5uY">
+                                <rect key="frame" x="0.0" y="137" width="375" height="530"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.98884795979999995" green="0.98884795979999995" blue="0.98884795979999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chatter Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5y-8w-xT7">
+                                <rect key="frame" x="121" y="48" width="133" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="textColor" red="0.98884795979999995" green="0.98884795979999995" blue="0.98884795979999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.61584327439999997" green="0.33384654200000002" blue="0.9446041127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -256,6 +269,7 @@
                     <connections>
                         <outlet property="chatterFeedView" destination="fzc-fi-7xH" id="KvX-g0-z5i"/>
                         <outlet property="chatterScrollView" destination="jlf-jG-5uY" id="Jk6-L9-jKd"/>
+                        <outlet property="placeHolderCurveView" destination="lAZ-9y-hCb" id="zyw-X9-X7X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORO-TI-ClC" userLabel="First Responder" sceneMemberID="firstResponder"/>

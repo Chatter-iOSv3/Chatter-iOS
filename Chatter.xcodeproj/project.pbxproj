@@ -11,7 +11,6 @@
 		1A0254A62058F3580045B763 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A52058F3580045B763 /* FollowingView.swift */; };
 		1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
-		1A27148820493A4C0058B33D /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A27148720493A4C0058B33D /* CustomSlider.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998920420A29009A674C /* Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998820420A29009A674C /* Landing.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -62,7 +61,6 @@
 		1A0254A52058F3580045B763 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingTableViewCell.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
-		1A27148720493A4C0058B33D /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A2E998820420A29009A674C /* Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landing.swift; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				1A928A7B20563A4F001434D0 /* InvitesView.swift */,
 				1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */,
 				1AA4C6A02056181300AD3980 /* FollowModal.swift */,
-				1A27148720493A4C0058B33D /* CustomSlider.swift */,
 				1AD7925B20510C8B007131CB /* DrawWaveForm.swift */,
 			);
 			path = Chatter;
@@ -550,7 +547,6 @@
 				1AFE56622047ED3700C9E8A2 /* ChatterBox.swift in Sources */,
 				1A2E998920420A29009A674C /* Landing.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
-				1A27148820493A4C0058B33D /* CustomSlider.swift in Sources */,
 				1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */,
 				1A0254A62058F3580045B763 /* FollowingView.swift in Sources */,
 				1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */,

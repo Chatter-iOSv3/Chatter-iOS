@@ -15,6 +15,8 @@ import AudioToolbox
 class ChatterFeed: UIViewController {
     @IBOutlet weak var chatterScrollView: UIScrollView!
     @IBOutlet var chatterFeedView: UIView!
+    @IBOutlet weak var placeHolderCurveView: UIView!
+    @IBOutlet weak var createNewChatterButton: UIButton!
     
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -35,6 +37,10 @@ class ChatterFeed: UIViewController {
         self.storageRef = storage.reference()
         self.userID = Auth.auth().currentUser?.uid
         
+        // Initial styling
+        self.placeHolderCurveView.layer.cornerRadius = 37.5
+        self.createNewChatterButton.layer.cornerRadius = 30
+        
         // Setting up UI Constructors --------------------------------------------------------------------------
         chatterScrollView.contentSize = chatterFeedView.frame.size
         
@@ -43,7 +49,7 @@ class ChatterFeed: UIViewController {
     
     func retrieveChatterFeedAndRender() {
         let imageWidth:CGFloat = 300
-        var imageHeight:CGFloat = 300
+        var imageHeight:CGFloat = 150
         var yPosition:CGFloat = 0
         var scrollViewContentSize:CGFloat=0;
         
@@ -60,13 +66,12 @@ class ChatterFeed: UIViewController {
             let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
             
             let newView = ChatterFeedSegmentView()
-            //            newView.layer.borderWidth = 1
-            //            newView.layer.borderColor = UIColor.purple.cgColor
             newView.contentMode = UIViewContentMode.scaleAspectFit
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
             newView.center = self.view.center
             newView.frame.origin.y = yPosition
+            newView.layer.cornerRadius = 30
             
             // Generate audio file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
@@ -83,7 +88,7 @@ class ChatterFeed: UIViewController {
             // Calculates running total of how long the scrollView needs to be with the variables
             self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
             
-            imageHeight = 300
+            imageHeight = 150
             
             self.chatterFeedSegmentArray.append(newView)
         })
@@ -93,6 +98,10 @@ class ChatterFeed: UIViewController {
         print("DEINITIALIZING")
         let userID = Auth.auth().currentUser?.uid
         self.ref.child("users").child(userID!).child("chatterFeed").removeAllObservers()
+    }
+    
+    @IBAction func(sender: UIButton) {
+        
     }
     
     @IBAction func animateButton(sender: UIButton) {

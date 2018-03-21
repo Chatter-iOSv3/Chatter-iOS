@@ -18,11 +18,20 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     var player: AVAudioPlayer?
     var multiplier: Float?
     
+    var waveView: UIView?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
         self.addGestureRecognizer(playGesture)
+        
+        let waveView = UIView()
+        waveView.frame.size.height = 100
+        waveView.frame.size.width = 300
+        waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
+        waveView.layer.cornerRadius = 30
+        self.addSubview(waveView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,7 +102,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         
         let waveForm = DrawWaveform()
         waveForm.frame.size.width = 300
-        waveForm.frame.size.height = 300
+        waveForm.frame.size.height = 100
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
         // Set multiplier
