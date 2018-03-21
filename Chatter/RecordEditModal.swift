@@ -30,6 +30,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     // Initialize Audio player vars
     var player : AVAudioPlayer?
     var recordedUrl: URL?
+    var multiplier: Int?
     
     // Initialize Firebase vars
     let storage = Storage.storage()
@@ -45,7 +46,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         recordEditModalView.layer.cornerRadius = 30
         recordWaveFormView.layer.cornerRadius = 20
         
-        // Generate Audio Wave form
+        // Generate Audio Wave form and calculate multiplier
+        self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.recordedUrl!)
         self.generateWaveForm(audioURL: self.recordedUrl!)
     }
     
@@ -206,7 +208,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     func generateWaveForm(audioURL: URL) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // change 1 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let file = try! AVAudioFile(forReading: audioURL)//Read File into AVAudioFile
             let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: file.fileFormat.sampleRate, channels: file.fileFormat.channelCount, interleaved: false)//Format of the file
             
@@ -217,6 +219,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
             waveForm.frame.size.width = self.recordWaveFormView.frame.width
             waveForm.frame.size.height = self.recordWaveFormView.frame.height
             waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
+            waveForm.contentMode = .scaleAspectFit
+            
+            waveForm.multiplier = self.multiplier
             
             //Store the array of floats in the struct
             waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
@@ -226,6 +231,14 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     // OTHER UTILITIES --------------------------------------------------
+    
+    func calculateMultiplierWithAudio(audioUrl: URL) -> Int {
+        let asset = AVURLAsset(url: audioUrl)
+        let audioDuration = asset.duration
+        let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+        
+        return Int(audioDurationSeconds * 9)
+    }
     
     func randomString(length: Int) -> String {
         

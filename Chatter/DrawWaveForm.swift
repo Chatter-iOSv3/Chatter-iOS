@@ -15,6 +15,8 @@ class DrawWaveform: UIView {
     var arrayFloatValues:[Float] = []
     var points:[CGFloat] = []
     
+    var multiplier: Int?
+    
     //This is where we're going to draw the waveform
     override func draw(_ rect: CGRect) {
         //downsample and convert to [CGFloat]
@@ -112,14 +114,13 @@ class DrawWaveform: UIView {
         //                   floatArrPtr, 1, sampleCount);
         //print(floatArr)
         
-        var multiplier = 180.0
-        print(multiplier)
-        if multiplier < 1{
-            multiplier = 1.0
-            
-        }
+//        var multiplier = 180.0
+//        print(multiplier)
+//        if multiplier < 1{
+//            multiplier = 1.0
+//        }
         
-        let samplesPerPixel = Int(150 * multiplier)
+        let samplesPerPixel = Int(150 * self.multiplier!)
         let filter = [Float](repeating: 1.0 / Float(samplesPerPixel),
                              count: Int(samplesPerPixel))
         let downSampledLength = Int(self.arrayFloatValues.count / samplesPerPixel)
