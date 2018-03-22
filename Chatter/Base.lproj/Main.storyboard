@@ -207,35 +207,6 @@
             </objects>
             <point key="canvasLocation" x="-239.19999999999999" y="447.52623688155927"/>
         </scene>
-        <!--Landing-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController storyboardIdentifier="LandingPage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="Landing" customModule="Chatter" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmY-9n-csp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="Nqu-23-wci" kind="embed" identifier="goToRecord" id="pE9-7b-dQX"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <gestureRecognizers/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Qlb-CN-K2L"/>
-                    <connections>
-                        <outlet property="recordView" destination="kmY-9n-csp" id="Ub2-VA-MWw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1480.8" y="-340.47976011994007"/>
-        </scene>
         <!--Chatter Feed-->
         <scene sceneID="iSk-eK-G1I">
             <objects>
@@ -351,12 +322,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyc-0A-HR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2396" y="394"/>
+            <point key="canvasLocation" x="2449" y="54"/>
         </scene>
         <!--Landing Record-->
         <scene sceneID="n79-xy-DGq">
             <objects>
-                <viewController id="Nqu-23-wci" customClass="LandingRecord" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandingRecord" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nqu-23-wci" customClass="LandingRecord" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NpF-id-SPE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -410,7 +381,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2396" y="-340"/>
+            <point key="canvasLocation" x="1481" y="-341"/>
         </scene>
         <!--Record Edit Modal-->
         <scene sceneID="BS9-l4-ffh">
@@ -481,7 +452,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3265" y="-341"/>
+            <point key="canvasLocation" x="2449" y="-706"/>
         </scene>
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">

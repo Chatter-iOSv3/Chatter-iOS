@@ -12,7 +12,6 @@
 		1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
-		1A2E998920420A29009A674C /* Landing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998820420A29009A674C /* Landing.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
 		1A2E998E20420A29009A674C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998D20420A29009A674C /* Assets.xcassets */; };
 		1A2E999120420A29009A674C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998F20420A29009A674C /* LaunchScreen.storyboard */; };
@@ -63,7 +62,6 @@
 		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1A2E998820420A29009A674C /* Landing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landing.swift; sourceTree = "<group>"; };
 		1A2E998B20420A29009A674C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A2E998D20420A29009A674C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A2E999020420A29009A674C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -164,7 +162,7 @@
 				1AF2BD3C2043F79500AF1B8A /* Login.swift */,
 				1AF2BD44204549B500AF1B8A /* SignUp.swift */,
 				1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */,
-				1A2E998820420A29009A674C /* Landing.swift */,
+				1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
 				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
@@ -179,7 +177,6 @@
 				1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */,
 				1AA4C6A02056181300AD3980 /* FollowModal.swift */,
 				1AD7925B20510C8B007131CB /* DrawWaveForm.swift */,
-				1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */,
 			);
 			path = Chatter;
 			sourceTree = "<group>";
@@ -537,7 +534,6 @@
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
-				1A2E998920420A29009A674C /* Landing.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
 				1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */,
 				1A0254A62058F3580045B763 /* FollowingView.swift in Sources */,

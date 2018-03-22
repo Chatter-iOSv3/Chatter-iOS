@@ -27,6 +27,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Present modal for loading
+        DispatchQueue.main.asyncAfter(deadline: .now()) { // change 2 to desired number of seconds
+            self.presentLoadingModal()
+        }
+        
         // Changing progress bar height
         recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
         recordProgress.alpha = 0.0
@@ -38,13 +43,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Set the rounded edge for the inner bar
         recordProgress.layer.sublayers![1].cornerRadius = 2.5
         recordProgress.subviews[1].clipsToBounds = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // Present modal for loading
-        DispatchQueue.main.asyncAfter(deadline: .now()) { // change 2 to desired number of seconds
-            self.presentLoadingModal()
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
