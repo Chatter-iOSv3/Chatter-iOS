@@ -15,24 +15,8 @@ class Landing: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-    }
-    
-    @IBAction func hearChatter(sender: UIButton) {
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         
-        // Notify ChatterFeed to start Chatter queue
-        NotificationCenter.default.post(name: .queueNextChatter, object: nil)
     }
     
     @IBAction func animateButton(sender: UIButton) {
@@ -51,14 +35,5 @@ class Landing: UIViewController {
         )
     }
     
-}
-
-extension Notification.Name {
-    static let queueNextChatter = Notification.Name("queueNextChatter")
-    static let chatterFinishedAndQueue = Notification.Name("chatterFinishedAndQueue")
-    static let chatterChangedAndQueue = Notification.Name("chatterChangedAndQueue")
-    
-    // When invitation is accepted, updates Followers list
-    static let invitationAcceptedRerenderFollowers = Notification.Name("invitationAcceptedRerenderFollowers")
 }
 

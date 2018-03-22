@@ -27,8 +27,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.recordButton.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
-        
         // Changing progress bar height
         recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
         recordProgress.alpha = 0.0
@@ -40,6 +38,13 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Set the rounded edge for the inner bar
         recordProgress.layer.sublayers![1].cornerRadius = 2.5
         recordProgress.subviews[1].clipsToBounds = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Present modal for loading
+        DispatchQueue.main.asyncAfter(deadline: .now()) { // change 2 to desired number of seconds
+            self.presentLoadingModal()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -199,4 +204,14 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.recordedURL = getAudioFileUrl()
         performSegue(withIdentifier: "showRecordEdit", sender: nil)
     }
+    
+    func presentLoadingModal() {
+        print("LOADING MODALLLLLL")
+        performSegue(withIdentifier: "showLoadingModal", sender: nil)
+    }
+}
+
+extension Notification.Name {
+    // When invitation is accepted, updates Followers list
+    static let invitationAcceptedRerenderFollowers = Notification.Name("invitationAcceptedRerenderFollowers")
 }

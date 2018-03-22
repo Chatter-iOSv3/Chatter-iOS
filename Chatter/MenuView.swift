@@ -29,6 +29,16 @@ class MenuView: UIViewController {
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userAvatarButton: UIButton!
+    @IBOutlet weak var profileView: UIView!
+    
+    @IBOutlet weak var followingCountLabel: UILabel!
+    @IBOutlet weak var followerCountLabel: UILabel!
+    
+    @IBOutlet weak var bitmojiButton: UIButton!
+    @IBOutlet weak var syncContactsButton: UIButton!
+    @IBOutlet weak var followRequestsButton: UIButton!
+    @IBOutlet weak var connectDevicesButton: UIButton!
+    
     
     // Initialize FB storage + DB
     var ref: DatabaseReference!
@@ -41,7 +51,7 @@ class MenuView: UIViewController {
     override func viewDidLoad() {
         ref = Database.database().reference()
         
-        // Set user full name, username, and avatar button labels
+        // Set user full name, username, avatar button labels, and counts
         ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             
@@ -58,7 +68,16 @@ class MenuView: UIViewController {
             let firstnameLetter = String(describing: firstname.first!)
             self.userAvatarButton.setTitle(firstnameLetter, for: .normal)
             
+            // Set follower/following counts
+            let followers = value?["followers"] as? NSDictionary ?? [:]
+            let following = value?["following"] as? NSDictionary ?? [:]
+            
+            self.followerCountLabel.text = String(followers.count)
+            self.followingCountLabel.text = String(following.count)
+            
             self.configureAvatarButton()
+            self.configureProfileView()
+            self.configureButtons()
         })
     }
     
@@ -86,10 +105,27 @@ class MenuView: UIViewController {
     }
     
     func configureAvatarButton() {
-        userAvatarButton.frame = CGRect(x: 18, y: 40, width: 40, height: 40)
         userAvatarButton.layer.cornerRadius = 0.5 * userAvatarButton.bounds.size.width
         userAvatarButton.clipsToBounds = true
         userAvatarButton.backgroundColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0)
+    }
+    
+    func configureProfileView() {
+        let path = UIBezierPath(roundedRect:self.profileView.bounds,
+                                byRoundingCorners:[.topRight, .topLeft],
+                                cornerRadii: CGSize(width: 20, height:  20))
+        
+        let maskLayer = CAShapeLayer()
+        
+        maskLayer.path = path.cgPath
+        self.profileView.layer.mask = maskLayer
+    }
+    
+    func configureButtons() {
+        self.bitmojiButton.layer.cornerRadius = self.bitmojiButton.frame.size.height / 2
+        self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2
+        self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2
+        self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2
     }
 }
 

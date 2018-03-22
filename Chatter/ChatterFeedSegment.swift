@@ -55,11 +55,6 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         player?.play()
     }
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("FINISHED PLAYING")
-        NotificationCenter.default.post(name: .chatterFinishedAndQueue, object: nil)
-    }
-    
     func generateAudioFile(audioURL: URL, id: String) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -74,6 +69,9 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
                 do {
                     self.player = try AVAudioPlayer(contentsOf: self.recordingURL)
                     self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.recordingURL)
+                    
+                    // Generate wave form
+                    self.generateWaveForm(audioURL: self.recordingURL)
                 } catch let error as NSError {
                     //self.player = nil
                     print(error.localizedDescription)

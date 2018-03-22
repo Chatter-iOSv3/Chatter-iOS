@@ -16,7 +16,6 @@ class ChatterFeed: UIViewController {
     @IBOutlet weak var chatterScrollView: UIScrollView!
     @IBOutlet var chatterFeedView: UIView!
     @IBOutlet weak var placeHolderCurveView: UIView!
-    @IBOutlet weak var createNewChatterButton: UIButton!
     
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -39,7 +38,6 @@ class ChatterFeed: UIViewController {
         
         // Initial styling
         self.placeHolderCurveView.layer.cornerRadius = 37.5
-        self.createNewChatterButton.layer.cornerRadius = 30
         
         // Setting up UI Constructors --------------------------------------------------------------------------
         chatterScrollView.contentSize = chatterFeedView.frame.size
@@ -73,12 +71,8 @@ class ChatterFeed: UIViewController {
             newView.frame.origin.y = yPosition
             newView.layer.cornerRadius = 30
             
-            // Generate audio file on UIView instance
+            // Generate audio and wave form for file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-                newView.generateWaveForm(audioURL: localURL)
-            }
             
             self.chatterScrollView.addSubview(newView)
             let spacer:CGFloat = 0
@@ -98,10 +92,6 @@ class ChatterFeed: UIViewController {
         print("DEINITIALIZING")
         let userID = Auth.auth().currentUser?.uid
         self.ref.child("users").child(userID!).child("chatterFeed").removeAllObservers()
-    }
-    
-    @IBAction func(sender: UIButton) {
-        
     }
     
     @IBAction func animateButton(sender: UIButton) {
