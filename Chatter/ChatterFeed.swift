@@ -80,7 +80,9 @@ class ChatterFeed: UIViewController {
             newAvatarView.frame.origin.x = 10
             newAvatarView.frame.origin.y = yPosition
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
-            newAvatarView.layer.backgroundColor = UIColor.blue.cgColor
+            newAvatarView.layer.borderWidth = 4
+            newAvatarView.layer.borderColor = self.generateRandomColor().cgColor
+            newAvatarView.layer.backgroundColor = UIColor.white.cgColor
             
             // Generate audio and wave form for file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
@@ -123,6 +125,14 @@ class ChatterFeed: UIViewController {
         },
                        completion: { Void in()  }
         )
+    }
+    
+    func generateRandomColor() -> UIColor {
+        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
+        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
+        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.85 // from 0.5 to 1.0 to stay away from black
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
 

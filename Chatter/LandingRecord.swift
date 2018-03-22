@@ -24,6 +24,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var finishedRecording = false
     var recordProgressValue = 0.00
     var recordedURL: URL?
+    var labelAlpha = 1.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     override func viewDidAppear(_ animated: Bool) {
         // Set animation for HearChatter and HoldRecord labels
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.landingRecordLabel.layer.removeAllAnimations()
         self.toggleLabels()
     }
@@ -66,6 +68,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
 
     @IBAction func startRecord(_ sender: AnyObject) {
         if (!finishedRecording) {
+            self.landingRecordLabel.alpha = 0.0
+            self.labelAlpha = 0.0
+            
             if sender.state == UIGestureRecognizerState.began
             {
                 // Start the progress view
@@ -75,6 +80,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
                     self.recordButton.backgroundColor = UIColor(red: 68/255, green: 14/255, blue: 112/255, alpha: 1.0)
                     self.recordProgress.alpha = 1.0
+                    self.landingRecordLabel.alpha = 0.0
                 }, completion:nil)
                 
                 // Start recording
@@ -175,6 +181,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
             self.recordButton.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
         }, completion:nil)
+        
+        // Return labels
+        self.landingRecordLabel.alpha = 1.0
+        self.labelAlpha = 1.0
     }
     
     @objc func startRecordProgress() {
@@ -222,18 +232,18 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     // Other methods ------------------------------------------
     
-    func toggleLabels() {
+    @objc func toggleLabels() {
         //Toggle on views after loaded
-        self.landingRecordLabel.alpha = 1.0
+        self.landingRecordLabel.alpha = CGFloat(self.labelAlpha)
         
-        let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
-        
-        UIView.transition(with: self.landingRecordLabel, duration: 1, options: .transitionCrossDissolve, animations: {
+        if (!isRecording) {
+            let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
+            
+            UIView.transition(with: self.landingRecordLabel, duration: 1, options: .transitionCrossDissolve, animations: {
                 self.landingRecordLabel.text = labelText
             }, completion: nil)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.toggleLabels()
+            
+            perform(#selector(toggleLabels), with: nil, afterDelay: 3)
         }
     }
 }

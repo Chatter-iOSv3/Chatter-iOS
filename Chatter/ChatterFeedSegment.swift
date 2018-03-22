@@ -109,6 +109,8 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         //Store the array of floats in the struct
         waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
         
-        self.addSubview(waveForm)
+        UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.addSubview(waveForm)
+        }, completion: nil)
     }
 }
