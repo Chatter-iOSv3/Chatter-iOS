@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 
 class ChatterLoadingModal: UIViewController {
+    @IBOutlet weak var loadingIcon: UIImageView!
     
     // Initialize Firebase vars
     let storage = Storage.storage()

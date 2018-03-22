@@ -15,6 +15,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     @IBOutlet weak var recordProgress: UIProgressView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var landingRecordLabel: UILabel!
     
     var isRecording = false
     var audioRecorder: AVAudioRecorder?
@@ -27,8 +28,13 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Hide landing views initially
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.landingRecordLabel.alpha = 0.0
+        }
+        
         // Present modal for loading
-        DispatchQueue.main.asyncAfter(deadline: .now()) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.presentLoadingModal()
         }
         
@@ -43,6 +49,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Set the rounded edge for the inner bar
         recordProgress.layer.sublayers![1].cornerRadius = 2.5
         recordProgress.subviews[1].clipsToBounds = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Set animation for HearChatter and HoldRecord labels
+        self.toggleLabels()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -207,9 +218,21 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         print("LOADING MODALLLLLL")
         performSegue(withIdentifier: "showLoadingModal", sender: nil)
     }
-}
-
-extension Notification.Name {
-    // When invitation is accepted, updates Followers list
-    static let invitationAcceptedRerenderFollowers = Notification.Name("invitationAcceptedRerenderFollowers")
+    
+    // Other methods ------------------------------------------
+    
+    func toggleLabels() {
+        //Toggle on views after loaded
+        self.landingRecordLabel.alpha = 1.0
+        
+        let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
+        
+        UIView.transition(with: self.landingRecordLabel, duration: 1, options: .transitionCrossDissolve, animations: {
+                self.landingRecordLabel.text = labelText
+            }, completion: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.toggleLabels()
+        }
+    }
 }

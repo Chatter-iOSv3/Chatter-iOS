@@ -319,6 +319,9 @@
                         <color key="backgroundColor" red="0.57993303169999999" green="0.27850108289999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="E1t-S0-Xp0"/>
                     </view>
+                    <connections>
+                        <outlet property="loadingIcon" destination="RfI-31-WjO" id="HSH-mM-1XY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyc-0A-HR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -347,6 +350,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="1" green="0.22065518700444986" blue="0.21965440295321037" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap to hear Chatter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEh-cW-ojY">
+                                <rect key="frame" x="48" y="323" width="278" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.84513769177862352" green="0.67235337418681018" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -356,6 +366,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="landingRecordLabel" destination="KEh-cW-ojY" id="t9x-IM-Mmy"/>
                         <outlet property="recordButton" destination="lTt-I9-zNO" id="OOq-XL-gin"/>
                         <outlet property="recordProgress" destination="7Vw-fV-Qbd" id="Cvi-Sb-qVg"/>
                         <segue destination="eOO-cO-i87" kind="presentation" identifier="showRecordEdit" id="Y4N-fK-DMH"/>
@@ -381,7 +392,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1481" y="-341"/>
+            <point key="canvasLocation" x="1480.8" y="-341.37931034482762"/>
         </scene>
         <!--Record Edit Modal-->
         <scene sceneID="BS9-l4-ffh">
