@@ -53,6 +53,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     override func viewDidAppear(_ animated: Bool) {
         // Set animation for HearChatter and HoldRecord labels
+        self.landingRecordLabel.layer.removeAllAnimations()
         self.toggleLabels()
     }
     

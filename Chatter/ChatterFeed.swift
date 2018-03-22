@@ -47,7 +47,7 @@ class ChatterFeed: UIViewController {
     
     func retrieveChatterFeedAndRender() {
         let imageWidth:CGFloat = 300
-        var imageHeight:CGFloat = 150
+        var imageHeight:CGFloat = 125
         var yPosition:CGFloat = 0
         var scrollViewContentSize:CGFloat=0;
         
@@ -63,18 +63,31 @@ class ChatterFeed: UIViewController {
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
             
+            // Generate the view for the ChatterSegment
             let newView = ChatterFeedSegmentView()
             newView.contentMode = UIViewContentMode.scaleAspectFit
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
             newView.center = self.view.center
+            newView.frame.origin.x = newView.frame.origin.x + 30
             newView.frame.origin.y = yPosition
             newView.layer.cornerRadius = 30
+            
+            // Generate the view for the Avatar
+            let newAvatarView = UIView()
+            newAvatarView.frame.size.width = 75
+            newAvatarView.frame.size.height = 75
+            newAvatarView.frame.origin.x = 10
+            newAvatarView.frame.origin.y = yPosition
+            newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
+            newAvatarView.layer.backgroundColor = UIColor.blue.cgColor
             
             // Generate audio and wave form for file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
             
+            newView.addSubview(newAvatarView)
             self.chatterScrollView.addSubview(newView)
+            self.chatterScrollView.addSubview(newAvatarView)
             let spacer:CGFloat = 0
             yPosition+=imageHeight + spacer
             scrollViewContentSize+=imageHeight + spacer
@@ -82,7 +95,7 @@ class ChatterFeed: UIViewController {
             // Calculates running total of how long the scrollView needs to be with the variables
             self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
             
-            imageHeight = 150
+            imageHeight = 125
             
             self.chatterFeedSegmentArray.append(newView)
         })

@@ -27,7 +27,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         self.addGestureRecognizer(playGesture)
         
         let waveView = UIView()
-        waveView.frame.size.height = 100
+        waveView.frame.size.height = 75
         waveView.frame.size.width = 300
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         waveView.layer.cornerRadius = 30
@@ -100,7 +100,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         
         let waveForm = DrawWaveform()
         waveForm.frame.size.width = 300
-        waveForm.frame.size.height = 100
+        waveForm.frame.size.height = 75
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
         // Set multiplier
