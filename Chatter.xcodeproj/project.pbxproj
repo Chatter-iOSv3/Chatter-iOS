@@ -152,31 +152,18 @@
 		1A2E998520420A29009A674C /* Chatter */ = {
 			isa = PBXGroup;
 			children = (
-				1A2E99BA20424449009A674C /* GoogleService-Info.plist */,
+				1A78F5222064B3070040B1A7 /* LoginSignup */,
+				1A78F5232064B32B0040B1A7 /* Landing */,
+				1A78F5242064B34C0040B1A7 /* LandingRecord */,
+				1A78F5252064B3630040B1A7 /* ChatterFeed */,
+				1A78F5262064B3790040B1A7 /* Profile */,
 				1A2E998620420A29009A674C /* AppDelegate.swift */,
 				1A2E998A20420A29009A674C /* Main.storyboard */,
 				1A2E99B82042389F009A674C /* Buttons.xcassets */,
 				1A2E998D20420A29009A674C /* Assets.xcassets */,
 				1A2E998F20420A29009A674C /* LaunchScreen.storyboard */,
+				1A2E99BA20424449009A674C /* GoogleService-Info.plist */,
 				1A2E999220420A29009A674C /* Info.plist */,
-				1AF2BD3C2043F79500AF1B8A /* Login.swift */,
-				1AF2BD44204549B500AF1B8A /* SignUp.swift */,
-				1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */,
-				1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */,
-				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
-				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
-				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
-				1A271485204939650058B33D /* ChatterFeedSegment.swift */,
-				1AF2BD422043FA0200AF1B8A /* Menu.swift */,
-				1A4DA0D42055EE85009E1DC9 /* MenuView.swift */,
-				1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */,
-				1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */,
-				1A0254A52058F3580045B763 /* FollowingView.swift */,
-				1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */,
-				1A928A7B20563A4F001434D0 /* InvitesView.swift */,
-				1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */,
-				1AA4C6A02056181300AD3980 /* FollowModal.swift */,
-				1AD7925B20510C8B007131CB /* DrawWaveForm.swift */,
 			);
 			path = Chatter;
 			sourceTree = "<group>";
@@ -197,6 +184,91 @@
 				1A2E99A820420A29009A674C /* Info.plist */,
 			);
 			path = ChatterUITests;
+			sourceTree = "<group>";
+		};
+		1A78F5222064B3070040B1A7 /* LoginSignup */ = {
+			isa = PBXGroup;
+			children = (
+				1AF2BD44204549B500AF1B8A /* SignUp.swift */,
+				1AF2BD3C2043F79500AF1B8A /* Login.swift */,
+			);
+			path = LoginSignup;
+			sourceTree = "<group>";
+		};
+		1A78F5232064B32B0040B1A7 /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */,
+				1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */,
+			);
+			path = Landing;
+			sourceTree = "<group>";
+		};
+		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
+			isa = PBXGroup;
+			children = (
+				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
+				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
+			);
+			path = LandingRecord;
+			sourceTree = "<group>";
+		};
+		1A78F5252064B3630040B1A7 /* ChatterFeed */ = {
+			isa = PBXGroup;
+			children = (
+				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
+				1A271485204939650058B33D /* ChatterFeedSegment.swift */,
+			);
+			path = ChatterFeed;
+			sourceTree = "<group>";
+		};
+		1A78F5262064B3790040B1A7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				1AF2BD422043FA0200AF1B8A /* Menu.swift */,
+				1A4DA0D42055EE85009E1DC9 /* MenuView.swift */,
+				1A78F5272064B38B0040B1A7 /* Followers */,
+				1A78F5282064B3970040B1A7 /* Following */,
+				1A78F5292064B3B70040B1A7 /* Invites */,
+				1A78F52A2064B3DF0040B1A7 /* Utilities */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		1A78F5272064B38B0040B1A7 /* Followers */ = {
+			isa = PBXGroup;
+			children = (
+				1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */,
+				1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */,
+			);
+			path = Followers;
+			sourceTree = "<group>";
+		};
+		1A78F5282064B3970040B1A7 /* Following */ = {
+			isa = PBXGroup;
+			children = (
+				1A0254A52058F3580045B763 /* FollowingView.swift */,
+				1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */,
+				1AA4C6A02056181300AD3980 /* FollowModal.swift */,
+			);
+			path = Following;
+			sourceTree = "<group>";
+		};
+		1A78F5292064B3B70040B1A7 /* Invites */ = {
+			isa = PBXGroup;
+			children = (
+				1A928A7B20563A4F001434D0 /* InvitesView.swift */,
+				1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */,
+			);
+			path = Invites;
+			sourceTree = "<group>";
+		};
+		1A78F52A2064B3DF0040B1A7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1AD7925B20510C8B007131CB /* DrawWaveForm.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		6BC074ED3A3E9E2376D08FB2 /* Pods */ = {
