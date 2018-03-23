@@ -11,12 +11,18 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 
-class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate{
+class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource{
     
+    // Recording Outlets
     @IBOutlet weak var recordProgress: UIProgressView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var landingRecordLabel: UILabel!
     
+    // Bubble list outlets
+    @IBOutlet weak var bubbleListButton: UIButton!
+    @IBOutlet weak var bubbleListTableView: UITableView!
+    
+    // Recording variables
     var isRecording = false
     var audioRecorder: AVAudioRecorder?
     var player : AVAudioPlayer?
@@ -25,6 +31,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var recordProgressValue = 0.00
     var recordedURL: URL?
     var labelAlpha = 1.0
+    
+    // Bubble list variables
+    var expanded = false
+    // *** TEMP
+    var bubbleArray: [UIColor] = [UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0), UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +43,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Hide landing views initially
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.landingRecordLabel.alpha = 0.0
+            self.bubbleListButton.alpha = 0.0
         }
         
         // Present modal for loading
@@ -50,6 +62,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Set the rounded edge for the inner bar
         recordProgress.layer.sublayers![1].cornerRadius = 2.5
         recordProgress.subviews[1].clipsToBounds = true
+        
+        // Configure bubble list
+        self.configureBubbleListTable()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,6 +80,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             destination.recordedUrl = self.recordedURL
         }
     }
+    
+    // Actions --------------------------------------------
 
     @IBAction func startRecord(_ sender: AnyObject) {
         if (!finishedRecording) {
@@ -93,6 +110,16 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             }
         }
     }
+    
+    @IBAction func toggleTableViewPressed(sender: Any) {
+        self.toggleTableView()
+    }
+    
+    @IBAction func queueBubbleList() {
+        queueList()
+    }
+    
+    @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
     
     //    Audio Recording ---------------------------------------
     
@@ -135,8 +162,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             // Recording interrupted by other reasons like call coming, reached time limit.
         }
     }
-    
-    @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
     
     // Audio Playback ------------------------------------------------
     
@@ -230,11 +255,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         performSegue(withIdentifier: "showLoadingModal", sender: nil)
     }
     
-    // Other methods ------------------------------------------
+    // View methods ------------------------------------------
     
     @objc func toggleLabels() {
         //Toggle on views after loaded
         self.landingRecordLabel.alpha = CGFloat(self.labelAlpha)
+        self.bubbleListButton.alpha = 1.0
         
         if (!isRecording) {
             let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
@@ -244,6 +270,63 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             }, completion: nil)
             
             perform(#selector(toggleLabels), with: nil, afterDelay: 3)
+        }
+    }
+    
+    func configureBubbleListTable() {
+        bubbleListButton?.layer.cornerRadius = (bubbleListButton?.frame.size.height)! / 2
+        
+        self.bubbleListTableView.dataSource = self
+        self.bubbleListTableView.tableFooterView = UIView()
+        
+        self.bubbleListTableView.rowHeight = 80.0
+        
+        self.bubbleListButton?.setTitle(String(self.bubbleArray.count), for: .normal)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (self.expanded && self.bubbleArray.count > 6) {
+            return 6
+        } else if (self.expanded) {
+            return self.bubbleArray.count;
+        }   else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
+        cell.backgroundColor = self.bubbleArray[indexPath[1]]
+        cell.layer.cornerRadius = 40
+        
+        if (indexPath[1] % 2 == 0) {
+            print("EVEN")
+            cell.bubbleListCellButton.frame.origin.x += 10
+        }   else {
+            cell.bubbleListCellButton.frame.origin.x -= 10
+        }
+        
+        return cell;
+    }
+    
+    func toggleTableView() {
+        self.expanded = !self.expanded
+        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
+        let sections = NSIndexSet(indexesIn: range)
+        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+    }
+    
+    func queueList() {
+        if (self.bubbleArray.count > 0) {
+            self.bubbleArray.removeFirst()
+            self.bubbleListButton?.setTitle(String(self.bubbleArray.count), for: .normal)
+            let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
+            let sections = NSIndexSet(indexesIn: range)
+            self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
         }
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09E4A86B34ED94F79E80001D /* Pods_ChatterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 125FA62B4640405F4CE6D4F8 /* Pods_ChatterTests.framework */; };
+		1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */; };
 		1A0254A62058F3580045B763 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A52058F3580045B763 /* FollowingView.swift */; };
 		1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		125FA62B4640405F4CE6D4F8 /* Pods_ChatterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleListCell.swift; sourceTree = "<group>"; };
 		1A0254A52058F3580045B763 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingTableViewCell.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
+				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 			);
 			path = LandingRecord;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 				1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */,
 				1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */,
 				1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */,
+				1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */,
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */,
