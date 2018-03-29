@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox
 import Firebase
 
-class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource{
+class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource, QueueNextDelegate{
     // Firebase Variables
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -37,6 +37,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var recordProgressValue = 0.00
     var recordedURL: URL?
     var labelAlpha = 1.0
+    
+    // Player Variables
+    var isPlaying = false
     
     // Bubble list variables
     var expanded = false
@@ -116,12 +119,14 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             let newView = LandingFeedSegmentView()
             
-            // Generate audio file on UIView instance
+            // Generate audio file on UIView instance 
             newView.generateAudioFile(audioURL: localURL, id: id)
             newView.frame.size.width = 80
             newView.frame.size.height = 80
             newView.layer.cornerRadius = 40
             newView.layer.backgroundColor = UIColor.red.cgColor
+            
+            newView.queueNextDelegate = self
             
             self.landingFeedViewArray.append(newView)
             self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
@@ -163,7 +168,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @IBAction func queueBubbleList() {
-        queueList()
+        if (self.isPlaying) {
+            queueList(skip: true)
+        }   else {
+            queueList(skip: false)
+            self.isPlaying = true
+        }
     }
     
     @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
@@ -367,9 +377,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
     }
     
-    func queueList() {
-        if (self.landingFeedViewArray.count > 0) {
+    func queueList(skip: Bool) {
+        if (self.landingFeedViewArray.count > 0 && !skip) {
             self.landingFeedViewArray.first?.playAudio()
+        }   else if (self.landingFeedViewArray.count > 0 && skip) {
+            self.landingFeedViewArray.first?.player?.stop()
             self.queueNext()
         }
     }
@@ -380,5 +392,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
         let sections = NSIndexSet(indexesIn: range)
         self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+        
+        self.queueList(skip: false)
     }
 }

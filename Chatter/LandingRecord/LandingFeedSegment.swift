@@ -12,10 +12,17 @@ import AVFoundation
 import AudioToolbox
 import Firebase
 
+protocol QueueNextDelegate
+{
+    func queueNext()
+}
+
 class LandingFeedSegmentView: UIView, AVAudioPlayerDelegate {
     var shouldSetupConstraints = true
     var recordingURL: URL!
     var player: AVAudioPlayer?
+    
+    var queueNextDelegate:QueueNextDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +52,11 @@ class LandingFeedSegmentView: UIView, AVAudioPlayerDelegate {
         player?.play()
     }
     
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        queueNextDelegate?.queueNext()
+    }
+
+    
     func playAudio() {
         print("playing \(self.recordingURL)")
         
@@ -67,6 +79,7 @@ class LandingFeedSegmentView: UIView, AVAudioPlayerDelegate {
                 
                 do {
                     self.player = try AVAudioPlayer(contentsOf: self.recordingURL)
+                    self.player?.delegate = self
                 } catch let error as NSError {
                     //self.player = nil
                     print(error.localizedDescription)
