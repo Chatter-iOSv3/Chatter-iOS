@@ -25,6 +25,7 @@
 		1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */; };
 		1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D42055EE85009E1DC9 /* MenuView.swift */; };
 		1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */; };
+		1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */; };
 		1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */; };
 		1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7B20563A4F001434D0 /* InvitesView.swift */; };
 		1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */; };
@@ -81,6 +82,7 @@
 		1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersView.swift; sourceTree = "<group>"; };
 		1A4DA0D42055EE85009E1DC9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersTableViewCell.swift; sourceTree = "<group>"; };
+		1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingFeedSegment.swift; sourceTree = "<group>"; };
 		1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterLoadingModal.swift; sourceTree = "<group>"; };
 		1A928A7B20563A4F001434D0 /* InvitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesView.swift; sourceTree = "<group>"; };
 		1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesTableViewCell.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
+				1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */,
 			);
 			path = LandingRecord;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */,
 				1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */,
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
+				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */,
 				1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */,

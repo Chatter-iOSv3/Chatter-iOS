@@ -10,8 +10,14 @@ import Foundation
 import UIKit
 import AVFoundation
 import AudioToolbox
+import Firebase
 
 class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource{
+    // Firebase Variables
+    var ref: DatabaseReference!
+    let storage = Storage.storage()
+    var storageRef: Any?
+    var userID: String!
     
     // Recording Outlets
     @IBOutlet weak var recordProgress: UIProgressView!
@@ -34,8 +40,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     // Bubble list variables
     var expanded = false
+    
     // *** TEMP
-    var bubbleArray: [UIColor] = [UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0), UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0)]
+//    var landingFeedViewArray: [UIColor] = [UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0), UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0)]
+    
+    var landingFeedViewArray: [LandingFeedSegmentView] = []
+    var landingFeedAudioArray: [AVAudioPlayer] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +60,14 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.presentLoadingModal()
         }
+        
+        // Firebase initializers
+        ref = Database.database().reference()
+        self.storageRef = storage.reference()
+        self.userID = Auth.auth().currentUser?.uid
+        
+        // Initialize the Live Feed
+        self.initLandingFeed()
         
         // Changing progress bar height
         recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
@@ -79,6 +97,35 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             destination.trashDelegate = self
             destination.recordedUrl = self.recordedURL
         }
+    }
+    
+    // Initialize Landing Feed
+    
+    func initLandingFeed() {
+        // Upon initialization, this will fire for EACH child in chatterFeed, and observe for each NEW -------------------------------------
+        self.ref.child("users").child(self.userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
+            // ************* Remember to add conditional to filter/delete based on date **************
+            
+            let value = snapshot.value as? NSDictionary
+            
+            let id = value?["id"] as? String ?? ""
+            let userDetails = value?["userDetails"] as? String ?? ""
+            
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let localURL = documentsURL.appendingPathComponent("\(id.suffix(10)).m4a")
+            
+            let newView = LandingFeedSegmentView()
+            
+            // Generate audio file on UIView instance
+            newView.generateAudioFile(audioURL: localURL, id: id)
+            newView.frame.size.width = 80
+            newView.frame.size.height = 80
+            newView.layer.cornerRadius = 40
+            newView.layer.backgroundColor = UIColor.red.cgColor
+            
+            self.landingFeedViewArray.append(newView)
+            self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
+        })
     }
     
     // Actions --------------------------------------------
@@ -281,7 +328,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         self.bubbleListTableView.rowHeight = 80.0
         
-        self.bubbleListButton?.setTitle(String(self.bubbleArray.count), for: .normal)
+        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -289,10 +336,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.expanded && self.bubbleArray.count > 6) {
+        if (self.expanded && self.landingFeedViewArray.count > 6) {
             return 6
         } else if (self.expanded) {
-            return self.bubbleArray.count;
+            return self.landingFeedViewArray.count;
         }   else {
             return 0
         }
@@ -300,14 +347,14 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
-        cell.backgroundColor = self.bubbleArray[indexPath[1]]
         cell.layer.cornerRadius = 40
+        cell.addSubview(self.landingFeedViewArray[indexPath[1]])
         
         if (indexPath[1] % 2 == 0) {
             print("EVEN")
-            cell.bubbleListCellButton.frame.origin.x += 10
+//            cell.bubbleListCellButton.frame.origin.x += 10
         }   else {
-            cell.bubbleListCellButton.frame.origin.x -= 10
+//            cell.bubbleListCellButton.frame.origin.x -= 10
         }
         
         return cell;
@@ -321,12 +368,17 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func queueList() {
-        if (self.bubbleArray.count > 0) {
-            self.bubbleArray.removeFirst()
-            self.bubbleListButton?.setTitle(String(self.bubbleArray.count), for: .normal)
-            let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-            let sections = NSIndexSet(indexesIn: range)
-            self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+        if (self.landingFeedViewArray.count > 0) {
+            self.landingFeedViewArray.first?.playAudio()
+            self.queueNext()
         }
+    }
+    
+    func queueNext() {
+        self.landingFeedViewArray.removeFirst()
+        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
+        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
+        let sections = NSIndexSet(indexesIn: range)
+        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
     }
 }
