@@ -27,8 +27,8 @@ class LandingFeedSegmentView: UIView, AVAudioPlayerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
-        self.addGestureRecognizer(playGesture)
+//        let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
+//        self.addGestureRecognizer(playGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,14 +43,14 @@ class LandingFeedSegmentView: UIView, AVAudioPlayerDelegate {
         super.updateConstraints()
     }
     
-    @objc func playAudio(_ sender:UITapGestureRecognizer) {
-        print("playing \(self.recordingURL)")
-        
-        player?.prepareToPlay()
-        player?.currentTime = 0
-        //            player?.volume = 10.0
-        player?.play()
-    }
+//    @objc func playAudio(_ sender:UITapGestureRecognizer) {
+//        print("playing \(self.recordingURL)")
+//        
+//        player?.prepareToPlay()
+//        player?.currentTime = 0
+//        //            player?.volume = 10.0
+//        player?.play()
+//    }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         queueNextDelegate?.queueNext()

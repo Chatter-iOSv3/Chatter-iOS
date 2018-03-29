@@ -121,10 +121,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             // Generate audio file on UIView instance 
             newView.generateAudioFile(audioURL: localURL, id: id)
-            newView.frame.size.width = 80
-            newView.frame.size.height = 80
-            newView.layer.cornerRadius = 40
-            newView.layer.backgroundColor = UIColor.red.cgColor
+            newView.frame.size.width = 50
+            newView.frame.size.height = 50
+            newView.layer.cornerRadius = 25
+            newView.layer.backgroundColor = self.generateRandomColor().cgColor
             
             newView.queueNextDelegate = self
             
@@ -337,6 +337,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.bubbleListTableView.tableFooterView = UIView()
         
         self.bubbleListTableView.rowHeight = 80.0
+        self.bubbleListTableView.allowsSelection = false
+        self.bubbleListTableView.separatorStyle = .none
         
         self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
     }
@@ -357,15 +359,18 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
-        cell.layer.cornerRadius = 40
-        cell.addSubview(self.landingFeedViewArray[indexPath[1]])
+        
+        let avatarView = self.landingFeedViewArray[indexPath[1]]
         
         if (indexPath[1] % 2 == 0) {
-            print("EVEN")
-//            cell.bubbleListCellButton.frame.origin.x += 10
+            print("EVEN \(avatarView.frame.origin.x)")
+            avatarView.frame.origin.x = 20
         }   else {
-//            cell.bubbleListCellButton.frame.origin.x -= 10
+            avatarView.frame.origin.x = 0
         }
+        
+        cell.landingFeedSegment = avatarView
+        cell.addAvatarView()
         
         return cell;
     }
@@ -374,7 +379,37 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.expanded = !self.expanded
         let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
         let sections = NSIndexSet(indexesIn: range)
+        
         self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+        
+        print(self.expanded)
+        if (!self.expanded) {
+            self.resetBubbles()
+        }   else {
+            self.animateBubbles()
+        }
+    }
+    
+    func animateBubbles() {
+        print("ANIMATING")
+        let cells = self.bubbleListTableView.visibleCells
+        
+        for cell in cells {
+            print("CELL")
+            let currCell: BubbleListCell = cell as! BubbleListCell
+            currCell.animateAvatarViews()
+        }
+    }
+    
+    func resetBubbles() {
+        let cells = self.landingFeedViewArray
+        
+        for cell in cells {
+            print("CELL")
+            cell.frame.size.width = 50
+            cell.frame.size.height = 50
+            cell.layer.cornerRadius = 25
+        }
     }
     
     func queueList(skip: Bool) {
@@ -394,5 +429,15 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
         
         self.queueList(skip: false)
+    }
+    
+    // Misc ---------------------------------------------------------------------------
+    
+    func generateRandomColor() -> UIColor {
+        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
+        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
+        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.85 // from 0.5 to 1.0 to stay away from black
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
