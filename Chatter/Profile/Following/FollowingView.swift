@@ -62,6 +62,8 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     func RerenderFollowingTableView() {
+         // TODO: Debug the Followers List with a SET instead of Arrays to prevent duplicates
+        
         self.followingLabelArray = []
         self.followingIDArray = []
         

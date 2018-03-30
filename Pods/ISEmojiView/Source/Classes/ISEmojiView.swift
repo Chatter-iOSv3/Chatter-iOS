@@ -30,7 +30,7 @@ fileprivate let EmojiFontSize = CGFloat(30.0)
 fileprivate let collectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 38, right: 10)
 fileprivate let collectionMinimumLineSpacing = CGFloat(0)
 fileprivate let collectionMinimumInteritemSpacing = CGFloat(0)
-fileprivate let ISMainBackgroundColor = UIColor(red: 249/255.0, green: 249/255.0, blue: 249/255.0, alpha: 1)
+fileprivate let ISMainBackgroundColor = UIColor(red: 68/255, green: 14/255, blue: 112/255, alpha: 1.0)
 
 /// A emoji keyboard view
 public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -42,7 +42,7 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     public var isShowPopPreview = true
     
     private var defaultFrame: CGRect {
-        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 236)
+        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 266)
     }
     public var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,6 +57,7 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
         collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collection.backgroundColor = ISMainBackgroundColor
         collection.register(ISEmojiCell.self, forCellWithReuseIdentifier: "cell")
+        collection.frame.size.height += 30
         return collection
     }()
     public var pageControl: UIPageControl = {
@@ -68,7 +69,7 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     }()
     public var deleteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("⌫", for: .normal)
+        button.setTitle("X", for: .normal)
         button.tintColor = .lightGray
         return button
     }()

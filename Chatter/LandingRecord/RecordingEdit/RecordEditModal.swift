@@ -40,6 +40,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     // Image Asset Items
     let filterImageArr: [UIImage] = [UIImage(named: "SaturnFilter")!, UIImage(named: "Robot")!, UIImage(named: "Microphone")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
+    var addIntent: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -246,12 +247,25 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     // View Methods ----------------------------------------------------------------
     
     func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
-        print("COUNTTT: \(self.filterImageArr.count)")
         return self.filterImageArr.count
     }
     
     func pickerView(_ pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
         return self.filterImageArr[item]
+    }
+    
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
+        // Temporary: TODO -> Refer to notes
+        if (item == 5 && self.addIntent != 5) {
+            self.addIntent = 5
+        }   else if (item == 5 && self.addIntent == 5) {
+            self.addIntent = 0
+            performSegue(withIdentifier: "showEmojiPicker", sender: nil)
+        }
+    }
+    
+    @objc func openEmojiModal() {
+        print("TAPPED")
     }
     
     // OTHER UTILITIES --------------------------------------------------
