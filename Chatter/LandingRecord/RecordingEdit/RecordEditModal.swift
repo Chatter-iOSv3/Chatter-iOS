@@ -49,7 +49,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         
         self.audioID = randomString(length: 10)
         
-        recordEditModalView.layer.cornerRadius = 30
+        recordEditModalView.layer.cornerRadius = 20
         recordWaveFormView.layer.cornerRadius = 20
         
         // Initialize Filter pickerView

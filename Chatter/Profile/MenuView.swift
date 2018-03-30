@@ -122,10 +122,10 @@ class MenuView: UIViewController {
     }
     
     func configureButtons() {
-        self.bitmojiButton.layer.cornerRadius = self.bitmojiButton.frame.size.height / 2
-        self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2
-        self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2
-        self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2
+        self.bitmojiButton.layer.cornerRadius = self.bitmojiButton.frame.size.height / 2 - 10
+        self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2 - 10
+        self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2 - 10
+        self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2 - 10
     }
 }
 

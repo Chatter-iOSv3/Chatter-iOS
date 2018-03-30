@@ -106,7 +106,7 @@ class ChatterFeed: UIViewController {
     deinit {
         print("DEINITIALIZING")
         let userID = Auth.auth().currentUser?.uid
-        self.ref.child("users").child(userID!).child("chatterFeed").removeAllObservers()
+//        self.ref.child("users").child(userID!).child("chatterFeed").removeAllObservers()
     }
     
     @IBAction func animateButton(sender: UIButton) {
