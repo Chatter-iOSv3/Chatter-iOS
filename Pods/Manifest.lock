@@ -1,4 +1,5 @@
 PODS:
+  - AKPickerView-Swift (2.0.1)
   - Firebase/Auth (4.1.0):
     - Firebase/Core
     - FirebaseAuth (= 4.1.0)
@@ -44,6 +45,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
+  - ISEmojiView (0.0.5)
   - leveldb-library (1.18.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -53,13 +55,25 @@ PODS:
   - UICircularProgressRing (1.7.0)
 
 DEPENDENCIES:
+  - AKPickerView-Swift (from `https://github.com/jhonyourangel/AKPickerView-Swift`)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - ISEmojiView
   - UICircularProgressRing
 
+EXTERNAL SOURCES:
+  AKPickerView-Swift:
+    :git: https://github.com/jhonyourangel/AKPickerView-Swift
+
+CHECKOUT OPTIONS:
+  AKPickerView-Swift:
+    :commit: 0c5f6b72df4be86ad1e0acf6ab14e5fb341a310e
+    :git: https://github.com/jhonyourangel/AKPickerView-Swift
+
 SPEC CHECKSUMS:
+  AKPickerView-Swift: 4969de689bee54f720dd64700f7aaab02a8f2ddc
   Firebase: ebebf41db7f10e0c7668b6eaaa857fbe599aa478
   FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
   FirebaseAuth: 8d1d2389cf82f891048d6d50d27d044f55ae09a6
@@ -69,10 +83,11 @@ SPEC CHECKSUMS:
   FirebaseStorage: 661fc1f8d4131891d256b62e82a45ace8b3f0c3b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  ISEmojiView: 792c0ce32a1a4f375ea09b6c3f2e86a488ee2d8f
   leveldb-library: 10fb39c39e243db4af1828441162405bbcec1404
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   UICircularProgressRing: 35c3d291b679161ea27fb6216fee58c40a4bb597
 
-PODFILE CHECKSUM: 7b82567456282578cce3300d33e157791bb19725
+PODFILE CHECKSUM: a94026cc22e57dbc2e8884a2647c3686e0469aeb
 
 COCOAPODS: 1.4.0

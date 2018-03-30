@@ -11,6 +11,7 @@
 		1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */; };
 		1A0254A62058F3580045B763 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A52058F3580045B763 /* FollowingView.swift */; };
 		1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */; };
+		1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleListCell.swift; sourceTree = "<group>"; };
 		1A0254A52058F3580045B763 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingTableViewCell.swift; sourceTree = "<group>"; };
+		1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModal.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A0D24FE206DE904000BC472 /* RecordingEdit */ = {
+			isa = PBXGroup;
+			children = (
+				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
+				1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */,
+			);
+			path = RecordingEdit;
+			sourceTree = "<group>";
+		};
 		1A2E997A20420A29009A674C = {
 			isa = PBXGroup;
 			children = (
@@ -211,8 +222,8 @@
 		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
 			isa = PBXGroup;
 			children = (
+				1A0D24FE206DE904000BC472 /* RecordingEdit */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
-				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 				1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */,
 			);
@@ -481,16 +492,20 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Chatter/Pods-Chatter-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AKPickerView-Swift/AKPickerView_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AKPickerView_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISEmojiView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -605,6 +620,7 @@
 			files = (
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
+				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
 				1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */,
 				1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */,
 				1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */,

@@ -11,17 +11,19 @@ import Foundation
 import AVFoundation
 import AudioToolbox
 import Firebase
+import AKPickerView_Swift
 
 protocol TrashRecordingDelegate
 {
     func trashRecording()
 }
 
-class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
     
     @IBOutlet weak var recordEditModalView: UIView!
     @IBOutlet weak var recordWaveFormView: UIView!
     @IBOutlet weak var saveRecordingButton: UIButton!
+    @IBOutlet weak var filtersPickerView: AKPickerView!
     
     var trashDelegate:TrashRecordingDelegate?
     
@@ -36,6 +38,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     let storage = Storage.storage()
     var ref: DatabaseReference!
     
+    // Image Asset Items
+    let filterImageArr: [UIImage] = [UIImage(named: "SaturnFilter")!, UIImage(named: "Robot")!, UIImage(named: "Microphone")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +50,12 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         
         recordEditModalView.layer.cornerRadius = 30
         recordWaveFormView.layer.cornerRadius = 20
+        
+        // Initialize Filter pickerView
+        self.filtersPickerView.delegate = self
+        self.filtersPickerView.dataSource = self
+        self.filtersPickerView.interitemSpacing = 30.0
+        self.filtersPickerView.layer.backgroundColor = UIColor.clear.cgColor
         
         // Generate Audio Wave form and calculate multiplier
         self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.recordedUrl!)
@@ -71,6 +82,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
             // couldn't load file :(
         }
     }
+    
+    // Actions --------------------------------------------------------------------------------------
     
     @IBAction func closeRecordEdit(_ sender: Any) {
         trashDelegate?.trashRecording()
@@ -228,6 +241,17 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
             
             self.recordWaveFormView.addSubview(waveForm)
         }
+    }
+    
+    // View Methods ----------------------------------------------------------------
+    
+    func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
+        print("COUNTTT: \(self.filterImageArr.count)")
+        return self.filterImageArr.count
+    }
+    
+    func pickerView(_ pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
+        return self.filterImageArr[item]
     }
     
     // OTHER UTILITIES --------------------------------------------------

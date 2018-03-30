@@ -22,5 +22,7 @@ pod 'Firebase/Database'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'UICircularProgressRing'
+pod 'ISEmojiView'
+pod 'AKPickerView-Swift', :git => 'https://github.com/jhonyourangel/AKPickerView-Swift'
 
 end

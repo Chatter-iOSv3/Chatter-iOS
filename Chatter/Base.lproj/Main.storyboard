@@ -479,6 +479,11 @@
                                             <action selector="saveRecordingWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="N99-5W-Cba"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qBA-b9-mZi" customClass="AKPickerView" customModule="AKPickerView_Swift">
+                                        <rect key="frame" x="26" y="133" width="288" height="82"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -487,6 +492,7 @@
                         <viewLayoutGuide key="safeArea" id="6kv-ZJ-FWq"/>
                     </view>
                     <connections>
+                        <outlet property="filtersPickerView" destination="qBA-b9-mZi" id="dns-il-azp"/>
                         <outlet property="recordEditModalView" destination="vhA-YC-GwT" id="iqZ-ny-RSR"/>
                         <outlet property="recordWaveFormView" destination="eFN-bh-V59" id="1BW-nO-7K9"/>
                         <outlet property="saveRecordingButton" destination="8Dw-R7-UzT" id="oeC-9u-9Xw"/>
@@ -502,7 +508,22 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2449" y="-706"/>
+            <point key="canvasLocation" x="2552.8000000000002" y="-707.49625187406298"/>
+        </scene>
+        <!--Emoji View Modal-->
+        <scene sceneID="2q7-bN-EUb">
+            <objects>
+                <viewController id="JoU-Vb-sIO" customClass="EmojiViewModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x3I-UW-Ms1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="YOK-V5-0ql"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cEd-Sz-244" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3311" y="-707"/>
         </scene>
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">
