@@ -24,5 +24,6 @@ pod 'Firebase/Storage'
 pod 'UICircularProgressRing'
 pod 'ISEmojiView'
 pod 'AKPickerView-Swift', :git => 'https://github.com/jhonyourangel/AKPickerView-Swift'
+pod 'XLPagerTabStrip'
 
 end

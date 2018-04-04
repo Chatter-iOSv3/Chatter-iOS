@@ -12,6 +12,8 @@
 		1A0254A62058F3580045B763 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A52058F3580045B763 /* FollowingView.swift */; };
 		1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */; };
 		1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */; };
+		1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */; };
+		1A0D25022074A3E3000BC472 /* DirectChatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D25012074A3E3000BC472 /* DirectChatter.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -64,6 +66,8 @@
 		1A0254A52058F3580045B763 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		1A0254A72058F3680045B763 /* FollowingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingTableViewCell.swift; sourceTree = "<group>"; };
 		1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModal.swift; sourceTree = "<group>"; };
+		1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChatterFeedViewController.swift; sourceTree = "<group>"; };
+		1A0D25012074A3E3000BC472 /* DirectChatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatter.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -233,7 +237,9 @@
 		1A78F5252064B3630040B1A7 /* ChatterFeed */ = {
 			isa = PBXGroup;
 			children = (
+				1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */,
 				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
+				1A0D25012074A3E3000BC472 /* DirectChatter.swift */,
 				1A271485204939650058B33D /* ChatterFeedSegment.swift */,
 			);
 			path = ChatterFeed;
@@ -497,6 +503,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -507,6 +514,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISEmojiView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -625,10 +633,12 @@
 				1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */,
 				1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */,
 				1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */,
+				1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
+				1A0D25022074A3E3000BC472 /* DirectChatter.swift in Sources */,
 				1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */,
 				1A0254A62058F3580045B763 /* FollowingView.swift in Sources */,
 				1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */,

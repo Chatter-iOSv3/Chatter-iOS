@@ -19,7 +19,7 @@ class LandingPageViewController: UIPageViewController {
         return [
             self.getViewController(withIdentifier: "Menu"),
             self.getViewController(withIdentifier: "LandingRecord"),
-            self.getViewController(withIdentifier: "DiscoverFeed")
+            self.getViewController(withIdentifier: "ParentChatterFeed")
         ]
     }()
     

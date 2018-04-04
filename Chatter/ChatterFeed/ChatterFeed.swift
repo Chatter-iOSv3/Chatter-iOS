@@ -11,8 +11,9 @@ import UIKit
 import Firebase
 import AVFoundation
 import AudioToolbox
+import XLPagerTabStrip
 
-class ChatterFeed: UIViewController {
+class ChatterFeed: UIViewController, IndicatorInfoProvider {
     @IBOutlet weak var chatterScrollView: UIScrollView!
     @IBOutlet var chatterFeedView: UIView!
     @IBOutlet weak var placeHolderCurveView: UIView!
@@ -101,6 +102,10 @@ class ChatterFeed: UIViewController {
             
             self.chatterFeedSegmentArray.append(newView)
         })
+    }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Chatter")
     }
     
     deinit {

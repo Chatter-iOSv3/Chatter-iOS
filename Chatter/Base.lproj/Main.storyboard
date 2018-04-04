@@ -220,31 +220,61 @@
             </objects>
             <point key="canvasLocation" x="-239.19999999999999" y="447.52623688155927"/>
         </scene>
+        <!--Parent Chatter Feed View Controller-->
+        <scene sceneID="Ofp-a7-qjI">
+            <objects>
+                <viewController storyboardIdentifier="ParentChatterFeed" id="rZK-iM-7l1" customClass="ParentChatterFeedViewController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nqi-ce-FWT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YGd-OQ-x14">
+                                <rect key="frame" x="0.0" y="71" width="375" height="596"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xfh-hF-Rgs" customClass="ButtonBarView" customModule="XLPagerTabStrip">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tef-gO-0Na">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="bvE-9a-5Jw"/>
+                    </view>
+                    <connections>
+                        <outlet property="buttonBarView" destination="xfh-hF-Rgs" id="byG-7t-iEl"/>
+                        <outlet property="containerView" destination="YGd-OQ-x14" id="oCM-a2-ZFz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2c-0N-NCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1480.8" y="-1510.7946026986508"/>
+        </scene>
         <!--Chatter Feed-->
         <scene sceneID="iSk-eK-G1I">
             <objects>
-                <viewController storyboardIdentifier="DiscoverFeed" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" customClass="ChatterFeed" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatterFeedChild1" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="je0-HG-s3Y" customClass="ChatterFeed" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fzc-fi-7xH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAZ-9y-hCb">
-                                <rect key="frame" x="0.0" y="96" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="6" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-jG-5uY">
-                                <rect key="frame" x="0.0" y="137" width="375" height="530"/>
+                                <rect key="frame" x="0.0" y="41" width="375" height="585"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.98884795979999995" green="0.98884795979999995" blue="0.98884795979999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chatter Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5y-8w-xT7">
-                                <rect key="frame" x="121" y="48" width="133" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <color key="textColor" red="0.98884795979999995" green="0.98884795979999995" blue="0.98884795979999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -258,7 +288,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORO-TI-ClC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1480.8" y="-1057.4212893553224"/>
+            <point key="canvasLocation" x="2552.8000000000002" y="-1509.8950524737631"/>
+        </scene>
+        <!--Direct Chatter-->
+        <scene sceneID="hLB-qO-Aa7">
+            <objects>
+                <viewController storyboardIdentifier="ChatterFeedChild2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e60-jV-xTZ" customClass="DirectChatter" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dBm-KW-YPN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="gVS-Mb-aRy"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3458" y="-1511"/>
         </scene>
         <!--Menu-->
         <scene sceneID="hdP-Pg-Kqr">
@@ -314,7 +359,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1480.8" y="393.55322338830587"/>
+            <point key="canvasLocation" x="1481" y="420"/>
         </scene>
         <!--Chatter Loading Modal-->
         <scene sceneID="eRe-C4-gkK">
