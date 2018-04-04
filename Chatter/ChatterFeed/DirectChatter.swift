@@ -11,9 +11,11 @@ import UIKit
 import XLPagerTabStrip
 
 class DirectChatter: UIViewController, IndicatorInfoProvider {
+    @IBOutlet weak var placeholderCurveView: UIView!
     
     override func viewDidLoad() {
-        
+        // Initial styling
+        self.placeholderCurveView.layer.cornerRadius = 37.5
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {

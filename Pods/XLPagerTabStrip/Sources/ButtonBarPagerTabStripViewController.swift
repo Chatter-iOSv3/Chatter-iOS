@@ -70,7 +70,10 @@ public struct ButtonBarPagerTabStripSettings {
     public var style = Style()
 }
 
-open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+open class ButtonBarPagerTabStripViewController:
+    PagerTabStripViewController, PagerTabStripDataSource,
+    PagerTabStripIsProgressiveDelegate, UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout {
     
     public var settings = ButtonBarPagerTabStripSettings()
     
@@ -240,7 +243,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
     
     // MARK: - UICollectionViewDelegateFlowLayut
     
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cellWidthValue = cachedCellWidths?[indexPath.row] else {
             fatalError("cachedCellWidths for \(indexPath.row) must not be nil")
         }
