@@ -452,7 +452,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="90" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ba3-NC-6O2" id="qmY-mZ-5BZ" customClass="LandingFeedSegmentView" customModule="Chatter" customModuleProvider="target">
@@ -794,14 +794,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kcl-H3-02F">
-                                        <rect key="frame" x="142" y="21" width="75" height="75"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9q6-dQ-y4e">
                                         <rect key="frame" x="66" y="169" width="34" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -861,6 +853,11 @@
                                             <action selector="goToFollowingSender:" destination="sTj-sJ-NbN" eventType="touchUpInside" id="ZWT-V2-wbR"/>
                                         </connections>
                                     </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYx-eL-Bsq">
+                                        <rect key="frame" x="142" y="25" width="75" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -875,9 +872,9 @@
                         <outlet property="followerCountLabel" destination="9q6-dQ-y4e" id="2Xj-e8-vqU"/>
                         <outlet property="followingCountLabel" destination="bwN-rl-H0Z" id="1TL-2j-kYe"/>
                         <outlet property="fullNameLabel" destination="4QE-Xs-HkO" id="jzd-Hk-jrk"/>
+                        <outlet property="profileImageView" destination="cYx-eL-Bsq" id="isZ-Y3-3hz"/>
                         <outlet property="profileView" destination="Pck-Vh-tuJ" id="SVq-PS-j3G"/>
                         <outlet property="syncContactsButton" destination="Ps9-iN-6JN" id="rXH-45-ra9"/>
-                        <outlet property="userAvatarButton" destination="Kcl-H3-02F" id="M3g-v4-nlq"/>
                         <outlet property="usernameLabel" destination="bum-Yv-eOS" id="p99-Sw-i3Y"/>
                         <segue destination="gbM-pK-tkH" kind="unwind" identifier="unwindToLogin" unwindAction="unwindToLoginWithSegue:" id="4by-iO-mGO"/>
                     </connections>
@@ -885,7 +882,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3aX-ac-rlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gbM-pK-tkH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1480.8" y="1208.5457271364319"/>
+            <point key="canvasLocation" x="1480.5755395683454" y="1208.3633093525179"/>
         </scene>
         <!--Invites View-->
         <scene sceneID="JMU-UN-iz3">

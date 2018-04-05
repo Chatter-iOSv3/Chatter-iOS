@@ -25,11 +25,11 @@ protocol SwitchMenuInvitesViewDelegate
     func SwitchMenuInvitesView(toPage: String)
 }
 
-class MenuView: UIViewController {
+class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var userAvatarButton: UIButton!
     @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var profileImageView: UIView!
     
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followerCountLabel: UILabel!
@@ -66,7 +66,12 @@ class MenuView: UIViewController {
             
             // Label Avatar button
             let firstnameLetter = String(describing: firstname.first!)
-            self.userAvatarButton.setTitle(firstnameLetter, for: .normal)
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
+            label.textAlignment = .center
+            label.font = label.font.withSize(20)
+            label.textColor = .white
+            label.text = firstnameLetter
+            self.profileImageView.addSubview(label)
             
             // Set follower/following counts
             let followers = value?["followers"] as? NSDictionary ?? [:]
@@ -77,9 +82,12 @@ class MenuView: UIViewController {
             
             self.configureAvatarButton()
             self.configureProfileView()
+            self.configureProfileImageView()
             self.configureButtons()
         })
     }
+    
+    // Actions -----------------------------------------------------------------------
     
     @IBAction func goToFollowers(sender: AnyObject) {
         switchMenuFollowersDelegate?.SwitchMenuFollowersView(toPage: "followerView")
@@ -104,10 +112,12 @@ class MenuView: UIViewController {
         self.performSegue(withIdentifier: "unwindToLogin", sender: self)
     }
     
+    // View configuration ------------------------------------------------------------------
+    
     func configureAvatarButton() {
-        userAvatarButton.layer.cornerRadius = 0.5 * userAvatarButton.bounds.size.width
-        userAvatarButton.clipsToBounds = true
-        userAvatarButton.backgroundColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0)
+        profileImageView.layer.cornerRadius = 0.5 * profileImageView.bounds.size.width
+        profileImageView.clipsToBounds = true
+        profileImageView.backgroundColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0)
     }
     
     func configureProfileView() {
@@ -121,11 +131,82 @@ class MenuView: UIViewController {
         self.profileView.layer.mask = maskLayer
     }
     
+    func configureProfileImageView() {
+        // Add gesture handler
+        self.profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        self.profileImageView.isUserInteractionEnabled = true
+    }
+    
     func configureButtons() {
         self.bitmojiButton.layer.cornerRadius = self.bitmojiButton.frame.size.height / 2 - 10
         self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2 - 10
         self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2 - 10
         self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2 - 10
+    }
+    
+    // Profile picture Utilities --------------------------------------------------------
+    
+    @objc func handleSelectProfileImageView() {
+        print("Clicked")
+        let imagePicker = UIImagePickerController()
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        var selectedImageFromPicker: UIImage?
+        
+        print(info)
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            selectedImageFromPicker = editedImage
+        }   else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            selectedImageFromPicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            print("Image Selected")
+            let resizedSelectedImage = self.resizeImage(image: selectedImage, targetSize: CGSize(width:85.0, height:85.0))
+            profileImageView.backgroundColor = UIColor(patternImage: resizedSelectedImage)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("Canceled")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Utilities ---------------------------------------------------------------------
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
 
