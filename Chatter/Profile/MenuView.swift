@@ -43,6 +43,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     // Initialize FB storage + DB
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
+    let storage = Storage.storage()
     
     var switchMenuFollowersDelegate:SwitchMenuFollowersViewDelegate?
     var switchMenuInvitesDelegate:SwitchMenuInvitesViewDelegate?
@@ -51,6 +52,16 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func viewDidLoad() {
         ref = Database.database().reference()
         
+        // Set user full name, username, avatar button labels, and counts
+        self.initializeProfile()
+        
+        self.configureAvatarButton()
+        self.configureProfileView()
+        self.configureProfileImageView()
+        self.configureButtons()
+    }
+    
+    func initializeProfile() {
         // Set user full name, username, avatar button labels, and counts
         ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
@@ -64,14 +75,15 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             
             self.usernameLabel.text = "@" + username
             
-            // Label Avatar button
-            let firstnameLetter = String(describing: firstname.first!)
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
-            label.textAlignment = .center
-            label.font = label.font.withSize(20)
-            label.textColor = .white
-            label.text = firstnameLetter
-            self.profileImageView.addSubview(label)
+            let profileImageURL = value?["profileImageURL"] as? String ?? ""
+            
+            if (value?["profileImageURL"] == nil) {
+                // Label Avatar button
+                let firstnameLetter = String(describing: firstname.first!)
+                self.labelProfileImage(firstnameLetter: firstnameLetter)
+            }   else {
+                self.renderProfileImageWithURL(imageURL: profileImageURL)
+            }
             
             // Set follower/following counts
             let followers = value?["followers"] as? NSDictionary ?? [:]
@@ -79,12 +91,17 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             
             self.followerCountLabel.text = String(followers.count)
             self.followingCountLabel.text = String(following.count)
-            
-            self.configureAvatarButton()
-            self.configureProfileView()
-            self.configureProfileImageView()
-            self.configureButtons()
         })
+    }
+    
+    func labelProfileImage(firstnameLetter: String) {
+        // Label Avatar button
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
+        label.textAlignment = .center
+        label.font = label.font.withSize(20)
+        label.textColor = .white
+        label.text = firstnameLetter
+        self.profileImageView.addSubview(label)
     }
     
     // Actions -----------------------------------------------------------------------
@@ -171,6 +188,8 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             print("Image Selected")
             let resizedSelectedImage = self.resizeImage(image: selectedImage, targetSize: CGSize(width:85.0, height:85.0))
             profileImageView.backgroundColor = UIColor(patternImage: resizedSelectedImage)
+            
+            self.uploadNewProfileImage(newProfileImage: resizedSelectedImage)
         }
         
         dismiss(animated: true, completion: nil)
@@ -179,6 +198,48 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("Canceled")
         dismiss(animated: true, completion: nil)
+    }
+    
+    func uploadNewProfileImage(newProfileImage:UIImage) {
+        // Initialize FB storage ref
+        let storageRef = storage.reference()
+        let userID = Auth.auth().currentUser?.uid
+        
+        let imageRef = storageRef.child("profileImages/\(userID!)_profileImage.png")
+        
+        if let uploadData = UIImagePNGRepresentation(newProfileImage) {
+            imageRef.putData(uploadData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print(metadata?.downloadURL()!)
+                    // Write profile pic URL to user's FB
+                    
+                    let childUpdates = ["profileImageURL": metadata?.downloadURL()?.absoluteString]
+                    
+                    self.ref.child("users").child(userID!).updateChildValues(childUpdates) {error, ref in
+                        print("Uploaded Image!")
+                    }
+                }
+            }
+        }
+    }
+    
+    func renderProfileImageWithURL(imageURL: String) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            let image = UIImage(data: data as Data)
+            
+            self.profileImageView.backgroundColor = UIColor(patternImage: image!)
+        })
     }
     
     // Utilities ---------------------------------------------------------------------
