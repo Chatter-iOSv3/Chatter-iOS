@@ -38,6 +38,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var syncContactsButton: UIButton!
     @IBOutlet weak var followRequestsButton: UIButton!
     @IBOutlet weak var connectDevicesButton: UIButton!
+    @IBOutlet weak var followRequestsBadge: UIButton!
     
     
     // Initialize FB storage + DB
@@ -93,9 +94,18 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             // Set follower/following counts
             let follower = value?["follower"] as? NSDictionary ?? [:]
             let following = value?["following"] as? NSDictionary ?? [:]
+            let followRequests = value?["invitations"] as? NSDictionary ?? [:]
             
             self.followerCountLabel.text = String(follower.count)
             self.followingCountLabel.text = String(following.count)
+            
+            if (followRequests.count > 0) {
+                self.followRequestsBadge.setTitle(String(followRequests.count), for: .normal)
+                
+                UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+                    self.followRequestsBadge.alpha = 1.0
+                }, completion:nil)
+            }
         })
     }
     
@@ -169,6 +179,9 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2 - 10
         self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2 - 10
         self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2 - 10
+        
+        self.followRequestsBadge.layer.cornerRadius = self.followRequestsBadge.frame.size.height / 2
+        self.followRequestsBadge.alpha = 0.0
     }
     
     // Profile picture Utilities --------------------------------------------------------

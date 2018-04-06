@@ -94,6 +94,7 @@ class InvitesView: UIViewController, UITableViewDataSource, UITableViewDelegate,
             print("INVITATION RECEIVED")
             
             self.RerenderInvitationsTableView()
+            NotificationCenter.default.post(name: .invitationAcceptedRerender, object: nil)
         })
     }
     
