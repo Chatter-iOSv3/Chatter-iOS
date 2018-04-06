@@ -128,9 +128,51 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             newView.queueNextDelegate = self
             
+            // Fill bubbles with profile data
+            self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
+                (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                
+                if let profileImageURL = value?["profileImageURL"] as? String {
+                    self.setProfileImageWithURL(imageURL: profileImageURL, newView: newView)
+                }   else {
+                    let firstname = value?["firstname"] as? String ?? ""
+                    let firstnameLetter = String(describing: firstname.first!)
+                    self.setBubbleLabel(firstnameLetter: firstnameLetter, newView: newView)
+                }
+            }
+            
             self.landingFeedViewArray.append(newView)
             self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
         })
+    }
+    
+    func setProfileImageWithURL(imageURL: String, newView: UIView) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        var currImage: UIImage?
+        
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            currImage = UIImage(data: data as Data)
+            newView.backgroundColor = UIColor(patternImage: currImage!)
+        })
+    }
+    
+    func setBubbleLabel(firstnameLetter: String, newView: UIView) {
+        // Label Avatar button
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        label.textAlignment = .center
+        label.font = label.font.withSize(20)
+        label.textColor = .white
+        label.text = firstnameLetter
+        newView.addSubview(label)
     }
     
     // Actions --------------------------------------------
