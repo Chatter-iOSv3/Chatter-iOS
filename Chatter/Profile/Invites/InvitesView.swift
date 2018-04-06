@@ -33,6 +33,7 @@ class InvitesView: UIViewController, UITableViewDataSource, UITableViewDelegate,
         invitesTableView.dataSource = self
         
         RerenderInvitationsTableView()
+        SetInvitationsObserver()
     }
     
     @IBAction func backToMenu() {
@@ -69,8 +70,10 @@ class InvitesView: UIViewController, UITableViewDataSource, UITableViewDelegate,
                     self.ref.child("users").child(inviterID!).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
                         let inviterUsername = snapshot.value as? String
                         
-                        self.invitationsLabelArray.append(inviterUsername!)
-                        self.invitationsIDArray.append(inviterID!)
+                        if (!self.invitationsLabelArray.contains(inviterUsername!)) {
+                            self.invitationsLabelArray.append(inviterUsername!)
+                            self.invitationsIDArray.append(inviterID!)
+                        }
                         
                         // Populate the Table View as the invitations are loaded
                         self.invitesTableView.reloadData()
@@ -84,6 +87,14 @@ class InvitesView: UIViewController, UITableViewDataSource, UITableViewDelegate,
         })  { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func SetInvitationsObserver() {
+        self.ref.child("users").child(userID!).child("invitations").observe(.childAdded, with: { (snapshot) in
+            print("INVITATION RECEIVED")
+            
+            self.RerenderInvitationsTableView()
+        })
     }
     
     // Table View Methods -------------------------------------------------------------------------------------------------

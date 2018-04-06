@@ -59,6 +59,11 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.configureProfileView()
         self.configureProfileImageView()
         self.configureButtons()
+        
+        
+        // Listens for invitation Acceptance
+        NotificationCenter.default.addObserver(self, selector: #selector(invitationAccepted(notification:)), name: .invitationAcceptedRerender, object: nil)
+        
     }
     
     func initializeProfile() {
@@ -86,10 +91,10 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             }
             
             // Set follower/following counts
-            let followers = value?["followers"] as? NSDictionary ?? [:]
+            let follower = value?["follower"] as? NSDictionary ?? [:]
             let following = value?["following"] as? NSDictionary ?? [:]
             
-            self.followerCountLabel.text = String(followers.count)
+            self.followerCountLabel.text = String(follower.count)
             self.followingCountLabel.text = String(following.count)
         })
     }
@@ -102,6 +107,11 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         label.textColor = .white
         label.text = firstnameLetter
         self.profileImageView.addSubview(label)
+    }
+    
+    
+    @objc func invitationAccepted(notification: NSNotification) {
+        initializeProfile()
     }
     
     // Actions -----------------------------------------------------------------------

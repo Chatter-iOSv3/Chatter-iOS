@@ -16,12 +16,11 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
 //      Styling for bar buttons
         settings.style.buttonBarItemBackgroundColor = .clear
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 17)
-        settings.style.selectedBarHeight = 5.0
+        settings.style.selectedBarHeight = 2.0
         settings.style.selectedBarBackgroundColor = .white
         settings.style.buttonBarItemLeftRightMargin = 0
-        settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        settings.style.buttonBarLeftContentInset = 0
-        settings.style.buttonBarRightContentInset = 0
+        settings.style.buttonBarLeftContentInset = 100
+        settings.style.buttonBarRightContentInset = 100
 
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }

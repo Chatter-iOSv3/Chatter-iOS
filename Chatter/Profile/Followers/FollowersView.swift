@@ -25,15 +25,13 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Listens for invitation Acceptance
-        NotificationCenter.default.addObserver(self, selector: #selector(invitationAccepted(notification:)), name: .invitationAcceptedRerenderFollowers, object: nil)
-        
         ref = Database.database().reference()
         
         followerTableView.delegate = self
         followerTableView.dataSource = self
         
-        RerendeFollowersTableView()
+        RerenderFollowersTableView()
+        SetFollowersObserver()
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,7 +56,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         switchDelegate?.SwitchMenuFollowersView(toPage: "menuView")
     }
     
-    func RerendeFollowersTableView() {
+    func RerenderFollowersTableView() {
         // TODO: Debug the Followers List with a SET instead of Arrays to prevent duplicates
         
         self.followerLabelArray = []
@@ -77,8 +75,10 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self.ref.child("users").child(followerID!).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
                         let followerUsername = snapshot.value as? String
                         
-                        self.followerLabelArray.append(followerUsername!)
-                        self.followerIDArray.append(followerID!)
+                        if (!self.followerLabelArray.contains(followerUsername!)) {
+                            self.followerLabelArray.append(followerUsername!)
+                            self.followerIDArray.append(followerID!)
+                        }
                         
                         // Populate the Table View as the invitations are loaded
                         self.followerTableView.reloadData()
@@ -94,8 +94,15 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
     }
     
-    @objc func invitationAccepted(notification: NSNotification) {
-        RerendeFollowersTableView()
+    func SetFollowersObserver() {
+        self.ref.child("users").child(userID!).child("follower").observe(.childAdded, with: { (snapshot) in
+            print("FOLLOWER ADDED")
+            
+            self.RerenderFollowersTableView()
+            
+            // Send notification to re-render follower tableView
+            NotificationCenter.default.post(name: .invitationAcceptedRerender, object: nil)
+        })
     }
     
     // Table View Methods --------------------------------------------------------------------------------

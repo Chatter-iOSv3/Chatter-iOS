@@ -23,6 +23,8 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
     var followingLabelArray: [String]!
     var followingIDArray: [String]!
     
+    var rerendered: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +34,7 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
         followingTableView.dataSource = self
         
         RerenderFollowingTableView()
+        SetFollowingObserver()  
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,8 +83,10 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self.ref.child("users").child(followingID!).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
                         let followingUsername = snapshot.value as? String
                         
-                        self.followingLabelArray.append(followingUsername!)
-                        self.followingIDArray.append(followingID!)
+                        if (!self.followingLabelArray.contains(followingUsername!)) {
+                            self.followingLabelArray.append(followingUsername!)
+                            self.followingIDArray.append(followingID!)
+                        }
                         
                         // Populate the Table View as the invitations are loaded
                         self.followingTableView.reloadData()
@@ -95,6 +100,17 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
         })  { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func SetFollowingObserver() {
+        self.ref.child("users").child(userID!).child("following").observe(.childAdded, with: { (snapshot) in
+            print("FOLLOWING ADDED")
+            
+            self.RerenderFollowingTableView()
+            
+            // Send notification to re-render follower tableView
+            NotificationCenter.default.post(name: .invitationAcceptedRerender, object: nil)
+        })
     }
     
     @objc func invitationAccepted(notification: NSNotification) {
