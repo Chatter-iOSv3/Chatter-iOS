@@ -17,7 +17,10 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
     @IBOutlet weak var followingView: UIView!
     
     override func viewDidLoad() {
-        
+        self.menuView.alpha = 1.0
+        self.invitesView.alpha = 0.0
+        self.followerView.alpha = 0.0
+        self.followingView.alpha = 0.0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
