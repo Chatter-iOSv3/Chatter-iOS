@@ -82,8 +82,9 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newAvatarView.frame.origin.y = yPosition
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
             newAvatarView.layer.borderWidth = 4
-            newAvatarView.layer.borderColor = self.generateRandomColor().cgColor
-            newAvatarView.layer.backgroundColor = UIColor.white.cgColor
+            newAvatarView.layer.borderColor = UIColor.white.cgColor
+            newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
+            self.setProfileImageAvatar(userDetails: userDetails, newView: newAvatarView)
             
             // Generate audio and wave form for file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
@@ -102,6 +103,49 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             
             self.chatterFeedSegmentArray.append(newView)
         })
+    }
+    
+    func setProfileImageAvatar(userDetails: String, newView: UIView) {
+        self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
+            (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            
+            if let profileImageURL = value?["profileImageURL"] as? String {
+                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView)
+            }   else {
+                let firstname = value?["firstname"] as? String ?? ""
+                let firstnameLetter = String(describing: firstname.first!)
+                self.setProfileImageAvatar(firstnameLetter: firstnameLetter, newView: newView)
+            }
+        }
+    }
+    
+    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        var currImage: UIImage?
+        
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            currImage = UIImage(data: data as Data)
+            newView.backgroundColor = UIColor(patternImage: currImage!)
+        })
+    }
+    
+    func setProfileImageAvatar(firstnameLetter: String, newView: UIView) {
+        // Label Avatar button
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        label.textAlignment = .center
+        label.font = label.font.withSize(20)
+        label.textColor = .white
+        label.text = firstnameLetter
+        newView.addSubview(label)
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
