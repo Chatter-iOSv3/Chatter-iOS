@@ -41,6 +41,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     // Image Asset Items
     var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
     var resizedFilterImageArr: [UIImage] = []
+    var filterLabelArr: [String] = ["Robot", "PoopEmoji", "Microphone", "SaturnFilter", "PoopEmoji", "BadMouth", "Add"]
     
     var addIntent: Int = 0
     
@@ -57,7 +58,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         // Initialize Filter pickerView
         self.filtersPickerView.delegate = self
         self.filtersPickerView.dataSource = self
-        self.filtersPickerView.interitemSpacing = 40.0
+        self.filtersPickerView.interitemSpacing = 50.0
         self.filtersPickerView.layer.backgroundColor = UIColor.clear.cgColor
         
         // Generate Audio Wave form and calculate multiplier
@@ -66,6 +67,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         
         // Regulate size of FilterImageArr
         self.sizeControlFilterImageArr()
+        self.loadPickerLabelArray()
     }
     
     @IBAction func playRecording(sender: Any) {
@@ -269,10 +271,6 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         }
     }
     
-    @objc func openEmojiModal() {
-        print("TAPPED")
-    }
-    
     // OTHER UTILITIES --------------------------------------------------
     
     func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
@@ -341,5 +339,11 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+    
+    func loadPickerLabelArray() {
+        for label in self.filterLabelArr {
+            self.filtersPickerView.labelArray.append(label)
+        }
     }
 }

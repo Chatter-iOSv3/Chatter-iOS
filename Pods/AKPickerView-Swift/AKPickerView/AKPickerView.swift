@@ -90,7 +90,7 @@ private class AKCollectionViewCell: UICollectionViewCell {
 		self.imageView.contentMode = .center
 		self.imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        var imageViewContainer = UIView()
+        let imageViewContainer = UIView()
         imageViewContainer.frame.size.width = 60
         imageViewContainer.frame.size.height = 60
         imageViewContainer.addSubview(self.imageView)
@@ -100,7 +100,9 @@ private class AKCollectionViewCell: UICollectionViewCell {
         imageViewContainer.layer.cornerRadius = imageViewContainer.frame.size.height / 2
         
 		self.contentView.addSubview(imageViewContainer)
+        
         imageViewContainer.center = CGPoint(x: self.contentView.frame.width / 2, y: self.contentView.frame.height / 2)
+        self.label.center = CGPoint(x: self.contentView.frame.width / 2, y: self.contentView.frame.height - 10)
 	}
 
 	init() {
@@ -262,6 +264,9 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 
 	/// Readwrite. A float value which indicates the spacing between cells.
 	@IBInspectable public var interitemSpacing: CGFloat = 0.0
+    
+    /// Readwrite. A float value which indicates the spacing between cells.
+    @IBInspectable public var labelArray: [String] = []
 
 	/// Readwrite. The style of the picker view. See AKPickerViewStyle.
 	public var pickerViewStyle = AKPickerViewStyle.wheel
@@ -543,6 +548,7 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 				}
 			}
 		} else if let image = self.dataSource?.pickerView?(self, imageForItem: indexPath.item) {
+            cell.label.text = self.labelArray[indexPath.item]
 			cell.imageView.image = image
 		}
 		cell._selected = (indexPath.item == self.selectedItem)
