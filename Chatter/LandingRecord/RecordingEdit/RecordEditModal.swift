@@ -39,7 +39,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var ref: DatabaseReference!
     
     // Image Asset Items
-    let filterImageArr: [UIImage] = [UIImage(named: "SaturnFilter")!, UIImage(named: "Robot")!, UIImage(named: "Microphone")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
+    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
+    var resizedFilterImageArr: [UIImage] = []
+    
     var addIntent: Int = 0
     
     override func viewDidLoad() {
@@ -55,12 +57,15 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         // Initialize Filter pickerView
         self.filtersPickerView.delegate = self
         self.filtersPickerView.dataSource = self
-        self.filtersPickerView.interitemSpacing = 30.0
+        self.filtersPickerView.interitemSpacing = 40.0
         self.filtersPickerView.layer.backgroundColor = UIColor.clear.cgColor
         
         // Generate Audio Wave form and calculate multiplier
         self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.recordedUrl!)
         self.generateWaveForm(audioURL: self.recordedUrl!)
+        
+        // Regulate size of FilterImageArr
+        self.sizeControlFilterImageArr()
     }
     
     @IBAction func playRecording(sender: Any) {
@@ -247,18 +252,18 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     // View Methods ----------------------------------------------------------------
     
     func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
-        return self.filterImageArr.count
+        return self.resizedFilterImageArr.count
     }
     
     func pickerView(_ pickerView: AKPickerView, imageForItem item: Int) -> UIImage {
-        return self.filterImageArr[item]
+        return self.resizedFilterImageArr[item]
     }
     
     func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         // Temporary: TODO -> Refer to notes
-        if (item == 5 && self.addIntent != 5) {
-            self.addIntent = 5
-        }   else if (item == 5 && self.addIntent == 5) {
+        if (item == 6 && self.addIntent != 6) {
+            self.addIntent = 6
+        }   else if (item == 6 && self.addIntent == 6) {
             self.addIntent = 0
             performSegue(withIdentifier: "showEmojiPicker", sender: nil)
         }
@@ -303,5 +308,38 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         let result = formatter.string(from: date)
         
         return result
+    }
+    
+    func sizeControlFilterImageArr() {
+        for image in self.filterImageArr {
+            var resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 35, height: 35))
+            self.resizedFilterImageArr.append(resizedImage)
+        }
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }

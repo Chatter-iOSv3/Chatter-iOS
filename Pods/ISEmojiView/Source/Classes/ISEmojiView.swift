@@ -42,7 +42,7 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     public var isShowPopPreview = true
     
     private var defaultFrame: CGRect {
-        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 266)
+        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 275)
     }
     public var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

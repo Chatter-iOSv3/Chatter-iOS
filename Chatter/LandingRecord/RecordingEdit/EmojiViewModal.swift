@@ -33,10 +33,10 @@ class EmojiViewModal: UIViewController, ISEmojiViewDelegate {
     func emojiViewDidSelectEmoji(emojiView: ISEmojiView, emoji: String) {
         print(emoji)
         self.pickedEmojiView.layer.borderWidth = 7
-        self.pickedEmojiView.layer.borderColor = UIColor.white.cgColor
+        self.pickedEmojiView.layer.borderColor = UIColor.lightGray.cgColor
         self.pickedEmojiView.layer.cornerRadius = self.pickedEmojiView.frame.size.height / 2
         self.pickedEmojiOutterView.layer.borderWidth = 1
-        self.pickedEmojiOutterView.layer.borderColor = UIColor.white.cgColor
+        self.pickedEmojiOutterView.layer.borderColor = UIColor.lightGray.cgColor
         self.pickedEmojiOutterView.layer.cornerRadius = self.pickedEmojiOutterView.frame.size.height / 2
         
         self.emojiTextView.insertText(emoji)

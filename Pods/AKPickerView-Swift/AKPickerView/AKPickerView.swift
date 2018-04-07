@@ -89,7 +89,18 @@ private class AKCollectionViewCell: UICollectionViewCell {
 		self.imageView.backgroundColor = UIColor.clear
 		self.imageView.contentMode = .center
 		self.imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-		self.contentView.addSubview(self.imageView)
+        
+        var imageViewContainer = UIView()
+        imageViewContainer.frame.size.width = 60
+        imageViewContainer.frame.size.height = 60
+        imageViewContainer.addSubview(self.imageView)
+        self.imageView.center = CGPoint(x: imageViewContainer.frame.width / 2, y: imageViewContainer.frame.height / 2)
+        imageViewContainer.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
+        imageViewContainer.layer.borderWidth = 2
+        imageViewContainer.layer.cornerRadius = imageViewContainer.frame.size.height / 2
+        
+		self.contentView.addSubview(imageViewContainer)
+        imageViewContainer.center = CGPoint(x: self.contentView.frame.width / 2, y: self.contentView.frame.height / 2)
 	}
 
 	init() {
@@ -286,7 +297,7 @@ public class AKPickerView: UIView, UICollectionViewDataSource, UICollectionViewD
 
 	// MARK: Readonly Properties
 	/// Readonly. Index of currently selected item.
-	public private(set) var selectedItem: Int = 0
+	public private(set) var selectedItem: Int = 3
 	/// Readonly. The point at which the origin of the content view is offset from the origin of the picker view.
 	public var contentOffset: CGPoint {
 		get {
