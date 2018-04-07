@@ -31,8 +31,8 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
 
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .lightGray
-            newCell?.label.textColor = .white
+            oldCell?.label.textColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
+            newCell?.label.textColor = .lightGray
         }
         super.viewDidLoad()
         

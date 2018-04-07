@@ -16,7 +16,6 @@ import XLPagerTabStrip
 class ChatterFeed: UIViewController, IndicatorInfoProvider {
     @IBOutlet weak var chatterScrollView: UIScrollView!
     @IBOutlet var chatterFeedView: UIView!
-    @IBOutlet weak var placeHolderCurveView: UIView!
     
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -35,9 +34,6 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
         self.storageRef = storage.reference()
         self.userID = Auth.auth().currentUser?.uid
         
-        // Initial styling
-        self.placeHolderCurveView.layer.cornerRadius = 37.5
-        
         // Setting up UI Constructors
         chatterScrollView.contentSize = chatterFeedView.frame.size
         
@@ -46,7 +42,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
     
     func retrieveChatterFeedAndRender() {
         let imageWidth:CGFloat = 300
-        var imageHeight:CGFloat = 125
+        var imageHeight:CGFloat = 100
         var yPosition:CGFloat = 0
         var scrollViewContentSize:CGFloat=0;
         
@@ -67,21 +63,30 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newView.contentMode = UIViewContentMode.scaleAspectFit
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
-            newView.frame.origin.x = newView.frame.origin.x + 60
-            newView.frame.origin.y = yPosition
+            newView.frame.origin.x = newView.frame.origin.x + 65
+            newView.frame.origin.y = yPosition + 30
             newView.layer.cornerRadius = 30
             
             // Generate the view for the Avatar
             let newAvatarView = UIView()
-            newAvatarView.frame.size.width = 75
-            newAvatarView.frame.size.height = 75
+            newAvatarView.frame.size.width = 65
+            newAvatarView.frame.size.height = 65
             newAvatarView.frame.origin.x = 10
-            newAvatarView.frame.origin.y = yPosition
+            newAvatarView.frame.origin.y = yPosition + 30
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
-            newAvatarView.layer.borderWidth = 4
+            newAvatarView.layer.borderWidth = 2
             newAvatarView.layer.borderColor = UIColor.white.cgColor
             newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
             self.setProfileImageAvatar(userDetails: userDetails, newView: newAvatarView)
+            
+            // Generate the avatar placeholder view
+            let newAvatarPlaceholderView = UIView()
+            newAvatarPlaceholderView.frame.size.width = 65
+            newAvatarPlaceholderView.frame.size.height = 65
+            newAvatarPlaceholderView.frame.origin.x = 40
+            newAvatarPlaceholderView.frame.origin.y = yPosition + 30
+            newAvatarPlaceholderView.layer.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0).cgColor
+            self.chatterScrollView.addSubview(newAvatarPlaceholderView)
             
             // Generate audio and wave form for file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
@@ -96,7 +101,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             // Calculates running total of how long the scrollView needs to be with the variables
             self.chatterScrollView.contentSize = CGSize(width: imageWidth, height: scrollViewContentSize)
             
-            imageHeight = 125
+            imageHeight = 100
             
             self.chatterFeedSegmentArray.append(newView)
         })

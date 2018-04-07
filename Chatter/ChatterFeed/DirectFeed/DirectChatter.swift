@@ -12,7 +12,6 @@ import XLPagerTabStrip
 import Firebase
 
 class DirectChatter: UIViewController, IndicatorInfoProvider {
-    @IBOutlet weak var placeholderCurveView: UIView!
     @IBOutlet weak var directScrollView: UIScrollView!
     @IBOutlet var directView: UIView!
     
@@ -34,9 +33,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initial styling
-        self.placeholderCurveView.layer.cornerRadius = 37.5
         
         // Setting up UI Constructors
         directScrollView.contentSize = directView.frame.size
