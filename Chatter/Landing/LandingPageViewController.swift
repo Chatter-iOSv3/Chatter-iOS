@@ -113,3 +113,11 @@ extension UIView {
         layer.addSublayer(border)
     }
 }
+
+extension Notification.Name {
+    // When invitation is accepted, updates Followers list
+    static let invitationAcceptedRerender = Notification.Name("invitationAcceptedRerender")
+    
+    // When compose modal/start direct Chatter is fired
+    static let startDirectChatter = Notification.Name("startDirectChatter")
+}

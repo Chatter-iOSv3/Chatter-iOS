@@ -220,6 +220,70 @@
             </objects>
             <point key="canvasLocation" x="-239.19999999999999" y="447.52623688155927"/>
         </scene>
+        <!--Compose Modal-->
+        <scene sceneID="uqY-UX-afS">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="h0N-t9-lzs" customClass="ComposeModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hua-6Z-7jh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0qy-HI-XD1">
+                                <rect key="frame" x="14" y="170" width="345" height="216"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chatter With" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOQ-oi-1CS">
+                                        <rect key="frame" x="104" y="55" width="136" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" red="0.74826695936721477" green="0.56698078151039943" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wng-tY-7sL">
+                                        <rect key="frame" x="67" y="84" width="210" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpv-mU-g7p">
+                                        <rect key="frame" x="19" y="8" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="X"/>
+                                        <connections>
+                                            <action selector="closeComposeModal:" destination="h0N-t9-lzs" eventType="touchUpInside" id="sw9-Ee-vvt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQH-hy-kI6">
+                                        <rect key="frame" x="22" y="156" width="300" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Start Chatter">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startDirectChatter:" destination="h0N-t9-lzs" eventType="touchUpInside" id="leY-qs-gHK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.5" green="0.5" blue="0.5" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="7fN-KU-X0u"/>
+                    </view>
+                    <connections>
+                        <outlet property="StartDirectChatterButton" destination="bQH-hy-kI6" id="KYc-9c-Vtf"/>
+                        <outlet property="composeModalView" destination="0qy-HI-XD1" id="Hde-jR-vo3"/>
+                        <outlet property="startDirectChatterButton" destination="bQH-hy-kI6" id="9Ox-IE-TTw"/>
+                        <outlet property="startDirectChatterTextField" destination="wng-tY-7sL" id="hqW-3n-bLJ"/>
+                        <outlet property="xComposeModalButton" destination="kpv-mU-g7p" id="w4j-oM-3Hz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8UR-RW-a0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2999.1999999999998" y="-2247.5262368815593"/>
+        </scene>
         <!--Parent Chatter Feed View Controller-->
         <scene sceneID="Ofp-a7-qjI">
             <objects>
@@ -244,13 +308,31 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hig-ew-eBR">
+                                <rect key="frame" x="329" y="32" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.21141279178069727" green="0.79092003423188639" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="0">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDp-Wi-S0i">
+                                <rect key="frame" x="16" y="23" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ComposeWhite"/>
+                                <connections>
+                                    <segue destination="h0N-t9-lzs" kind="presentation" id="KK3-Kv-u8m"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bvE-9a-5Jw"/>
                     </view>
                     <connections>
                         <outlet property="buttonBarView" destination="xfh-hF-Rgs" id="CU9-JU-uZ2"/>
+                        <outlet property="composeChatterButton" destination="WDp-Wi-S0i" id="BvS-Ie-jju"/>
                         <outlet property="containerView" destination="YGd-OQ-x14" id="oCM-a2-ZFz"/>
+                        <outlet property="directChatterRequests" destination="Hig-ew-eBR" id="Yjj-5P-aug"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2c-0N-NCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -303,22 +385,24 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MS9-9O-zq4">
-                                <rect key="frame" x="0.0" y="40" width="375" height="585"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVO-hH-e8P">
+                                <rect key="frame" x="0.0" y="41" width="375" height="585"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="gVS-Mb-aRy"/>
                     </view>
                     <connections>
+                        <outlet property="directScrollView" destination="yVO-hH-e8P" id="D71-Nm-Zbs"/>
+                        <outlet property="directView" destination="dBm-KW-YPN" id="7zF-aB-w1Y"/>
                         <outlet property="placeholderCurveView" destination="Epa-yG-A6x" id="GNR-g4-Bzb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3456.8000000000002" y="-1511.6941529235382"/>
+            <point key="canvasLocation" x="3457" y="-1510"/>
         </scene>
         <!--Menu-->
         <scene sceneID="hdP-Pg-Kqr">
@@ -452,7 +536,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="90" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ba3-NC-6O2" id="qmY-mZ-5BZ" customClass="LandingFeedSegmentView" customModule="Chatter" customModuleProvider="target">
@@ -1127,6 +1211,7 @@
         <image name="Add" width="50" height="50"/>
         <image name="Check" width="50" height="50"/>
         <image name="Compose" width="45" height="45"/>
+        <image name="ComposeWhite" width="45" height="45"/>
         <image name="LeftPointingArrow" width="25" height="25"/>
         <image name="RedX" width="50" height="50"/>
         <image name="RightArrowCircle" width="40" height="40"/>

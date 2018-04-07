@@ -10,6 +10,11 @@ import Foundation
 import XLPagerTabStrip
 
 class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
+    @IBOutlet weak var composeChatterButton: UIButton!
+    @IBOutlet weak var directChatterRequests: UIButton!
+    
+    var chatterViewController: UIViewController?
+    var directViewController: UIViewController?
     
     override func viewDidLoad() {
         
@@ -21,6 +26,8 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemLeftRightMargin = 0
         settings.style.buttonBarLeftContentInset = 100
         settings.style.buttonBarRightContentInset = 100
+        
+        directChatterRequests.layer.cornerRadius = directChatterRequests.frame.height / 2
 
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
@@ -28,11 +35,21 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             newCell?.label.textColor = .white
         }
         super.viewDidLoad()
+        
+        // Listens for starting Direct Chatter
+        NotificationCenter.default.addObserver(self, selector: #selector(goToDirectChatter(notification:)), name: .startDirectChatter, object: nil)
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild1")
-        let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild2")
-        return [child_1, child_2]
+        self.chatterViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild1")
+        self.chatterViewController?.view.layoutSubviews()
+        self.directViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild2")
+        self.directViewController?.view.layoutSubviews()
+        return [self.chatterViewController! , self.directViewController!]
+    }
+    
+    @objc func goToDirectChatter(notification:NSNotification) {
+        self.directViewController?.viewDidLoad()
+        moveToViewController(at: 1)
     }
 }

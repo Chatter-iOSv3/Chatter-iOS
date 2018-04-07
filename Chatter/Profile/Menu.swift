@@ -94,8 +94,3 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
     }
 }
 
-extension Notification.Name {
-    // When invitation is accepted, updates Followers list
-    static let invitationAcceptedRerender = Notification.Name("invitationAcceptedRerender")
-}
-

@@ -31,8 +31,6 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chatterFeedSegmentArray = []
-        
         ref = Database.database().reference()
         self.storageRef = storage.reference()
         self.userID = Auth.auth().currentUser?.uid
@@ -40,7 +38,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
         // Initial styling
         self.placeHolderCurveView.layer.cornerRadius = 37.5
         
-        // Setting up UI Constructors --------------------------------------------------------------------------
+        // Setting up UI Constructors
         chatterScrollView.contentSize = chatterFeedView.frame.size
         
         self.retrieveChatterFeedAndRender()
@@ -116,7 +114,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             }   else {
                 let firstname = value?["firstname"] as? String ?? ""
                 let firstnameLetter = String(describing: firstname.first!)
-                self.setProfileImageAvatar(firstnameLetter: firstnameLetter, newView: newView)
+                self.setProfileImageAvatarWithLabel(firstnameLetter: firstnameLetter, newView: newView)
             }
         }
     }
@@ -138,7 +136,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
         })
     }
     
-    func setProfileImageAvatar(firstnameLetter: String, newView: UIView) {
+    func setProfileImageAvatarWithLabel(firstnameLetter: String, newView: UIView) {
         // Label Avatar button
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         label.textAlignment = .center

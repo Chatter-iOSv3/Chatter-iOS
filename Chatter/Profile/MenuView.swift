@@ -105,6 +105,8 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
                     self.followRequestsBadge.alpha = 1.0
                 }, completion:nil)
+            }   else if (followRequests.count == 0) {
+                self.followRequestsBadge.alpha = 0.0
             }
         })
     }

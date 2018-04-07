@@ -14,7 +14,9 @@
 		1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */; };
 		1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */; };
 		1A0D25022074A3E3000BC472 /* DirectChatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D25012074A3E3000BC472 /* DirectChatter.swift */; };
-		1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegment.swift */; };
+		1A0D25042077F60E000BC472 /* ComposeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D25032077F60E000BC472 /* ComposeModal.swift */; };
+		1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */; };
+		1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegmentView.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
 		1A2E998E20420A29009A674C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998D20420A29009A674C /* Assets.xcassets */; };
@@ -68,7 +70,9 @@
 		1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiViewModal.swift; sourceTree = "<group>"; };
 		1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChatterFeedViewController.swift; sourceTree = "<group>"; };
 		1A0D25012074A3E3000BC472 /* DirectChatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatter.swift; sourceTree = "<group>"; };
-		1A271485204939650058B33D /* ChatterFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegment.swift; sourceTree = "<group>"; };
+		1A0D25032077F60E000BC472 /* ComposeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeModal.swift; sourceTree = "<group>"; };
+		1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatterRoomView.swift; sourceTree = "<group>"; };
+		1A271485204939650058B33D /* ChatterFeedSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentView.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A2E998B20420A29009A674C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -144,6 +148,24 @@
 				1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */,
 			);
 			path = RecordingEdit;
+			sourceTree = "<group>";
+		};
+		1A0D250520780F42000BC472 /* ChatterFeed */ = {
+			isa = PBXGroup;
+			children = (
+				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
+				1A271485204939650058B33D /* ChatterFeedSegmentView.swift */,
+			);
+			path = ChatterFeed;
+			sourceTree = "<group>";
+		};
+		1A0D250620780F52000BC472 /* DirectFeed */ = {
+			isa = PBXGroup;
+			children = (
+				1A0D25012074A3E3000BC472 /* DirectChatter.swift */,
+				1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */,
+			);
+			path = DirectFeed;
 			sourceTree = "<group>";
 		};
 		1A2E997A20420A29009A674C = {
@@ -238,9 +260,9 @@
 			isa = PBXGroup;
 			children = (
 				1A0D24FF2074A0B4000BC472 /* ParentChatterFeedViewController.swift */,
-				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
-				1A0D25012074A3E3000BC472 /* DirectChatter.swift */,
-				1A271485204939650058B33D /* ChatterFeedSegment.swift */,
+				1A0D25032077F60E000BC472 /* ComposeModal.swift */,
+				1A0D250520780F42000BC472 /* ChatterFeed */,
+				1A0D250620780F52000BC472 /* DirectFeed */,
 			);
 			path = ChatterFeed;
 			sourceTree = "<group>";
@@ -626,11 +648,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A0D25042077F60E000BC472 /* ComposeModal.swift in Sources */,
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
 				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
 				1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */,
-				1A271486204939650058B33D /* ChatterFeedSegment.swift in Sources */,
+				1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */,
 				1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */,
 				1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */,
 				1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */,
@@ -647,6 +670,7 @@
 				1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */,
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
+				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */,
 				1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */,
