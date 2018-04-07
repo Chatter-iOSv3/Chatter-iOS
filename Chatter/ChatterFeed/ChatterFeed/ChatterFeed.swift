@@ -67,8 +67,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newView.contentMode = UIViewContentMode.scaleAspectFit
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
-            newView.center = self.view.center
-            newView.frame.origin.x = newView.frame.origin.x + 30
+            newView.frame.origin.x = newView.frame.origin.x + 60
             newView.frame.origin.y = yPosition
             newView.layer.cornerRadius = 30
             

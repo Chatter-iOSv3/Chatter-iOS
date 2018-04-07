@@ -49,7 +49,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     }
     
     @objc func goToDirectChatter(notification:NSNotification) {
-        self.directViewController?.viewDidLoad()
+        self.directViewController?.view.layoutSubviews()
         moveToViewController(at: 1)
     }
 }

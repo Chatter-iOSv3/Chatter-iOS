@@ -8,11 +8,9 @@
 
 import UIKit
 import Foundation
-import AVFoundation
-import AudioToolbox
 import Firebase
 
-class DirectChatterRoomView: UIView, AVAudioPlayerDelegate {
+class DirectChatterRoomView: UIView{
     var shouldSetupConstraints = true
     var waveView: UIView?
     
@@ -29,14 +27,6 @@ class DirectChatterRoomView: UIView, AVAudioPlayerDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    override func updateConstraints() {
-        if(shouldSetupConstraints) {
-            // AutoLayout constraints
-            shouldSetupConstraints = false
-        }
-        super.updateConstraints()
     }
 }
 
