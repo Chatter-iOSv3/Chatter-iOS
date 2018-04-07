@@ -13,6 +13,7 @@ import Firebase
 class FollowModal: UIViewController {
     @IBOutlet weak var modalView: UIView!
     @IBOutlet weak var inviteUsernameInput: UITextField!
+    @IBOutlet weak var inviteButton: UIButton!
     
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
@@ -21,9 +22,14 @@ class FollowModal: UIViewController {
         super.viewDidLoad()
         
         // Set up modal styling
-        modalView.layer.cornerRadius = 5
-        modalView.layer.borderWidth = 2
-        modalView.layer.borderColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0).cgColor
+        modalView.layer.cornerRadius = 10
+        inviteButton.layer.cornerRadius = inviteButton.frame.size.height / 2 - 10
+        
+        let inviteUsernameInputBottomLine = CALayer()
+        inviteUsernameInputBottomLine.frame = CGRect(x: 0.0, y: self.inviteUsernameInput.frame.height - 1, width: self.inviteUsernameInput.frame.width, height: 0.5)
+        inviteUsernameInputBottomLine.backgroundColor = UIColor.gray.cgColor
+        self.inviteUsernameInput.borderStyle = UITextBorderStyle.none
+        self.inviteUsernameInput.layer.addSublayer(inviteUsernameInputBottomLine)
         
         // Initiate Firebase
         ref = Database.database().reference()
