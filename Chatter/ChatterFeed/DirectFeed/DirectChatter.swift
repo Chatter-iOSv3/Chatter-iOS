@@ -76,7 +76,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                 }
             }
         })
-    }
+    } 
     
     // View Methods ----------------------------------------------------------------------------------
     
