@@ -26,8 +26,11 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     var directChatterRoomsArray: [UIView] = []
     var directChatterRoomsIDArray: [String] = []
     
+    // Scrollview Values
     var yPosition:CGFloat = 0
     var scrollViewContentSize:CGFloat=0
+    let imageWidth:CGFloat = 300
+    var imageHeight:CGFloat = 125
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +53,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     }
     
     func retrieveDirectChatterAndRender() {
-        let imageWidth:CGFloat = 300
-        var imageHeight:CGFloat = 125
 
         // Upon initialization, this will fire for EACH child in Direct Chatter, and observe for each NEW -------------------------------------
         self.ref.child("users").child(self.userID!).child("chatterRooms").observe(.childAdded, with: { (snapshot) -> Void in
@@ -63,43 +64,14 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                 let users = value?["users"] as? String ?? ""
                 
                 if let chatterRoomSegments = value?["chatterRoomSegments"] as? NSDictionary {
-                    print("Segments Exist!")
+                    print("Segments Exist! \(users)")
+                    
+                    self.constructDirectChatterRooms(users: users, chatterRoomSegments: chatterRoomSegments)
+                    self.directChatterRoomsIDArray.append(snapshot.key)
                 }   else {
                     print("No Segments! \(users)")
-                    // Generate the view for the ChatterSegment
-                    let newView = DirectChatterRoomView()
-                    newView.contentMode = UIViewContentMode.scaleAspectFit
-                    newView.frame.size.width = imageWidth
-                    newView.frame.size.height = imageHeight
-                    newView.frame.origin.x = newView.frame.origin.x + 60
-                    newView.frame.origin.y = self.yPosition
-                    newView.layer.cornerRadius = 35 
                     
-                    // Generate the view for the Avatar
-                    let newAvatarView = UIView()
-                    newAvatarView.frame.size.width = 75
-                    newAvatarView.frame.size.height = 75
-                    newAvatarView.frame.origin.x = 10
-                    newAvatarView.frame.origin.y = self.yPosition
-                    newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
-                    newAvatarView.layer.borderWidth = 4
-                    newAvatarView.layer.borderColor = UIColor.white.cgColor
-                    newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
-                    self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
-                    //
-                    // Add the subviews
-                    self.directScrollView.addSubview(newView)
-                    self.directScrollView.addSubview(newAvatarView)
-                    let spacer:CGFloat = 0
-                    self.yPosition+=imageHeight + spacer
-                    self.scrollViewContentSize+=imageHeight + spacer
-                    
-                    // Calculates running total of how long the scrollView needs to be with the variables
-                    self.directScrollView.contentSize = CGSize(width: imageWidth, height: self.scrollViewContentSize)
-                    
-                    imageHeight = 125
-                    
-                    self.directChatterRoomsArray.append(newView)
+                    self.constructDirectChatterRooms(users: users, chatterRoomSegments: [:])
                     self.directChatterRoomsIDArray.append(snapshot.key)
                 }
             }
@@ -107,6 +79,44 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     }
     
     // View Methods ----------------------------------------------------------------------------------
+    
+    func constructDirectChatterRooms(users: String, chatterRoomSegments: NSDictionary) {
+        // Generate the view for the ChatterSegment
+        let newView = DirectChatterRoomView()
+        newView.contentMode = UIViewContentMode.scaleAspectFit
+        newView.frame.size.width = self.imageWidth
+        newView.frame.size.height = self.imageHeight
+        newView.frame.origin.x = newView.frame.origin.x + 60
+        newView.frame.origin.y = self.yPosition
+        newView.layer.cornerRadius = 35
+        newView.chatterRoomSegments = chatterRoomSegments
+        
+        // Generate the view for the Avatar
+        let newAvatarView = UIView()
+        newAvatarView.frame.size.width = 75
+        newAvatarView.frame.size.height = 75
+        newAvatarView.frame.origin.x = 10
+        newAvatarView.frame.origin.y = self.yPosition
+        newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
+        newAvatarView.layer.borderWidth = 4
+        newAvatarView.layer.borderColor = UIColor.white.cgColor
+        newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
+        self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
+        //
+        // Add the subviews
+        self.directScrollView.addSubview(newView)
+        self.directScrollView.addSubview(newAvatarView)
+        let spacer:CGFloat = 0
+        self.yPosition+=self.imageHeight + spacer
+        self.scrollViewContentSize+=self.imageHeight + spacer
+        
+        // Calculates running total of how long the scrollView needs to be with the variables
+        self.directScrollView.contentSize = CGSize(width: self.imageWidth, height: self.scrollViewContentSize)
+        
+        self.imageHeight = 125
+        
+        self.directChatterRoomsArray.append(newView)
+    }
     
     func setProfileImageAvatar(userDetails: String, newView: UIView) {
         self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
