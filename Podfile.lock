@@ -45,6 +45,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
+  - IQKeyboardManager (4.0.13)
   - ISEmojiView (0.0.5)
   - leveldb-library (1.18.3)
   - nanopb (0.3.8):
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - IQKeyboardManager
   - ISEmojiView
   - UICircularProgressRing
   - XLPagerTabStrip
@@ -85,12 +87,13 @@ SPEC CHECKSUMS:
   FirebaseStorage: 661fc1f8d4131891d256b62e82a45ace8b3f0c3b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
   ISEmojiView: 792c0ce32a1a4f375ea09b6c3f2e86a488ee2d8f
   leveldb-library: 10fb39c39e243db4af1828441162405bbcec1404
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   UICircularProgressRing: 35c3d291b679161ea27fb6216fee58c40a4bb597
   XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: 8156182ccf742b320112af157058dce62297d590
+PODFILE CHECKSUM: f2d41091bf77546e23ae8947297634607e12c594
 
 COCOAPODS: 1.4.0

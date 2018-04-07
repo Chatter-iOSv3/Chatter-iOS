@@ -25,5 +25,6 @@ pod 'UICircularProgressRing'
 pod 'ISEmojiView'
 pod 'AKPickerView-Swift', :git => 'https://github.com/jhonyourangel/AKPickerView-Swift'
 pod 'XLPagerTabStrip'
+pod 'IQKeyboardManager' 
 
 end
