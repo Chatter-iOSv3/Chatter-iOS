@@ -44,9 +44,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     // Bubble list variables
     var expanded = false
     
-    // *** TEMP
-//    var landingFeedViewArray: [UIColor] = [UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0), UIColor(red: 1, green: 0.8, blue: 0, alpha: 1.0), UIColor(red: 0, green: 0.1216, blue: 0.6784, alpha: 1.0), UIColor(red: 0.3373, green: 0, blue: 0.2745, alpha: 1.0), UIColor(red: 0, green: 0.8, blue: 0.1725, alpha: 1.0), UIColor(red: 0, green: 0.3804, blue: 0.5569, alpha: 1.0), UIColor(red: 0.3373, green: 0.1451, blue: 0, alpha: 1.0)]
-    
     var landingFeedViewArray: [LandingFeedSegmentView] = []
     var landingFeedAudioArray: [AVAudioPlayer] = []
 
@@ -77,11 +74,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         recordProgress.alpha = 0.0
         
         // Set the rounded edge for the outer bar
-        recordProgress.layer.cornerRadius = 2.5
+        recordProgress.layer.cornerRadius = recordProgress.frame.size.height / 2 - 1
         recordProgress.clipsToBounds = true
         
         // Set the rounded edge for the inner bar
-        recordProgress.layer.sublayers![1].cornerRadius = 2.5
+        recordProgress.layer.sublayers![0].cornerRadius = recordProgress.frame.size.height / 2 - 1
+        recordProgress.layer.sublayers![1].cornerRadius = recordProgress.frame.size.height / 2 - 1
         recordProgress.subviews[1].clipsToBounds = true
         
         // Configure bubble list

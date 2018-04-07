@@ -18,6 +18,9 @@ class Login: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        self.configureTextFields()
+        self.configureButtons()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -47,4 +50,24 @@ class Login: UIViewController {
     // Unwinds got Logging Out
     @IBAction func unwindToLogin(segue: UIStoryboardSegue) {}
     
+    
+// View methods -----------------------------------------------------------------------
+    
+    func configureTextFields() {
+        let passwordBottomLine = CALayer()
+        passwordBottomLine.frame = CGRect(x: 0.0, y: self.passwordField.frame.height - 1, width: self.passwordField.frame.width, height: 0.5)
+        passwordBottomLine.backgroundColor = UIColor.white.cgColor
+        self.passwordField.borderStyle = UITextBorderStyle.none
+        self.passwordField.layer.addSublayer(passwordBottomLine)
+        
+        let emailBottomLine = CALayer()
+        emailBottomLine.frame = CGRect(x: 0.0, y: self.emailField.frame.height - 1, width: self.emailField.frame.width, height: 0.5)
+        emailBottomLine.backgroundColor = UIColor.white.cgColor
+        self.emailField.borderStyle = UITextBorderStyle.none
+        self.emailField.layer.addSublayer(emailBottomLine)
+    }
+    
+    func configureButtons() {
+        self.loginButton.layer.cornerRadius = self.loginButton.frame.size.height / 2
+    }
 }

@@ -35,7 +35,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var followerCountLabel: UILabel!
     
     @IBOutlet weak var bitmojiButton: UIButton!
-    @IBOutlet weak var syncContactsButton: UIButton!
+    @IBOutlet weak var findFriendsButton: UIButton!
     @IBOutlet weak var followRequestsButton: UIButton!
     @IBOutlet weak var connectDevicesButton: UIButton!
     @IBOutlet weak var followRequestsBadge: UIButton!
@@ -57,7 +57,6 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.initializeProfile()
         
         self.configureAvatarButton()
-        self.configureProfileView()
         self.configureProfileImageView()
         self.configureButtons()
         
@@ -159,27 +158,36 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         profileImageView.backgroundColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0)
     }
     
-    func configureProfileView() {
-        let path = UIBezierPath(roundedRect:self.profileView.bounds,
-                                byRoundingCorners:[.topRight, .topLeft],
-                                cornerRadii: CGSize(width: 20, height:  20))
-        
-        let maskLayer = CAShapeLayer()
-        
-        maskLayer.path = path.cgPath
-        self.profileView.layer.mask = maskLayer
-    }
-    
     func configureProfileImageView() {
         // Add gesture handler
         self.profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         self.profileImageView.isUserInteractionEnabled = true
+        
+        // Style
+        self.profileImageView.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
+        self.profileImageView.layer.borderWidth = 2
     }
     
     func configureButtons() {
-        self.bitmojiButton.layer.cornerRadius = self.bitmojiButton.frame.size.height / 2 - 10
-        self.syncContactsButton.layer.cornerRadius = self.syncContactsButton.frame.size.height / 2 - 10
-        self.followRequestsButton.layer.cornerRadius = self.followRequestsButton.frame.size.height / 2 - 10
+        let followRequestsPath = UIBezierPath(roundedRect:self.followRequestsButton.bounds,
+                                byRoundingCorners:[.topRight, .bottomRight],
+                                cornerRadii: CGSize(width: 15, height:  15))
+        
+        let followRequestsMaskLayer = CAShapeLayer()
+        
+        followRequestsMaskLayer.path = followRequestsPath.cgPath
+        self.followRequestsButton.layer.mask = followRequestsMaskLayer
+        
+        let bitmojiPath = UIBezierPath(roundedRect:self.bitmojiButton.bounds,
+                                byRoundingCorners:[.topLeft, .bottomLeft],
+                                cornerRadii: CGSize(width: 15, height:  15))
+        
+        let bitmojiMaskLayer = CAShapeLayer()
+        
+        bitmojiMaskLayer.path = bitmojiPath.cgPath
+        self.bitmojiButton.layer.mask = bitmojiMaskLayer
+        
+        self.findFriendsButton.layer.cornerRadius = self.findFriendsButton.frame.size.height / 2 - 10
         self.connectDevicesButton.layer.cornerRadius = self.connectDevicesButton.frame.size.height / 2 - 10
         
         self.followRequestsBadge.layer.cornerRadius = self.followRequestsBadge.frame.size.height / 2
