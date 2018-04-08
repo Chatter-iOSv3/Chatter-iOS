@@ -64,7 +64,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
             newView.frame.origin.x = newView.frame.origin.x + 65
-            newView.frame.origin.y = yPosition + 30
+            newView.frame.origin.y = yPosition + 5
             newView.layer.cornerRadius = 30
             
             // Generate the view for the Avatar
@@ -72,7 +72,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newAvatarView.frame.size.width = 65
             newAvatarView.frame.size.height = 65
             newAvatarView.frame.origin.x = 10
-            newAvatarView.frame.origin.y = yPosition + 30
+            newAvatarView.frame.origin.y = yPosition + 5
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
             newAvatarView.layer.borderWidth = 2
             newAvatarView.layer.borderColor = UIColor.white.cgColor
@@ -84,7 +84,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newAvatarPlaceholderView.frame.size.width = 65
             newAvatarPlaceholderView.frame.size.height = 65
             newAvatarPlaceholderView.frame.origin.x = 40
-            newAvatarPlaceholderView.frame.origin.y = yPosition + 30
+            newAvatarPlaceholderView.frame.origin.y = yPosition + 5
             newAvatarPlaceholderView.layer.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0).cgColor
             self.chatterScrollView.addSubview(newAvatarPlaceholderView)
             
