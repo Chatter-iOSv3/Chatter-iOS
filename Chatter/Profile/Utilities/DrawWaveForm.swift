@@ -29,8 +29,8 @@ class DrawWaveform: UIView {
         let aPath2 = UIBezierPath()
         
         //lineWidth
-        aPath.lineWidth = 3.5
-        aPath2.lineWidth = 3.5
+        aPath.lineWidth = 2
+        aPath2.lineWidth = 2
         
         //start drawing at:
         aPath.move(to: CGPoint(x:0.0 , y:rect.height/2 ))
@@ -42,7 +42,7 @@ class DrawWaveform: UIView {
         //Loop the array
         for _ in self.points{
             //Distance between points
-            var x:CGFloat = 10.0
+            var x:CGFloat = 5.0
             //next location to draw
             aPath.move(to: CGPoint(x:aPath.currentPoint.x + x , y:aPath.currentPoint.y ))
             
@@ -66,7 +66,7 @@ class DrawWaveform: UIView {
         
         //Reflection of waveform
         for _ in self.points{
-            var x:CGFloat = 10.0
+            var x:CGFloat = 5.0
             aPath2.move(to: CGPoint(x:aPath2.currentPoint.x + x , y:aPath2.currentPoint.y ))
             
             // AD CONSTRAINTS ************ min/max vals that y can be at
@@ -120,7 +120,7 @@ class DrawWaveform: UIView {
 //            multiplier = 1.0
 //        }
         
-        let samplesPerPixel = Int(150 * self.multiplier!)
+        let samplesPerPixel = Int(75 * self.multiplier!)
         let filter = [Float](repeating: 1.0 / Float(samplesPerPixel),
                              count: Int(samplesPerPixel))
         let downSampledLength = Int(self.arrayFloatValues.count / samplesPerPixel)
