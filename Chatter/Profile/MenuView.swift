@@ -221,6 +221,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             print("Image Selected")
             let resizedSelectedImage = self.resizeImage(image: selectedImage, targetSize: CGSize(width:85.0, height:85.0))
             profileImageView.backgroundColor = UIColor(patternImage: resizedSelectedImage)
+            self.sendProfileImageToFeeds(image: selectedImage)
             
             self.uploadNewProfileImage(newProfileImage: resizedSelectedImage)
         }
@@ -272,7 +273,17 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             let image = UIImage(data: data as Data)
             
             self.profileImageView.backgroundColor = UIColor(patternImage: image!)
+            
+            // Send loaded profile image to Feed page
+            self.sendProfileImageToFeeds(image: image!)
         })
+    }
+    
+    func sendProfileImageToFeeds(image: UIImage) {
+        if (image != nil) {
+            let resizedForFeedImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
+            NotificationCenter.default.post(name: .profileImageChanged, object: nil, userInfo: ["image": resizedForFeedImage])
+        }
     }
     
     // Utilities ---------------------------------------------------------------------

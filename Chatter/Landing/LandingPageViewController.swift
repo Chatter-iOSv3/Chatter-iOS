@@ -120,4 +120,7 @@ extension Notification.Name {
     
     // When compose modal/start direct Chatter is fired
     static let startDirectChatter = Notification.Name("startDirectChatter")
+    
+    // When Profile picture is updated
+    static let profileImageChanged = Notification.Name("profileImageChanged")
 }

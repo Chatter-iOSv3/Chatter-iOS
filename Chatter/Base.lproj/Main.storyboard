@@ -339,6 +339,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utb-iL-Xpf">
+                                <rect key="frame" x="312" y="48" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bvE-9a-5Jw"/>
@@ -348,6 +353,7 @@
                         <outlet property="composeChatterButton" destination="WDp-Wi-S0i" id="BvS-Ie-jju"/>
                         <outlet property="containerView" destination="YGd-OQ-x14" id="oCM-a2-ZFz"/>
                         <outlet property="curveViewPlaceholder" destination="IoS-A6-n7K" id="UzC-si-Byd"/>
+                        <outlet property="feedPageAvatarView" destination="utb-iL-Xpf" id="xrA-sr-RmS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2c-0N-NCh" userLabel="First Responder" sceneMemberID="firstResponder"/>

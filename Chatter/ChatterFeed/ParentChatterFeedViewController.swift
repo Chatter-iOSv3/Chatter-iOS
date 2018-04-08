@@ -12,14 +12,20 @@ import XLPagerTabStrip
 class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var composeChatterButton: UIButton!
     @IBOutlet weak var curveViewPlaceholder: UIView!
+    @IBOutlet weak var feedPageAvatarView: UIView!
     
     var chatterViewController: UIViewController?
     var directViewController: UIViewController?
+    
+    var profileImage: UIImage?
     
     override func viewDidLoad() {
         
         // Styling for Placeholder view
         curveViewPlaceholder.layer.cornerRadius = 20
+        feedPageAvatarView.layer.cornerRadius = feedPageAvatarView.frame.size.height / 2
+        feedPageAvatarView.layer.borderWidth = 1
+        feedPageAvatarView.layer.borderColor = UIColor.white.cgColor
         
 //      Styling for bar buttons
         settings.style.buttonBarItemBackgroundColor = .clear
@@ -43,8 +49,9 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         }
         super.viewDidLoad()
         
-        // Listens for starting Direct Chatter
+        // Listens for starting Direct Chatter and ProfileImage change
         NotificationCenter.default.addObserver(self, selector: #selector(goToDirectChatter(notification:)), name: .startDirectChatter, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(profileImageChanged(notification:)), name: .profileImageChanged, object: nil)
     }
     
     func configureCellsOnChatter(oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?) {
@@ -64,6 +71,15 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             
             oldCellLayer.path = oldCellPath.cgPath
             oldCell?.layer.mask = oldCellLayer
+            
+            // Add border
+            let borderLayer = CAShapeLayer()
+            borderLayer.path = oldCellLayer.path // Reuse the Bezier path
+            borderLayer.fillColor = UIColor.clear.cgColor
+            borderLayer.strokeColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
+            borderLayer.lineWidth = 5
+            borderLayer.frame = (oldCell?.bounds)!
+            oldCell?.layer.addSublayer(borderLayer)
         }
         
         newCell?.label.textColor = .white
@@ -102,6 +118,15 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             
             oldCellLayer.path = oldCellPath.cgPath
             oldCell?.layer.mask = oldCellLayer
+            
+            // Add border
+            let borderLayer = CAShapeLayer()
+            borderLayer.path = oldCellLayer.path // Reuse the Bezier path
+            borderLayer.fillColor = UIColor.clear.cgColor
+            borderLayer.strokeColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
+            borderLayer.lineWidth = 5
+            borderLayer.frame = (oldCell?.bounds)!
+            oldCell?.layer.addSublayer(borderLayer)
         }
         
         newCell?.label.textColor = .white
@@ -134,5 +159,11 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     @objc func goToDirectChatter(notification:NSNotification) {
         self.directViewController?.view.layoutSubviews()
         moveToViewController(at: 1)
+    }
+    
+    @objc func profileImageChanged(notification:NSNotification) {
+        if let image = notification.userInfo?["image"] as? UIImage {
+            self.feedPageAvatarView.backgroundColor = UIColor(patternImage: image)
+        }
     }
 }
