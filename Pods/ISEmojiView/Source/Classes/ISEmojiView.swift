@@ -34,7 +34,7 @@ fileprivate let ISMainBackgroundColor = UIColor(red: 68/255, green: 14/255, blue
 
 /// A emoji keyboard view
 public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
-
+    
     /// the delegate for callback
     public weak var delegate: ISEmojiViewDelegate?
     
@@ -96,7 +96,7 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     public override func layoutSubviews() {
         updateControlLayout()
     }
-
+    
     private func setupUI() {
         frame = defaultFrame
         
@@ -136,9 +136,9 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
         let pageCount = collectionView.numberOfSections
         let pageControlSizes = pageControl.size(forNumberOfPages: pageCount)
         pageControl.frame = CGRect(x: frame.midX - pageControlSizes.width / 2.0,
-                                        y: frame.height-pageControlSizes.height,
-                                        width: pageControlSizes.width,
-                                        height: pageControlSizes.height)
+                                   y: frame.height-pageControlSizes.height,
+                                   width: pageControlSizes.width,
+                                   height: pageControlSizes.height)
         pageControl.numberOfPages = pageCount
         
         // update delete button
@@ -374,3 +374,4 @@ fileprivate class ISEmojiPopView: UIView {
         self.emojiLabel.text = emoji
     }
 }
+
