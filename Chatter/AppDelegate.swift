@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storage = Storage.storage()
         
         IQKeyboardManager.shared().isEnabled = true
+        IQKeyboardManager.shared().disabledToolbarClasses.add(EmojiViewModal.self)
         
         return true
     }

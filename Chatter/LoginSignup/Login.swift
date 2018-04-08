@@ -56,13 +56,13 @@ class Login: UIViewController {
     func configureTextFields() {
         let passwordBottomLine = CALayer()
         passwordBottomLine.frame = CGRect(x: 0.0, y: self.passwordField.frame.height - 1, width: self.passwordField.frame.width, height: 0.5)
-        passwordBottomLine.backgroundColor = UIColor.white.cgColor
+        passwordBottomLine.backgroundColor = UIColor.lightGray.cgColor
         self.passwordField.borderStyle = UITextBorderStyle.none
         self.passwordField.layer.addSublayer(passwordBottomLine)
         
         let emailBottomLine = CALayer()
         emailBottomLine.frame = CGRect(x: 0.0, y: self.emailField.frame.height - 1, width: self.emailField.frame.width, height: 0.5)
-        emailBottomLine.backgroundColor = UIColor.white.cgColor
+        emailBottomLine.backgroundColor = UIColor.lightGray.cgColor
         self.emailField.borderStyle = UITextBorderStyle.none
         self.emailField.layer.addSublayer(emailBottomLine)
     }

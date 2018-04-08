@@ -219,7 +219,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         if let selectedImage = selectedImageFromPicker {
             print("Image Selected")
-            let resizedSelectedImage = self.resizeImage(image: selectedImage, targetSize: CGSize(width:85.0, height:85.0))
+            let resizedSelectedImage = self.resizeImage(image: selectedImage, targetSize: CGSize(width:90, height:90))
             profileImageView.backgroundColor = UIColor(patternImage: resizedSelectedImage)
             self.sendProfileImageToFeeds(image: selectedImage)
             

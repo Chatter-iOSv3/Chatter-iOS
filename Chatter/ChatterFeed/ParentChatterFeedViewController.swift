@@ -41,7 +41,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             
             // Styling Button Bar Cells
             
-            if (newCell?.label.text == "Chatter" || newCell == nil) {
+            if (newCell?.label.text == "Feed" || newCell == nil) {
                 self?.configureCellsOnChatter(oldCell: oldCell, newCell: newCell)
             }   else if (newCell?.label.text == "Direct") {
                 self?.configureCellsOnDirect(oldCell: oldCell, newCell: newCell)
@@ -56,7 +56,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     
     func configureCellsOnChatter(oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?) {
         oldCell?.label.textColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
-        oldCell?.layer.borderWidth = 2.0
+        oldCell?.layer.borderWidth = 1.0
         oldCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         oldCell?.layer.backgroundColor = UIColor.white.cgColor
         oldCell?.frame.size.height = 35
@@ -77,13 +77,13 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             borderLayer.path = oldCellLayer.path // Reuse the Bezier path
             borderLayer.fillColor = UIColor.clear.cgColor
             borderLayer.strokeColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
-            borderLayer.lineWidth = 5
+            borderLayer.lineWidth = 3
             borderLayer.frame = (oldCell?.bounds)!
             oldCell?.layer.addSublayer(borderLayer)
         }
         
         newCell?.label.textColor = .white
-        newCell?.layer.borderWidth = 2.0
+        newCell?.layer.borderWidth = 1.0
         newCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         newCell?.layer.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         newCell?.frame.size.height = 35
@@ -103,7 +103,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     
     func configureCellsOnDirect(oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?) {
         oldCell?.label.textColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
-        oldCell?.layer.borderWidth = 2.0
+        oldCell?.layer.borderWidth = 1.0
         oldCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         oldCell?.layer.backgroundColor = UIColor.white.cgColor
         oldCell?.frame.size.height = 35
@@ -124,13 +124,13 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             borderLayer.path = oldCellLayer.path // Reuse the Bezier path
             borderLayer.fillColor = UIColor.clear.cgColor
             borderLayer.strokeColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
-            borderLayer.lineWidth = 5
+            borderLayer.lineWidth = 3
             borderLayer.frame = (oldCell?.bounds)!
             oldCell?.layer.addSublayer(borderLayer)
         }
         
         newCell?.label.textColor = .white
-        newCell?.layer.borderWidth = 2.0
+        newCell?.layer.borderWidth = 1.0
         newCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         newCell?.layer.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         newCell?.frame.size.height = 35

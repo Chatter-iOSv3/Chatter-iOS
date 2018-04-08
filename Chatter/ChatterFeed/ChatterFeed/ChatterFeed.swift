@@ -151,7 +151,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Chatter")
+        return IndicatorInfo(title: "Feed")
     }
     
     deinit {
