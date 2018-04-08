@@ -48,18 +48,16 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var landingFeedAudioArray: [AVAudioPlayer] = []
     
     var toggleTask: DispatchWorkItem?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Hide landing views initially: Loading modal is only an overlay
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.landingRecordLabel.alpha = 0.0
             self.bubbleListButton.alpha = 0.0
-            
-            self.perform(#selector(self.exposeLabels), with: nil, afterDelay: 2)
         }
-        
+
         // Present modal for loading
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.presentLoadingModal()
@@ -104,7 +102,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         self.landingRecordLabel.layer.removeAllAnimations()
         self.landingRecordLabel.text = "Hold to Record"
-        self.toggleLabels()
+        self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 1)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -403,7 +401,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         if (!isRecording) {
             let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
             
-            UIView.transition(with: self.landingRecordLabel, duration: 1, options: .transitionCrossDissolve, animations: {
+            UIView.transition(with: self.landingRecordLabel, duration: 1.0, options: .transitionCrossDissolve, animations: {
                 self.landingRecordLabel.text = labelText
             }, completion: { completion in
                 self.blinkLabel()
@@ -412,16 +410,14 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @objc func blinkLabel() {
-        UIView.animate(withDuration: 1.0, delay:0, options: [.repeat, .autoreverse], animations: {
-            UIView.setAnimationRepeatCount(5)
-            self.landingRecordLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-//            self.landingRecordLabel.alpha = 0.0
-        }, completion: {completion in
-            self.landingRecordLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
-//            self.landingRecordLabel.alpha = 1.0
+        UIView.transition(with: self.landingRecordLabel, duration: 1.5, options: [.repeat, .autoreverse, .transitionCrossDissolve], animations: {
+            UIView.setAnimationRepeatCount(6)
+            self.landingRecordLabel.textColor = UIColor(red: 160/255, green: 35/255, blue: 232/255, alpha: 1.0)
+        }, completion: { completion in
+            self.landingRecordLabel.textColor = UIColor(red: 190/255, green: 140/255, blue: 234/255, alpha: 1.0)
         })
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9, execute: self.toggleTask!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9.0, execute: self.toggleTask!)
     }
     
     func configureBubbleListTable() {
