@@ -46,14 +46,18 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     var landingFeedViewArray: [LandingFeedSegmentView] = []
     var landingFeedAudioArray: [AVAudioPlayer] = []
+    
+    var toggleTask: DispatchWorkItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Hide landing views initially
+        // Hide landing views initially: Loading modal is only an overlay
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.landingRecordLabel.alpha = 0.0
             self.bubbleListButton.alpha = 0.0
+            
+            self.perform(#selector(self.exposeLabels), with: nil, afterDelay: 2)
         }
         
         // Present modal for loading
@@ -84,12 +88,21 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         // Configure bubble list
         self.configureBubbleListTable()
+        
+        // Create task for toggling labels
+        self.toggleTask = DispatchWorkItem { self.toggleLabels() }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         // Set animation for HearChatter and HoldRecord labels
+        print("VIEW DID APPEAR")
         NSObject.cancelPreviousPerformRequests(withTarget: self)
+        self.toggleTask?.cancel()
+        
+        self.toggleTask = DispatchWorkItem { self.toggleLabels() }
+        
         self.landingRecordLabel.layer.removeAllAnimations()
+        self.landingRecordLabel.text = "Hold to Record"
         self.toggleLabels()
     }
     
@@ -348,11 +361,15 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func presentLoadingModal() {
-        print("LOADING MODALLLLLL")
         performSegue(withIdentifier: "showLoadingModal", sender: nil)
     }
     
     // View methods ------------------------------------------
+    
+    @objc func exposeLabels() {
+        self.landingRecordLabel.alpha = 1.0
+        self.bubbleListButton.alpha = 1.0
+    }
     
     @objc func toggleLabels() {
         //Toggle on views after loaded
@@ -364,10 +381,23 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             UIView.transition(with: self.landingRecordLabel, duration: 1, options: .transitionCrossDissolve, animations: {
                 self.landingRecordLabel.text = labelText
-            }, completion: nil)
-            
-            perform(#selector(toggleLabels), with: nil, afterDelay: 3)
+            }, completion: { completion in
+                self.blinkLabel()
+            })
         }
+    }
+    
+    @objc func blinkLabel() {
+        UIView.animate(withDuration: 1.0, delay:0, options: [.repeat, .autoreverse], animations: {
+            UIView.setAnimationRepeatCount(5)
+            self.landingRecordLabel.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+//            self.landingRecordLabel.alpha = 0.0
+        }, completion: {completion in
+            self.landingRecordLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+//            self.landingRecordLabel.alpha = 1.0
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9, execute: self.toggleTask!)
     }
     
     func configureBubbleListTable() {
