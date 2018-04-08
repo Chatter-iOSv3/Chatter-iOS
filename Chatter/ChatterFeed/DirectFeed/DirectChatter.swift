@@ -29,7 +29,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     var yPosition:CGFloat = 0
     var scrollViewContentSize:CGFloat=0
     let imageWidth:CGFloat = 300
-    var imageHeight:CGFloat = 125
+    var imageHeight:CGFloat = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,23 +80,38 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         newView.contentMode = UIViewContentMode.scaleAspectFit
         newView.frame.size.width = self.imageWidth
         newView.frame.size.height = self.imageHeight
-        newView.frame.origin.x = newView.frame.origin.x + 60
-        newView.frame.origin.y = self.yPosition
-        newView.layer.cornerRadius = 35
+        newView.frame.origin.x = newView.frame.origin.x + 65
+        newView.frame.origin.y = self.yPosition + 5
+        newView.layer.cornerRadius = 30
         newView.chatterRoomSegments = chatterRoomSegments
+        
+        // Generate Segment Divider
+        let dividerLine = CALayer()
+        dividerLine.frame = CGRect(x: newView.frame.width - self.directScrollView.frame.width + 10, y: newView.frame.height - 17, width: self.directScrollView.frame.width, height: 0.5)
+        dividerLine.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0).cgColor
+        newView.layer.addSublayer(dividerLine)
         
         // Generate the view for the Avatar
         let newAvatarView = UIView()
-        newAvatarView.frame.size.width = 75
-        newAvatarView.frame.size.height = 75
+        newAvatarView.frame.size.width = 67
+        newAvatarView.frame.size.height = 67
         newAvatarView.frame.origin.x = 10
-        newAvatarView.frame.origin.y = self.yPosition
+        newAvatarView.frame.origin.y = self.yPosition + 5
         newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
-        newAvatarView.layer.borderWidth = 4
+        newAvatarView.layer.borderWidth = 3
         newAvatarView.layer.borderColor = UIColor.white.cgColor
         newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
         self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
-        //
+        
+        // Generate the avatar placeholder view
+        let newAvatarPlaceholderView = UIView()
+        newAvatarPlaceholderView.frame.size.width = 65
+        newAvatarPlaceholderView.frame.size.height = 65
+        newAvatarPlaceholderView.frame.origin.x = 40
+        newAvatarPlaceholderView.frame.origin.y = self.yPosition + 5
+        newAvatarPlaceholderView.layer.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0).cgColor
+        self.directScrollView.addSubview(newAvatarPlaceholderView)
+        
         // Add the subviews
         self.directScrollView.addSubview(newView)
         self.directScrollView.addSubview(newAvatarView)
@@ -107,7 +122,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         // Calculates running total of how long the scrollView needs to be with the variables
         self.directScrollView.contentSize = CGSize(width: self.imageWidth, height: self.scrollViewContentSize)
         
-        self.imageHeight = 125
+        self.imageHeight = 100
         
         self.directChatterRoomsArray.append(newView)
     }

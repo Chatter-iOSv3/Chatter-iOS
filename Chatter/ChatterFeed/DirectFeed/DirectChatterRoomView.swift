@@ -19,14 +19,14 @@ class DirectChatterRoomView: UIView{
         super.init(frame: frame)
         
         let waveView = UIView()
-        waveView.frame.size.height = 75
+        waveView.frame.size.height = 65
         waveView.frame.size.width = 300
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
-        waveView.layer.cornerRadius = 25
+        waveView.layer.cornerRadius = 20
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // change 2 to desired number of seconds
             if (self.chatterRoomSegments?.count == 0) {
-                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 75))
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 65))
                 label.textAlignment = .center
                 label.font = label.font.withSize(15)
                 label.textColor = .white
