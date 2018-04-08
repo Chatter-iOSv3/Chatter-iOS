@@ -189,6 +189,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
 
     @IBAction func startRecord(_ sender: AnyObject) {
         if (!finishedRecording) {
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.toggleTask?.cancel()
+            self.landingRecordLabel.layer.removeAllAnimations()
+            
             self.landingRecordLabel.alpha = 0.0
             self.labelAlpha = 0.0
             
@@ -340,8 +344,18 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         }, completion:nil)
         
         // Return labels
+        // Set animation for HearChatter and HoldRecord labels
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        self.toggleTask?.cancel()
+        
+        self.toggleTask = DispatchWorkItem { self.toggleLabels() }
+        
+        self.landingRecordLabel.layer.removeAllAnimations()
+        self.landingRecordLabel.text = "Hold to Record"
         self.landingRecordLabel.alpha = 1.0
         self.labelAlpha = 1.0
+        
+        self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 1)
     }
     
     @objc func startRecordProgress() {

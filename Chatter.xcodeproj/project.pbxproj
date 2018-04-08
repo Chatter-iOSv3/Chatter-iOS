@@ -25,6 +25,7 @@
 		1A2E99A720420A29009A674C /* ChatterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E99A620420A29009A674C /* ChatterUITests.swift */; };
 		1A2E99B92042389F009A674C /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99B82042389F009A674C /* Buttons.xcassets */; };
 		1A2E99BB20424449009A674C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99BA20424449009A674C /* GoogleService-Info.plist */; };
+		1A386F7F207AB78B00CB76AB /* ChooseAudienceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */; };
 		1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */; };
 		1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A40B9CC20426F10006D61CC /* ChatterFeed.swift */; };
 		1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */; };
@@ -87,6 +88,7 @@
 		1A2E99A820420A29009A674C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A2E99B82042389F009A674C /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		1A2E99BA20424449009A674C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAudienceModal.swift; sourceTree = "<group>"; };
 		1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditModal.swift; sourceTree = "<group>"; };
 		1A40B9CC20426F10006D61CC /* ChatterFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeed.swift; sourceTree = "<group>"; };
 		1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersView.swift; sourceTree = "<group>"; };
@@ -227,6 +229,14 @@
 			path = ChatterUITests;
 			sourceTree = "<group>";
 		};
+		1A386F80207ADB2C00CB76AB /* ChooseAudience */ = {
+			isa = PBXGroup;
+			children = (
+				1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */,
+			);
+			path = ChooseAudience;
+			sourceTree = "<group>";
+		};
 		1A78F5222064B3070040B1A7 /* LoginSignup */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				1A0D24FE206DE904000BC472 /* RecordingEdit */,
+				1A386F80207ADB2C00CB76AB /* ChooseAudience */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 				1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */,
@@ -654,6 +665,7 @@
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
 				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
+				1A386F7F207AB78B00CB76AB /* ChooseAudienceModal.swift in Sources */,
 				1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */,
 				1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */,
 				1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */,

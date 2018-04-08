@@ -34,7 +34,7 @@ class ChatterLoadingModal: UIViewController {
         ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
             // Check all values exist
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 2 to desired number of seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { // change 2 to desired number of seconds
                 self.dismiss(animated: true, completion: nil)
             }
         })
