@@ -60,6 +60,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     
     func configureCellsOnChatter(oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?) {
         oldCell?.label.textColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
+        oldCell?.label.font = UIFont.boldSystemFont(ofSize: 14.0)
         oldCell?.layer.borderWidth = 1.0
         oldCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         oldCell?.layer.backgroundColor = UIColor.white.cgColor
@@ -87,6 +88,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         }
         
         newCell?.label.textColor = .white
+        newCell?.label.font = UIFont.boldSystemFont(ofSize: 14.0)
         newCell?.layer.borderWidth = 1.0
         newCell?.layer.borderColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor
         newCell?.layer.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0).cgColor

@@ -841,12 +841,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NU-a6-kew">
-                                        <rect key="frame" x="27" y="237" width="160" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8NU-a6-kew">
+                                        <rect key="frame" x="27" y="237" width="159" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.71393507719039917" green="0.35246580839157104" blue="0.93876117467880249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <state key="normal" title="Bitmoji">
+                                        <state key="normal" image="Bitmoji">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
@@ -1269,6 +1268,7 @@
     </scenes>
     <resources>
         <image name="Add" width="33" height="33"/>
+        <image name="Bitmoji" width="70" height="21"/>
         <image name="Chatterv3" width="150" height="150"/>
         <image name="Check" width="166" height="166"/>
         <image name="Compose" width="45" height="45"/>

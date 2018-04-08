@@ -23,7 +23,7 @@ pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'UICircularProgressRing'
 pod 'ISEmojiView'
-pod 'AKPickerView-Swift', :git => 'https://github.com/jhonyourangel/AKPickerView-Swift'
+pod 'AKPickerView-Swift', :git => 'https://github.com/Chatter-iOSv3/AKPickerView-Swift.git', :commit => 'ee72e72042ade0a445438547c815dd33fbb87334'
 pod 'XLPagerTabStrip'
 pod 'IQKeyboardManager' 
 

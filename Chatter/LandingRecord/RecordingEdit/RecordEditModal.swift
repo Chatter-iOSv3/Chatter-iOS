@@ -39,9 +39,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var ref: DatabaseReference!
     
     // Image Asset Items
-    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "PoopEmoji")!, UIImage(named: "BadMouth")!, UIImage(named: "Add")!]
+    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "BadMouth")!, UIImage(named: "Plus")!]
     var resizedFilterImageArr: [UIImage] = []
-    var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Poop", "BadMouth", "Add"]
+    var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Running", "BadMouth", "Emoji"]
     
     var addIntent: Int = 0
     

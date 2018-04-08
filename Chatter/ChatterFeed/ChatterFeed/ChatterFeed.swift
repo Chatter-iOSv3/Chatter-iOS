@@ -67,6 +67,12 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newView.frame.origin.y = yPosition + 5
             newView.layer.cornerRadius = 30
             
+            // Generate Segment Divider
+            let dividerLine = CALayer()
+            dividerLine.frame = CGRect(x: newView.frame.width - self.chatterScrollView.frame.width + 10, y: newView.frame.height - 17, width: self.chatterFeedView.frame.width, height: 0.5)
+            dividerLine.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0).cgColor
+            newView.layer.addSublayer(dividerLine)
+            
             // Generate the view for the Avatar
             let newAvatarView = UIView()
             newAvatarView.frame.size.width = 67
