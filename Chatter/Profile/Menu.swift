@@ -23,6 +23,10 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
         self.followingView.alpha = 0.0
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .stopLandingChatter, object: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? MenuView {
             destination.switchMenuFollowersDelegate = self

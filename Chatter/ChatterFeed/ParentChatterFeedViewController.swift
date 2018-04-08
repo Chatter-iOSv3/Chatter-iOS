@@ -24,7 +24,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         // Styling for Placeholder view
         curveViewPlaceholder.layer.cornerRadius = 20
         feedPageAvatarView.layer.cornerRadius = feedPageAvatarView.frame.size.height / 2
-        feedPageAvatarView.layer.borderWidth = 1
+        feedPageAvatarView.layer.borderWidth = 2
         feedPageAvatarView.layer.borderColor = UIColor.white.cgColor
         
 //      Styling for bar buttons
@@ -52,6 +52,10 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         // Listens for starting Direct Chatter and ProfileImage change
         NotificationCenter.default.addObserver(self, selector: #selector(goToDirectChatter(notification:)), name: .startDirectChatter, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(profileImageChanged(notification:)), name: .profileImageChanged, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: .stopLandingChatter, object: nil)
     }
     
     func configureCellsOnChatter(oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?) {

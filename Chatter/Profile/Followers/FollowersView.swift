@@ -68,7 +68,6 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
             
             if (value != nil) {
                 for user in value! {
-                    print("Follower: \(user)")
                     let followerID = user.key as? String
                     
                     // Retrieve username with ID
@@ -96,7 +95,6 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     func SetFollowersObserver() {
         self.ref.child("users").child(userID!).child("follower").observe(.childAdded, with: { (snapshot) in
-            print("FOLLOWER ADDED")
             
             self.RerenderFollowersTableView()
             

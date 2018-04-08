@@ -197,7 +197,6 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     // Profile picture Utilities --------------------------------------------------------
     
     @objc func handleSelectProfileImageView() {
-        print("Clicked")
         let imagePicker = UIImagePickerController()
         
         imagePicker.delegate = self

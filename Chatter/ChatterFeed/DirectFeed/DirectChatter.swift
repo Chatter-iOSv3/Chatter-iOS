@@ -65,8 +65,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                     self.constructDirectChatterRooms(users: users, chatterRoomSegments: chatterRoomSegments)
                     self.directChatterRoomsIDArray.append(snapshot.key)
                 }   else {
-                    print("No Segments! \(users)")
-                    
                     self.constructDirectChatterRooms(users: users, chatterRoomSegments: [:])
                     self.directChatterRoomsIDArray.append(snapshot.key)
                 }

@@ -91,11 +91,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         // Create task for toggling labels
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(stopLandingChatter(notification:)), name: .stopLandingChatter, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         // Set animation for HearChatter and HoldRecord labels
-        print("VIEW DID APPEAR")
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.toggleTask?.cancel()
         
@@ -285,12 +286,35 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             // Here conforming to AVAudioPlayerDelegate
             sound.delegate = self
             sound.prepareToPlay()
-            sound.numberOfLoops = -1
+//            sound.numberOfLoops = -1
             sound.play()
         } catch {
             print("error loading file")
             // couldn't load file :(
         }
+    }
+    
+    func queueList(skip: Bool) {
+        if (self.landingFeedViewArray.count > 0 && !skip) {
+            self.landingFeedViewArray.first?.playAudio()
+        }   else if (self.landingFeedViewArray.count > 0 && skip) {
+            self.landingFeedViewArray.first?.player?.stop()
+            self.queueNext()
+        }
+    }
+    
+    func queueNext() {
+        self.landingFeedViewArray.removeFirst()
+        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
+        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
+        let sections = NSIndexSet(indexesIn: range)
+        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+        
+        self.queueList(skip: false)
+    }
+    
+    @objc func stopLandingChatter(notification: NSNotification) {
+        self.landingFeedViewArray.first?.player?.stop()
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -461,11 +485,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func animateBubbles() {
-        print("ANIMATING")
         let cells = self.bubbleListTableView.visibleCells
         
         for cell in cells {
-            print("CELL")
             let currCell: BubbleListCell = cell as! BubbleListCell
             currCell.animateAvatarViews()
         }
@@ -475,30 +497,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         let cells = self.landingFeedViewArray
         
         for cell in cells {
-            print("CELL")
             cell.frame.size.width = 50
             cell.frame.size.height = 50
             cell.layer.cornerRadius = 25
         }
-    }
-    
-    func queueList(skip: Bool) {
-        if (self.landingFeedViewArray.count > 0 && !skip) {
-            self.landingFeedViewArray.first?.playAudio()
-        }   else if (self.landingFeedViewArray.count > 0 && skip) {
-            self.landingFeedViewArray.first?.player?.stop()
-            self.queueNext()
-        }
-    }
-    
-    func queueNext() {
-        self.landingFeedViewArray.removeFirst()
-        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
-        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-        let sections = NSIndexSet(indexesIn: range)
-        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
-        
-        self.queueList(skip: false)
     }
     
     // Misc ---------------------------------------------------------------------------

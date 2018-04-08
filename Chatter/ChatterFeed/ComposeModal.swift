@@ -76,10 +76,8 @@ class ComposeModal: UIViewController {
     
     func configureViews() {
         composeModalView.layer.cornerRadius = 10
-        composeModalView.layer.borderWidth = 2
-        composeModalView.layer.borderColor = UIColor(red: 179/255, green: 95/255, blue: 232/255, alpha: 1.0).cgColor
         
-        startDirectChatterButton.layer.cornerRadius = 10
+        startDirectChatterButton.layer.cornerRadius = 15
     }
     
     // Utilities -----------------------------------------------------------
