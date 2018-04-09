@@ -785,6 +785,9 @@
                                         <state key="normal" title="ChatterFeed">
                                             <color key="titleColor" red="0.9590848197655053" green="1" blue="0.95811108360669939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="uploadToChatterFeed" destination="xiP-51-t9b" eventType="touchUpInside" id="aL8-nK-Ie9"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send to..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBv-dG-OpG">
                                         <rect key="frame" x="117" y="25" width="109" height="21"/>
@@ -842,9 +845,11 @@
                         <outlet property="friendsTableView" destination="PSR-Uo-5GB" id="XFL-CO-mEE"/>
                         <outlet property="initiateChatterTextField" destination="ile-Za-0ZP" id="mnG-KV-TkF"/>
                         <outlet property="uploadButton" destination="jQc-AF-xtm" id="5T4-4C-Waf"/>
+                        <segue destination="5qJ-AP-fM1" kind="unwind" identifier="unwindToLandingRecord" unwindAction="unwindToLandingRecordWithSegue:" id="ld9-Ih-Ng9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gcs-Y0-esv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5qJ-AP-fM1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3760.8000000000002" y="53.940886699507388"/>
         </scene>

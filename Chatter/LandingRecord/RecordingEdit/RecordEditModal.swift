@@ -104,9 +104,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func confirmRecording(sender: AnyObject) {
-        
-    }
+    @IBAction func confirmRecording(sender: AnyObject) {}
     
     @IBAction func animateButton(sender: UIButton) {
 

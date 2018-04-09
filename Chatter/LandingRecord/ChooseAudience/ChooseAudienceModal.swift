@@ -46,6 +46,10 @@ class ChooseAudienceModal: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func uploadToChatterFeed() {
+        self.saveRecording()
+    }
+    
     func saveRecording() {
         // Initialize FB storage ref
         let storageRef = storage.reference()
@@ -121,8 +125,7 @@ class ChooseAudienceModal: UIViewController {
                         
                         // Exit the modal
                         print("LOCAL SAVE SUCCESS")
-                        self.trashDelegate?.trashRecording()
-                        self.performSegue(withIdentifier: "unwindToLandingRecord", sender: self)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }) { (error) in
                     print(error.localizedDescription)
