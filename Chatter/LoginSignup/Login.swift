@@ -21,6 +21,7 @@ class Login: UIViewController {
         
         self.configureTextFields()
         self.configureButtons()
+        self.setupTap()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -29,12 +30,18 @@ class Login: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func loginClicked(sender: UIButton) {
-        UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+    func setupTap() {
+        let touchDown = UILongPressGestureRecognizer(target:self, action: #selector(didTouchDownLogin))
+        touchDown.minimumPressDuration = 0
+        self.loginButton.addGestureRecognizer(touchDown)
+    }
+    
+    @objc func didTouchDownLogin(gesture: UILongPressGestureRecognizer) {
+        if (gesture.state == .began){
             self.loginButton.backgroundColor = UIColor(red: 139/255, green: 240/255, blue: 249/255, alpha: 1.0)
-        }, completion:nil)
-        
-        handleLogin()
+            
+            handleLogin()
+        }
     }
     
     @objc func handleLogin() {
