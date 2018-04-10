@@ -102,7 +102,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         self.landingRecordLabel.layer.removeAllAnimations()
         self.landingRecordLabel.text = "Hold to Record"
-        self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 1)
+        self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 2)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
