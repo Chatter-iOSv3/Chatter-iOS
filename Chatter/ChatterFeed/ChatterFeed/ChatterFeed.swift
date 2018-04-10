@@ -75,10 +75,10 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             
             // Generate the view for the Avatar
             let newAvatarView = UIView()
-            newAvatarView.frame.size.width = 67
-            newAvatarView.frame.size.height = 67
+            newAvatarView.frame.size.width = 66
+            newAvatarView.frame.size.height = 66
             newAvatarView.frame.origin.x = 10
-            newAvatarView.frame.origin.y = yPosition + 3
+            newAvatarView.frame.origin.y = yPosition + 4
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
             newAvatarView.layer.borderWidth = 3
             newAvatarView.layer.borderColor = UIColor.white.cgColor

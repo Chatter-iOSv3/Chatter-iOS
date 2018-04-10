@@ -29,8 +29,8 @@ class DrawWaveform: UIView {
         let aPath2 = UIBezierPath()
         
         //lineWidth
-        aPath.lineWidth = 2
-        aPath2.lineWidth = 2
+        aPath.lineWidth = 3
+        aPath2.lineWidth = 3
         
         //start drawing at:
         aPath.move(to: CGPoint(x:0.0 , y:rect.height/2 ))

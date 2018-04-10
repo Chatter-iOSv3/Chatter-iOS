@@ -131,7 +131,7 @@
                         <outlet property="emailField" destination="7GD-Od-3xr" id="0gr-wR-1i3"/>
                         <outlet property="loginButton" destination="dAK-4f-rle" id="L3P-L6-rGt"/>
                         <outlet property="passwordField" destination="zfp-9P-pUl" id="sZd-TQ-B2j"/>
-                        <segue destination="VWf-RC-Qzv" kind="show" identifier="loginToLanding" id="LRn-rX-MYf"/>
+                        <segue destination="VWf-RC-Qzv" kind="presentation" identifier="loginToLanding" modalTransitionStyle="crossDissolve" id="LRn-rX-MYf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DW0-94-Btc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -392,7 +392,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlf-jG-5uY">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="630"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.98884795979999995" green="0.98884795979999995" blue="0.98884795979999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -615,7 +615,7 @@
                         <outlet property="recordButton" destination="lTt-I9-zNO" id="OOq-XL-gin"/>
                         <outlet property="recordProgress" destination="7Vw-fV-Qbd" id="Cvi-Sb-qVg"/>
                         <segue destination="eOO-cO-i87" kind="presentation" identifier="showRecordEdit" id="Y4N-fK-DMH"/>
-                        <segue destination="tRd-DF-3Xc" kind="presentation" identifier="showLoadingModal" id="4NL-EB-m2N"/>
+                        <segue destination="tRd-DF-3Xc" kind="presentation" identifier="showLoadingModal" modalPresentationStyle="overCurrentContext" modalTransitionStyle="flipHorizontal" id="4NL-EB-m2N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
