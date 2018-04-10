@@ -56,8 +56,11 @@ class DrawWaveform: UIView {
             f += 1
         }
         
+        aPath.lineJoinStyle = .round
+        
         UIColor.white.set()
         aPath.stroke()
+        
         //If you want to fill it as well
         aPath.fill()
         
@@ -81,6 +84,8 @@ class DrawWaveform: UIView {
             f += 1
         }
         
+        aPath2.lineJoinStyle = .round
+        
         //If you want to stroke it with a Orange color
         UIColor.white.set()
         
@@ -90,7 +95,6 @@ class DrawWaveform: UIView {
         
         //If you want to fill it as well
         aPath2.fill()
-        
     }
     
     func convertToPoints() {

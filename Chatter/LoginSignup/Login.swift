@@ -40,6 +40,10 @@ class Login: UIViewController {
         if (gesture.state == .began){
             self.loginButton.backgroundColor = UIColor(red: 139/255, green: 240/255, blue: 249/255, alpha: 1.0)
             
+            UIView.animate(withDuration: 0.3, delay: 0.0, options:.curveLinear, animations: {
+                self.loginButton.backgroundColor = UIColor(red: 0/255, green: 212/255, blue: 255/255, alpha: 1.0)
+            }, completion:nil)
+            
             handleLogin()
         }
     }
@@ -52,9 +56,6 @@ class Login: UIViewController {
             if error == nil && user != nil {
                 self.performSegue(withIdentifier: "loginToLanding", sender: nil)
             }   else {
-                UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
-                    self.loginButton.backgroundColor = UIColor(red: 0/255, green: 212/255, blue: 255/255, alpha: 1.0)
-                }, completion:nil)
                 print("Error:\(error!.localizedDescription)")
             }
         });
