@@ -126,4 +126,7 @@ extension Notification.Name {
     
     // When VCs are changed, stop Landing Chatter from playing
     static let stopLandingChatter = Notification.Name("stopLandingChatter")
+    
+    // When Chatter audio is changed, stops previous play
+    static let stopChatterFeedAudio = Notification.Name("stopChatterFeedAudio")
 }

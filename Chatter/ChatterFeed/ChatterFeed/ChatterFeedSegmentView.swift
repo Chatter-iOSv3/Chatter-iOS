@@ -32,6 +32,8 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         waveView.layer.cornerRadius = 20
         self.addSubview(waveView)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(stopChatterFeedAudio(notification:)), name: .stopChatterFeedAudio, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,10 +51,17 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     @objc func playAudio(_ sender:UITapGestureRecognizer) {
         print("playing \(self.recordingURL)")
         
+        // Notifies other players to stop playing
+        NotificationCenter.default.post(name: .stopChatterFeedAudio, object: nil)
+        
         player?.prepareToPlay()
         player?.currentTime = 0
         //            player?.volume = 10.0
         player?.play()
+    }
+    
+    @objc func stopChatterFeedAudio(notification:NSNotification) {
+        player?.stop()
     }
     
     func generateAudioFile(audioURL: URL, id: String) {

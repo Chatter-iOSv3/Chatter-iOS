@@ -279,6 +279,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     // Audio Playback ------------------------------------------------
     
     func playSound(){
+        // Haptic Feedback
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
         let url = getAudioFileUrl()
         do {
             // AVAudioPlayer setting up with the saved file URL
