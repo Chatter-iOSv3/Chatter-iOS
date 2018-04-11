@@ -224,6 +224,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @IBAction func queueBubbleList() {
+        // Haptic Feedback
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
         if (self.isPlaying) {
             queueList(skip: true)
         }   else {
@@ -279,8 +282,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     // Audio Playback ------------------------------------------------
     
     func playSound(){
-        // Haptic Feedback
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         
         let url = getAudioFileUrl()
         do {
