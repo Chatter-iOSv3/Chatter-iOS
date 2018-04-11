@@ -46,9 +46,12 @@ class DrawWaveform: UIView {
             //next location to draw
             aPath.move(to: CGPoint(x:aPath.currentPoint.x + x , y:aPath.currentPoint.y ))
             
-            // AD CONSTRAINTS ************ min/max vals that y can be at
-            //y is the amplitude of each square
-            aPath.addLine(to: CGPoint(x:aPath.currentPoint.x  , y:aPath.currentPoint.y - (self.points[f] * 150) - 1.0))
+            //y is the amplitude of each square, 2 is the max height upwards
+            var yAmplitude = aPath.currentPoint.y - (self.points[f] * 150) - 1.0
+            if (yAmplitude <= 2) {
+                yAmplitude = 2
+            }
+            aPath.addLine(to: CGPoint(x:aPath.currentPoint.x, y:yAmplitude))
             
             aPath.close()
             
@@ -72,9 +75,12 @@ class DrawWaveform: UIView {
             var x:CGFloat = 5.0
             aPath2.move(to: CGPoint(x:aPath2.currentPoint.x + x , y:aPath2.currentPoint.y ))
             
-            // AD CONSTRAINTS ************ min/max vals that y can be at
-            //y is the amplitude of each square
-            aPath2.addLine(to: CGPoint(x:aPath2.currentPoint.x  , y:aPath2.currentPoint.y - ((-1.0 * self.points[f]) * 150)))
+            //y is the amplitude of each square, 62 is max height downwards
+            var yAmplitude2 = aPath2.currentPoint.y - ((-1.0 * self.points[f]) * 150)
+            if (yAmplitude2 > 62.0) {
+                yAmplitude2 = 62.0
+            }
+            aPath2.addLine(to: CGPoint(x:aPath2.currentPoint.x  , y:yAmplitude2))
             
             // aPath.close()
             aPath2.close()

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
-import AudioToolbox
+import AudioToolbox.AudioServices
 import Firebase
 
 class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource, QueueNextDelegate{

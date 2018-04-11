@@ -37,6 +37,10 @@ class ChooseAudienceModal: UIViewController {
         self.configureViews()
     }
     
+    func initFriendsList() {
+        
+    }
+    
     func configureViews() {
         self.chooseAudienceModal.layer.cornerRadius = 20
         self.chatterFeedButton.layer.cornerRadius = 30
