@@ -10,7 +10,6 @@ import Foundation
 import XLPagerTabStrip
 
 class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
-    @IBOutlet weak var composeChatterButton: UIButton!
     @IBOutlet weak var curveViewPlaceholder: UIView!
     @IBOutlet weak var feedPageAvatarView: UIView!
     
