@@ -25,6 +25,7 @@ class ComposeModal: UIViewController {
         ref = Database.database().reference()
         
         self.configureViews()
+        
     }
     
     // Actions ---------------------------------------------------------------

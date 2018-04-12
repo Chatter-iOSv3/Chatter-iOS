@@ -19,6 +19,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
     
+    var followerArray: [LandingRecord.friendItem]!
     var followerLabelArray: [String]!
     var followerIDArray: [String]!
     
@@ -77,6 +78,13 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
                         if (!self.followerLabelArray.contains(followerUsername!)) {
                             self.followerLabelArray.append(followerUsername!)
                             self.followerIDArray.append(followerID!)
+                            
+                            // Send notification with FollowerSet to composeModal
+                            // ************* Implement profileImages
+                            let tempUIView = UIView()
+                            let currFollowerItem = LandingRecord.friendItem(userID: followerID!, userName: followerUsername!, profileImage: tempUIView)
+
+                            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
                         }
                         
                         // Populate the Table View as the invitations are loaded

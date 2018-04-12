@@ -26,6 +26,7 @@
 		1A2E99B92042389F009A674C /* Buttons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99B82042389F009A674C /* Buttons.xcassets */; };
 		1A2E99BB20424449009A674C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E99BA20424449009A674C /* GoogleService-Info.plist */; };
 		1A386F7F207AB78B00CB76AB /* ChooseAudienceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */; };
+		1A386F82207F374600CB76AB /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A386F81207F374600CB76AB /* FriendsTableViewCell.swift */; };
 		1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */; };
 		1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A40B9CC20426F10006D61CC /* ChatterFeed.swift */; };
 		1A4DA0D32055E1B5009E1DC9 /* FollowersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */; };
@@ -89,6 +90,7 @@
 		1A2E99B82042389F009A674C /* Buttons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Buttons.xcassets; sourceTree = "<group>"; };
 		1A2E99BA20424449009A674C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAudienceModal.swift; sourceTree = "<group>"; };
+		1A386F81207F374600CB76AB /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
 		1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditModal.swift; sourceTree = "<group>"; };
 		1A40B9CC20426F10006D61CC /* ChatterFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeed.swift; sourceTree = "<group>"; };
 		1A4DA0D22055E1B5009E1DC9 /* FollowersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersView.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				1A386F7E207AB78B00CB76AB /* ChooseAudienceModal.swift */,
+				1A386F81207F374600CB76AB /* FriendsTableViewCell.swift */,
 			);
 			path = ChooseAudience;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
+				1A386F82207F374600CB76AB /* FriendsTableViewCell.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
 				1A0D25022074A3E3000BC472 /* DirectChatter.swift in Sources */,

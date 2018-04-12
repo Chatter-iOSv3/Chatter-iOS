@@ -44,6 +44,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     var addIntent: Int = 0
     
+    var friendsList: [LandingRecord.friendItem]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,6 +75,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
             let vc = segue.destination as? ChooseAudienceModal
             vc?.recordedUrl = self.recordedUrl
             vc?.trashDelegate = self.trashDelegate
+            vc?.friendsList = self.friendsList
         }
     }
     

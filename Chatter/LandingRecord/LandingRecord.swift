@@ -49,6 +49,15 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     var toggleTask: DispatchWorkItem?
     
+    // Friends list
+    struct friendItem {
+        let userID: String
+        let userName: String
+        let profileImage: UIView
+    }
+    
+    var friendsList: [friendItem]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -91,6 +100,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopLandingChatter(notification:)), name: .stopLandingChatter, object: nil)
+        
+        // Listens for Friends list from Followers/Following
+        NotificationCenter.default.addObserver(self, selector: #selector(friendsListSetup(notification:)), name: .sendToComposeModalFriendsList, object: nil)
+        self.friendsList = []
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -109,6 +122,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         if let destination = segue.destination as? RecordEditModal {
             destination.trashDelegate = self
             destination.recordedUrl = self.recordedURL
+            destination.friendsList = self.friendsList
         }
     }
     
@@ -514,6 +528,12 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             cell.frame.size.width = 50
             cell.frame.size.height = 50
             cell.layer.cornerRadius = 25
+        }
+    }
+    
+    @objc func friendsListSetup(notification: NSNotification) {
+        if let newFriendItem = notification.userInfo?["userData"] as? friendItem {
+            self.friendsList.append(newFriendItem)
         }
     }
     

@@ -117,6 +117,8 @@ extension UIView {
 extension Notification.Name {
     // When invitation is accepted, updates Followers list
     static let invitationAcceptedRerender = Notification.Name("invitationAcceptedRerender")
+    // Send Followers/Followings to compose modal Friends list
+    static let sendToComposeModalFriendsList = Notification.Name("sendToComposeModalFriendsList")
     
     // When compose modal/start direct Chatter is fired
     static let startDirectChatter = Notification.Name("startDirectChatter")
