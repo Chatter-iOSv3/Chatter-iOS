@@ -59,13 +59,15 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                 
                 let users = value?["users"] as? String ?? ""
                 
+                let chatterRoomUsersArr = users.components(separatedBy: ",")
+        
                 if let chatterRoomSegments = value?["chatterRoomSegments"] as? NSDictionary {
                     print("Segments Exist! \(users)")
                     
-                    self.constructDirectChatterRooms(users: users, chatterRoomSegments: chatterRoomSegments)
+                    self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments)
                     self.directChatterRoomsIDArray.append(snapshot.key)
                 }   else {
-                    self.constructDirectChatterRooms(users: users, chatterRoomSegments: [:])
+                    self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: [:])
                     self.directChatterRoomsIDArray.append(snapshot.key)
                 }
             }

@@ -533,7 +533,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     @objc func friendsListSetup(notification: NSNotification) {
         if let newFriendItem = notification.userInfo?["userData"] as? friendItem {
-            self.friendsList.append(newFriendItem)
+            // Checks repetition of friends
+            if self.friendsList.index(where: {$0.userID == newFriendItem.userID}) == nil {
+                self.friendsList.append(newFriendItem)
+            }
         }
     }
     

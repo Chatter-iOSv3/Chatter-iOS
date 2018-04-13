@@ -25,9 +25,11 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
     // Initialize Firebase vars
     let storage = Storage.storage()
     var ref: DatabaseReference!
+    var userID: String = (Auth.auth().currentUser?.uid)!
     
     // Friends list
     var friendsList: [LandingRecord.friendItem]!
+    var selectedFriendsList: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,8 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         
         friendsTableView.delegate = self
         friendsTableView.dataSource = self
+        
+        self.selectedFriendsList = []
         
         // Configure views
         self.configureViews()
@@ -54,6 +58,11 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBAction func uploadToChatterFeed() {
         self.saveRecording()
+    }
+    
+    
+    @IBAction func sendToDirectChatter(_ sender: Any) {
+        self.startDirectChatter(selectedFriendsList: self.selectedFriendsList)
     }
     
     func saveRecording() {
@@ -140,6 +149,53 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    func startDirectChatter(selectedFriendsList: [String]) {
+        // Generate a new chatterRoomID
+        let newChatterRoomID = self.randomString(length: 20)
+        let newChatterRoomUsers = self.selectedFriendsList.joined(separator: ",") + ", \(self.userID)"
+        
+        self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            
+            // Initiate ChatterRoom with all associated friends
+            for friendID in selectedFriendsList {
+                // Iterate through users to find matching user data with username
+                for user in value! {
+                    let currUserDetails = user.value as? NSDictionary
+                    let currUserID = user.key as? String
+                    
+                    if (currUserID == friendID && self.userID != currUserID) {
+                        print("FOUND USER: \(user)")
+                        
+                        // Go into users' DB and add the chatterRoomID
+                        let startDirectChatterWithUserID = user.key as? String
+                        
+                        // Store the new Chatter room in designated user's and the requesting user's DB
+                        let chatterRoomDataTo: [String: [String: String]] = [newChatterRoomID: ["chatterRoomSegments": "", "users": newChatterRoomUsers]]
+                        self.ref.child("users").child(startDirectChatterWithUserID!).child("chatterRooms").updateChildValues(chatterRoomDataTo)
+                    }
+                }
+            }
+            
+            // Add ChatterRoom data to own DB
+            let chatterRoomDataFrom: [String: [String: String]] = [newChatterRoomID: ["chatterRoomSegments": "", "users": newChatterRoomUsers]]
+            self.ref.child("users").child(self.userID).child("chatterRooms").updateChildValues(chatterRoomDataFrom) { (error, ref) -> Void in
+                // Close modal and redirect to Direct Messages page
+                self.dismiss(animated: true, completion: nil)
+            }
+        })
+    }
+    
+    func addSelectedFriend(friendID: String) {
+        self.selectedFriendsList.append(friendID)
+        print(self.selectedFriendsList)
+    }
+    
+    func removeSelectedFriend(friendID: String) {
+        self.selectedFriendsList = self.selectedFriendsList.filter{$0 != friendID}
+        print(self.selectedFriendsList)
+    }
+    
     // Table View Methods --------------------------------------------------------------------------------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -160,14 +216,15 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         // Allow button clicks on cells
         cell.contentView.isUserInteractionEnabled = true
         
-        // Styling the Cell
+        // Preparing the Cell
         cell.frame.size.height = 70
         cell.friendUsernameLabel.text = friendsList[indexPath.row].userName
         let firstnameLetter = String(describing: friendsList[indexPath.row].userName.first!).uppercased()
         cell.friendAvatarButton.setTitle(firstnameLetter, for: .normal)
-        let randomColor = generateRandomColor()
-        let currCellButton = cell.friendAvatarButton
-        configureAvatarButton(button: currCellButton!, color: randomColor)
+        cell.friendID = friendsList[indexPath.row].userID
+        
+        cell.ChooseAudienceVC = self
+        
         return cell
     }
     
@@ -198,19 +255,5 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         let result = formatter.string(from: date)
         
         return result
-    }
-    
-    func configureAvatarButton(button: UIButton, color: UIColor) {
-        button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.clipsToBounds = true
-        button.backgroundColor = color
-    }
-    
-    func generateRandomColor() -> UIColor {
-        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
-        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.8 // from 0.5 to 1.0 to stay away from white
-        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }

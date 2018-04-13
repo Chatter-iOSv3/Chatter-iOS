@@ -776,6 +776,9 @@
                                         <rect key="frame" x="282" y="13" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="RightArrowCircle"/>
+                                        <connections>
+                                            <action selector="sendToDirectChatter:" destination="xiP-51-t9b" eventType="touchUpInside" id="U0l-Xy-TxO"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DqH-rA-Cht">
                                         <rect key="frame" x="11" y="79" width="320" height="55"/>
@@ -815,23 +818,32 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="318" height="69.666666666666671"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vy-dB-dHv">
-                                                            <rect key="frame" x="88" y="17" width="188" height="35"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWC-8o-m2m">
-                                                            <rect key="frame" x="30" y="9" width="50" height="50"/>
+                                                            <rect key="frame" x="15" y="9" width="50" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <state key="normal">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vy-dB-dHv">
+                                                            <rect key="frame" x="85" y="17" width="188" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kF8-Yq-PUS">
+                                                            <rect key="frame" x="281" y="22" width="25" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" image="WhiteCheck"/>
+                                                            <connections>
+                                                                <action selector="friendChosen:" destination="26Q-s1-jXW" eventType="touchUpInside" id="9Rs-m0-KoJ"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="chooseFriendButton" destination="kF8-Yq-PUS" id="A4U-Vu-msA"/>
                                                     <outlet property="friendAvatarButton" destination="uWC-8o-m2m" id="GN4-fh-X1M"/>
                                                     <outlet property="friendUsernameLabel" destination="3vy-dB-dHv" id="Lqw-Ap-UtQ"/>
                                                 </connections>
@@ -1400,6 +1412,7 @@
         <image name="RedX" width="166" height="166"/>
         <image name="RightArrowCircle" width="40" height="40"/>
         <image name="RunningMan" width="25" height="29"/>
+        <image name="WhiteCheck" width="166" height="166"/>
         <image name="X" width="166" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
