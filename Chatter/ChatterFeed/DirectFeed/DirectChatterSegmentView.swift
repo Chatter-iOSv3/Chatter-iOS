@@ -28,7 +28,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         
         let waveView = UIView()
         waveView.frame.size.height = 65
-        waveView.frame.size.width = 300
+        waveView.frame.size.width = 98
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         waveView.layer.cornerRadius = 20
         self.addSubview(waveView)
@@ -108,7 +108,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         try! file.read(into: buf!)//Read Floats
         
         let waveForm = DrawWaveform()
-        waveForm.frame.size.width = 300
+        waveForm.frame.size.width = 98
         waveForm.frame.size.height = 65
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         

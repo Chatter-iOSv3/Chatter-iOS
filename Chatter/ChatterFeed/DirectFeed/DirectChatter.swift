@@ -65,7 +65,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                 
                 self.ref.child("chatterRooms").child(chatterRoomID).observeSingleEvent(of: .value, with: { (chatterRoomSnapshot) -> Void in
                     let chatterRoomValue = chatterRoomSnapshot.value as? NSDictionary
-                    print("************\(chatterRoomValue?["chatterRoomSegments"])")
                     if let chatterRoomSegments = chatterRoomValue?["chatterRoomSegments"] as? NSArray {
                         print("Segments Exist! \(users)")
                         
