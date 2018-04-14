@@ -12,7 +12,7 @@ import Firebase
 
 class DirectChatterRoomView: UIView{
     var shouldSetupConstraints = true
-    var recordingURLArr: [URL]!
+    var recordingURLArr: NSArray!
     var chatterRoomView: UIView?
     
     var dummyArr: [String]?
@@ -20,7 +20,7 @@ class DirectChatterRoomView: UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        initializeChatterRoomScrollView()
+//        initializeChatterRoomScrollView()
     }
     
     func initializeChatterRoomScrollView() {
@@ -42,7 +42,7 @@ class DirectChatterRoomView: UIView{
         chatterRoomScrollView.frame.size.width = 300
         chatterRoomScrollView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         
-        for chatterRoomSegment in dummyArr! {
+        for chatterRoomSegment in self.recordingURLArr {
             var chatterRoomSegmentView = DirectChatterSegmentView()
             chatterRoomSegmentView.frame.size.height = 65
             chatterRoomSegmentView.frame.size.width = 98

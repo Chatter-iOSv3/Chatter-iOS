@@ -54,29 +54,35 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         self.ref.child("users").child(self.userID!).child("chatterRooms").observe(.childAdded, with: { (snapshot) -> Void in
             // ************************ Refactor Here *******************************
             
-            if (!self.directChatterRoomsIDArray.contains(snapshot.key)) {
+            let chatterRoomID = snapshot.key
+            
+            if (!self.directChatterRoomsIDArray.contains(chatterRoomID)) {
                 let value = snapshot.value as? NSDictionary
                 
                 let users = value?["users"] as? String ?? ""
                 
                 let chatterRoomUsersArr = users.components(separatedBy: ",")
-        
-                if let chatterRoomSegments = value?["chatterRoomSegments"] as? NSDictionary {
-                    print("Segments Exist! \(users)")
-                    
-                    self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments)
-                    self.directChatterRoomsIDArray.append(snapshot.key)
-                }   else {
-                    self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: [:])
-                    self.directChatterRoomsIDArray.append(snapshot.key)
-                }
+                
+                self.ref.child("chatterRooms").child(chatterRoomID).observeSingleEvent(of: .value, with: { (chatterRoomSnapshot) -> Void in
+                    let chatterRoomValue = chatterRoomSnapshot.value as? NSDictionary
+                    print("************\(chatterRoomValue?["chatterRoomSegments"])")
+                    if let chatterRoomSegments = chatterRoomValue?["chatterRoomSegments"] as? NSArray {
+                        print("Segments Exist! \(users)")
+                        
+                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments)
+                        self.directChatterRoomsIDArray.append(snapshot.key)
+                    }   else {
+                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: [])
+                        self.directChatterRoomsIDArray.append(snapshot.key)
+                    }
+                })
             }
         })
     } 
     
     // View Methods ----------------------------------------------------------------------------------
     
-    func constructDirectChatterRooms(users: String, chatterRoomSegments: NSDictionary) {
+    func constructDirectChatterRooms(users: String, chatterRoomSegments: NSArray) {
         // Generate the view for the ChatterSegment
         let newView = DirectChatterRoomView()
         newView.contentMode = UIViewContentMode.scaleAspectFit
@@ -85,6 +91,8 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         newView.frame.origin.x = newView.frame.origin.x + 65
         newView.frame.origin.y = self.yPosition + 5
         newView.layer.cornerRadius = 30
+        newView.recordingURLArr = chatterRoomSegments
+        newView.initializeChatterRoomScrollView()
         
         // Generate Segment Divider
         let dividerLine = CALayer()
