@@ -12,30 +12,56 @@ import Firebase
 
 class DirectChatterRoomView: UIView{
     var shouldSetupConstraints = true
-    var waveView: UIView?
-    var chatterRoomSegments: NSDictionary?
+    var recordingURLArr: [URL]!
+    var chatterRoomView: UIView?
+    
+    var dummyArr: [String]?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let waveView = UIView()
-        waveView.frame.size.height = 65
-        waveView.frame.size.width = 300
-        waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
-        waveView.layer.cornerRadius = 20
+        initializeChatterRoomScrollView()
+    }
+    
+    func initializeChatterRoomScrollView() {
+        dummyArr = ["1", "2", "3", "4", "5"]
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // change 2 to desired number of seconds
-            if (self.chatterRoomSegments?.count == 0) {
-                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 65))
-                label.textAlignment = .center
-                label.font = label.font.withSize(15)
-                label.textColor = .white
-                label.text = "Press and Hold to send Chatter!"
-                waveView.addSubview(label)
-            }
+        let imageWidth:CGFloat = 100
+        var imageHeight:CGFloat = 60
+        var xPosition:CGFloat = 0
+        var scrollViewContentSize:CGFloat=0;
+        
+        let chatterRoomView = UIView()
+        chatterRoomView.frame.size.height = 65
+        chatterRoomView.frame.size.width = 300
+        chatterRoomView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
+        chatterRoomView.layer.cornerRadius = 20
+        
+        let chatterRoomScrollView = UIScrollView()
+        chatterRoomScrollView.frame.size.height = 65
+        chatterRoomScrollView.frame.size.width = 300
+        chatterRoomScrollView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
+        
+        for chatterRoomSegment in dummyArr! {
+            var chatterRoomSegmentView = DirectChatterSegmentView()
+            chatterRoomSegmentView.frame.size.height = 65
+            chatterRoomSegmentView.frame.size.width = 98
+            chatterRoomSegmentView.backgroundColor = .red
+            
+            chatterRoomSegmentView.frame.origin.x = xPosition + 2
+            
+            chatterRoomScrollView.addSubview(chatterRoomSegmentView)
+            xPosition+=imageWidth
+            scrollViewContentSize+=imageWidth
+            
+            // Calculates running total of how long the scrollView needs to be with the variables
+            chatterRoomScrollView.contentSize = CGSize(width: scrollViewContentSize, height: imageHeight)
         }
         
-        self.addSubview(waveView)
+        //        waveView.addSubview(waveScrollView)
+        
+        self.addSubview(chatterRoomView)
+        self.addSubview(chatterRoomScrollView)
     }
     
     required init?(coder aDecoder: NSCoder) {

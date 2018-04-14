@@ -85,7 +85,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         newView.frame.origin.x = newView.frame.origin.x + 65
         newView.frame.origin.y = self.yPosition + 5
         newView.layer.cornerRadius = 30
-        newView.chatterRoomSegments = chatterRoomSegments
         
         // Generate Segment Divider
         let dividerLine = CALayer()

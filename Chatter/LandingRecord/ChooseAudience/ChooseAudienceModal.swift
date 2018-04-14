@@ -68,11 +68,10 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
     func saveRecording() {
         // Initialize FB storage ref
         let storageRef = storage.reference()
-        let userID = Auth.auth().currentUser?.uid
         
         // Get audio url and generate a unique ID for the audio file
         let audioUrl = self.recordedUrl!
-        let fullAudioID = "\(userID ?? "") | \(self.audioID)"
+        let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
         
         // Saving the recording to FB
         let audioRef = storageRef.child("audio/\(fullAudioID)")
@@ -85,7 +84,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                 //                    let downloadURL = metadata!.downloadURL()
                 
                 // Write to the ChatterFeed string in FB-DB
-                self.ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+                self.ref.child("users").child(self.userID).observeSingleEvent(of: .value, with: { (snapshot) in
                     // Retrieve existing ChatterFeed
                     let value = snapshot.value as? NSDictionary
                     let currChatterFeedCount = (value!["chatterFeed"] as AnyObject).count
@@ -100,7 +99,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                     
                     // Construct new ChatterFeed segment
                     var chatterFeedSegment = Dictionary<String, Any>()
-                    chatterFeedSegment = ["id": fullAudioID, "userDetails": userID!, "dateCreated": self.getCurrentDate()]
+                    chatterFeedSegment = ["id": fullAudioID, "userDetails": self.userID, "dateCreated": self.getCurrentDate()]
                     
                     let childUpdates = ["\(countIdentifier)": chatterFeedSegment]
                     
@@ -108,7 +107,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                     let follower = value!["follower"] as? NSDictionary
                     
                     // Update your Chatter feed, then feed in all follower
-                    self.ref.child("users").child(userID!).child("chatterFeed").updateChildValues(childUpdates) {error, ref in
+                    self.ref.child("users").child(self.userID).child("chatterFeed").updateChildValues(childUpdates) {error, ref in
                         if (follower != nil) {
                             // Iterate through each follower and update their feed
                             for follower in follower! {
@@ -127,7 +126,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                                     
                                     // Construct follower ChatterFeed segment
                                     var followerChatterFeedSegment = Dictionary<String, Any>()
-                                    followerChatterFeedSegment = ["id": fullAudioID, "userDetails": userID!, "dateCreated": self.getCurrentDate()]
+                                    followerChatterFeedSegment = ["id": fullAudioID, "userDetails": self.userID, "dateCreated": self.getCurrentDate()]
                                     
                                     let followerChildUpdates = ["\(followerCountIdentifier)": followerChatterFeedSegment]
                                     
@@ -171,15 +170,24 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                         let startDirectChatterWithUserID = user.key as? String
                         
                         // Store the new Chatter room in designated user's and the requesting user's DB
-                        let chatterRoomDataTo: [String: [String: String]] = [newChatterRoomID: ["chatterRoomSegments": "", "users": newChatterRoomUsers]]
+                        let chatterRoomDataTo: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
                         self.ref.child("users").child(startDirectChatterWithUserID!).child("chatterRooms").updateChildValues(chatterRoomDataTo)
                     }
                 }
             }
             
             // Add ChatterRoom data to own DB
-            let chatterRoomDataFrom: [String: [String: String]] = [newChatterRoomID: ["chatterRoomSegments": "", "users": newChatterRoomUsers]]
+            let chatterRoomDataFrom: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
             self.ref.child("users").child(self.userID).child("chatterRooms").updateChildValues(chatterRoomDataFrom) { (error, ref) -> Void in
+                // Close modal and redirect to Direct Messages page
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+            
+            // Add ChatterRoomID to overall DB
+            let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": ["0": fullAudioID]]]
+            self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
                 // Close modal and redirect to Direct Messages page
                 self.dismiss(animated: true, completion: nil)
             }
