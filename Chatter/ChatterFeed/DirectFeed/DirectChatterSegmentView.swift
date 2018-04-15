@@ -17,6 +17,8 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var recordingURL: URL!
     var player: AVAudioPlayer?
     var multiplier: Float?
+    var audioPathURL: URL!
+    var audioLength: Double!
     
     var waveView: UIView?
     
@@ -28,7 +30,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         
         let waveView = UIView()
         waveView.frame.size.height = 65
-        waveView.frame.size.width = 98
+        waveView.frame.size.width = 100
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         waveView.layer.cornerRadius = 20
         self.addSubview(waveView)
@@ -68,6 +70,8 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         let storage = Storage.storage()
         let storageRef = storage.reference()
         
+        self.audioPathURL = audioURL
+        
         let audioRef = storageRef.child("audio/\(id)")
         audioRef.write(toFile: audioURL) { url, error in
             if let error = error {
@@ -97,7 +101,9 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         let audioDuration = asset.duration
         let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
         
-        return Float(audioDurationSeconds * 9.5)
+        self .audioLength = audioDurationSeconds
+        
+        return Float(audioDurationSeconds * 25)
     }
     
     func generateWaveForm(audioURL: URL) {
@@ -108,7 +114,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         try! file.read(into: buf!)//Read Floats
         
         let waveForm = DrawWaveform()
-        waveForm.frame.size.width = 98
+        waveForm.frame.size.width = CGFloat(self.audioLength * 25)
         waveForm.frame.size.height = 65
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         

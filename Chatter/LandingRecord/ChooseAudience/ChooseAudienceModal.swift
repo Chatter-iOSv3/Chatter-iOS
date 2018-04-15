@@ -153,45 +153,61 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         let newChatterRoomID = self.randomString(length: 20)
         let newChatterRoomUsers = self.selectedFriendsList.joined(separator: ",") + ", \(self.userID)"
         
-        self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            
-            // Initiate ChatterRoom with all associated friends
-            for friendID in selectedFriendsList {
-                // Iterate through users to find matching user data with username
-                for user in value! {
-                    let currUserDetails = user.value as? NSDictionary
-                    let currUserID = user.key as? String
+        // Initialize FB storage ref
+        let storageRef = storage.reference()
+        
+        // Get audio url and generate a unique ID for the audio file
+        let audioUrl = self.recordedUrl!
+        let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+        
+        // Saving the recording to FB
+        let audioRef = storageRef.child("audio/\(fullAudioID)")
+        
+        audioRef.putFile(from: audioUrl, metadata: nil) { metadata, error in
+            if let error = error {
+                print(error)
+            } else {
+                self.ref.child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                    let value = snapshot.value as? NSDictionary
                     
-                    if (currUserID == friendID && self.userID != currUserID) {
-                        print("FOUND USER: \(user)")
-                        
-                        // Go into users' DB and add the chatterRoomID
-                        let startDirectChatterWithUserID = user.key as? String
-                        
-                        // Store the new Chatter room in designated user's and the requesting user's DB
-                        let chatterRoomDataTo: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
-                        self.ref.child("users").child(startDirectChatterWithUserID!).child("chatterRooms").updateChildValues(chatterRoomDataTo)
+                    // Initiate ChatterRoom with all associated friends
+                    for friendID in selectedFriendsList {
+                        // Iterate through users to find matching user data with username
+                        for user in value! {
+                            let currUserDetails = user.value as? NSDictionary
+                            let currUserID = user.key as? String
+                            
+                            if (currUserID == friendID && self.userID != currUserID) {
+                                print("FOUND USER: \(user)")
+                                
+                                // Go into users' DB and add the chatterRoomID
+                                let startDirectChatterWithUserID = user.key as? String
+                                
+                                // Store the new Chatter room in designated user's and the requesting user's DB
+                                let chatterRoomDataTo: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
+                                self.ref.child("users").child(startDirectChatterWithUserID!).child("chatterRooms").updateChildValues(chatterRoomDataTo)
+                            }
+                        }
                     }
-                }
+                    
+                    // Add ChatterRoom data to own DB
+                    let chatterRoomDataFrom: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
+                    self.ref.child("users").child(self.userID).child("chatterRooms").updateChildValues(chatterRoomDataFrom) { (error, ref) -> Void in
+                        // Close modal and redirect to Direct Messages page
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                    let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+                    
+                    // Add ChatterRoomID to overall DB
+                    let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": ["0": fullAudioID]]]
+                    self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
+                        // Close modal and redirect to Direct Messages page
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                })
             }
-            
-            // Add ChatterRoom data to own DB
-            let chatterRoomDataFrom: [String: [String: String]] = [newChatterRoomID: ["users": newChatterRoomUsers]]
-            self.ref.child("users").child(self.userID).child("chatterRooms").updateChildValues(chatterRoomDataFrom) { (error, ref) -> Void in
-                // Close modal and redirect to Direct Messages page
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
-            
-            // Add ChatterRoomID to overall DB
-            let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": ["0": fullAudioID]]]
-            self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
-                // Close modal and redirect to Direct Messages page
-                self.dismiss(animated: true, completion: nil)
-            }
-        })
+        }
     }
     
     func addSelectedFriend(friendID: String) {

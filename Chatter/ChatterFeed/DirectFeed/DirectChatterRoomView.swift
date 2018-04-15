@@ -43,10 +43,10 @@ class DirectChatterRoomView: UIView{
             
             var chatterRoomSegmentView = DirectChatterSegmentView()
             chatterRoomSegmentView.frame.size.height = 65
-            chatterRoomSegmentView.frame.size.width = 98
+            chatterRoomSegmentView.frame.size.width = 100
             chatterRoomSegmentView.backgroundColor = .clear
             
-            chatterRoomSegmentView.frame.origin.x = xPosition + 2
+            chatterRoomSegmentView.frame.origin.x = xPosition
             
             chatterRoomScrollView.addSubview(chatterRoomSegmentView)
             xPosition+=imageWidth
