@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import XLPagerTabStrip
 import Firebase
+import UICircularProgressRing
 
 class DirectChatter: UIViewController, IndicatorInfoProvider {
     @IBOutlet weak var directScrollView: UIScrollView!
     @IBOutlet var directView: UIView!
+    var recordProgressRing: UICircularProgressRingView!
     
     // Initialize Firebase
     var ref: DatabaseReference!
@@ -36,6 +38,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         
         // Setting up UI Constructors
         directScrollView.contentSize = directView.frame.size
+        self.createRecordProgressRing()
         
         ref = Database.database().reference()
         self.storageRef = storage.reference()
@@ -108,6 +111,13 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         newAvatarView.layer.borderWidth = 3
         newAvatarView.layer.borderColor = UIColor.white.cgColor
         newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
+        newAvatarView.addSubview(self.recordProgressRing)
+        
+        self.recordProgressRing.setProgress(value: 49, animationDuration: 2.0) {
+            print("Done animating!")
+            // Do anything your heart desires...
+        }
+        
         self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
         
         // Generate the avatar placeholder view
@@ -177,6 +187,15 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         label.textColor = .white
         label.text = firstnameLetter
         newView.addSubview(label)
+    }
+    
+    func createRecordProgressRing() {
+        // Create the recordRing
+        self.recordProgressRing = UICircularProgressRingView(frame: CGRect(x: 0, y: 0, width: 67, height: 67))
+        // Change any of the properties you'd like
+        self.recordProgressRing.outerRingColor = UIColor.clear
+        self.recordProgressRing.innerRingColor = UIColor.darkGray
+        self.recordProgressRing.innerRingWidth = 20
     }
     
     func generateRandomColor() -> UIColor {
