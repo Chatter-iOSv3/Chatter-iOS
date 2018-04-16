@@ -12,7 +12,7 @@ import XLPagerTabStrip
 import Firebase
 import UICircularProgressRing
 
-class DirectChatter: UIViewController, IndicatorInfoProvider {
+class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate {
     @IBOutlet weak var directScrollView: UIScrollView!
     @IBOutlet var directView: UIView!
     var recordProgressRing: UICircularProgressRingView!
@@ -32,6 +32,8 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
     var scrollViewContentSize:CGFloat=0
     let imageWidth:CGFloat = 300
     var imageHeight:CGFloat = 100
+    
+    var recordedURL: URL!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +81,13 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
                 })
             }
         })
-    } 
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? DirectRecordEditModal {
+            destination.recordedUrl = self.recordedURL
+        }
+    }
     
     // View Methods ----------------------------------------------------------------------------------
     
@@ -113,11 +121,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
         newAvatarView.addSubview(self.recordProgressRing)
         
-        self.recordProgressRing.setProgress(value: 49, animationDuration: 2.0) {
-            print("Done animating!")
-            // Do anything your heart desires...
-        }
-        
         self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
         
         // Generate the avatar placeholder view
@@ -130,6 +133,8 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         self.directScrollView.addSubview(newAvatarPlaceholderView)
         
         // Add the subviews
+        newView.recordProgressRing = self.recordProgressRing
+        newView.recordEditDelegate = self
         self.directScrollView.addSubview(newView)
         self.directScrollView.addSubview(newAvatarView)
         let spacer:CGFloat = 0
@@ -193,9 +198,16 @@ class DirectChatter: UIViewController, IndicatorInfoProvider {
         // Create the recordRing
         self.recordProgressRing = UICircularProgressRingView(frame: CGRect(x: 0, y: 0, width: 67, height: 67))
         // Change any of the properties you'd like
+        self.recordProgressRing.startAngle = -CGFloat(90.0)
         self.recordProgressRing.outerRingColor = UIColor.clear
-        self.recordProgressRing.innerRingColor = UIColor.darkGray
-        self.recordProgressRing.innerRingWidth = 20
+        self.recordProgressRing.innerRingColor = UIColor(red: 255/255, green: 4/255, blue: 0/255, alpha: 0.7)
+        self.recordProgressRing.shouldShowValueText = false
+    }
+    
+    func performSegueToRecordEdit(recordedURL: URL) {
+        print("DELEGATE")
+        self.recordedURL = recordedURL
+        performSegue(withIdentifier: "showDirectRecordEdit", sender: self)
     }
     
     func generateRandomColor() -> UIColor {

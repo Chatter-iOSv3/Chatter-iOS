@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.shared().isEnabled = true
         IQKeyboardManager.shared().disabledToolbarClasses.add(EmojiViewModal.self)
+        IQKeyboardManager.shared().disabledToolbarClasses.add(DirectEmojiViewModal.self)
         
         return true
     }

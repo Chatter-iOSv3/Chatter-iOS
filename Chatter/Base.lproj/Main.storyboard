@@ -428,11 +428,120 @@
                     <connections>
                         <outlet property="directScrollView" destination="yVO-hH-e8P" id="D71-Nm-Zbs"/>
                         <outlet property="directView" destination="dBm-KW-YPN" id="7zF-aB-w1Y"/>
+                        <segue destination="yiy-HK-F30" kind="presentation" identifier="showDirectRecordEdit" id="uqg-gX-e3D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3457" y="-1510"/>
+        </scene>
+        <!--Direct Record Edit Modal-->
+        <scene sceneID="M3T-Hu-UTf">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="yiy-HK-F30" customClass="DirectRecordEditModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yHR-1I-KaH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WCB-uT-2pa">
+                                <rect key="frame" x="16" y="540" width="343" height="223"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpT-90-qPf">
+                                        <rect key="frame" x="153" y="8" width="36" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="textColor" red="0.67572908970000001" green="0.53172568139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9V-gE-aw3">
+                                        <rect key="frame" x="15" y="5" width="25" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="X"/>
+                                        <connections>
+                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="tUe-Xt-WfI"/>
+                                            <action selector="closeRecordEdit:" destination="eOO-cO-i87" eventType="touchUpInside" id="NvW-eq-tCG"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQN-QG-r2U">
+                                        <rect key="frame" x="15" y="52" width="311" height="65"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.60320021899999998" green="0.85191521069999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6K-Ea-m11">
+                                        <rect key="frame" x="296" y="3" width="35" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="RightArrowCircle"/>
+                                        <connections>
+                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="JTg-UZ-595"/>
+                                            <action selector="confirmRecordingWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="SuW-Ha-84o"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DiL-a8-QUz" customClass="AKPickerView" customModule="AKPickerView_Swift">
+                                        <rect key="frame" x="26" y="117" width="289" height="98"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.19959176061007955" green="0.19959176061007955" blue="0.19959176061007955" alpha="0.69514474693251538" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="f7C-y2-yzd"/>
+                    </view>
+                    <connections>
+                        <outlet property="filtersPickerView" destination="DiL-a8-QUz" id="T6Y-jI-Wcg"/>
+                        <outlet property="recordEditModalView" destination="WCB-uT-2pa" id="hRK-RE-UAT"/>
+                        <outlet property="recordWaveFormView" destination="dQN-QG-r2U" id="6tg-GP-NND"/>
+                        <segue destination="7ot-5v-gOd" kind="presentation" identifier="showDirectEmojiPicker" id="O1h-hU-MKb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BFX-8g-cLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4610" y="-1511"/>
+        </scene>
+        <!--Direct Emoji View Modal-->
+        <scene sceneID="XrD-wX-00E">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="7ot-5v-gOd" customClass="DirectEmojiViewModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GRE-gG-HZu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t6Y-GI-Es2">
+                                <rect key="frame" x="102" y="208" width="170" height="170"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SBj-Up-igI">
+                                        <rect key="frame" x="25" y="25" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="100"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8C4-ss-vfn">
+                                        <rect key="frame" x="-10" y="-10" width="190" height="190"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="qsS-bJ-1kc"/>
+                    </view>
+                    <connections>
+                        <outlet property="emojiTextView" destination="SBj-Up-igI" id="ihH-p9-h2A"/>
+                        <outlet property="pickedEmojiOutterView" destination="8C4-ss-vfn" id="DdO-LS-EMo"/>
+                        <outlet property="pickedEmojiView" destination="t6Y-GI-Es2" id="chy-rg-DxE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qbx-T5-6Nf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5738" y="-1511"/>
         </scene>
         <!--Menu-->
         <scene sceneID="hdP-Pg-Kqr">

@@ -7,18 +7,33 @@
 //
 
 import UIKit
-import Foundation
+import AVFoundation
+import AudioToolbox
+import UICircularProgressRing
 import Firebase
 
-class DirectChatterRoomView: UIView{
+protocol RecordEditDelegate {
+    func performSegueToRecordEdit(recordedURL: URL)
+}
+
+class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var shouldSetupConstraints = true
     var recordingURLArr: NSArray!
     var chatterRoomView: UIView?
     
+    var recordEditDelegate : RecordEditDelegate?
+    
+    var recordProgressRing: UICircularProgressRingView!
+    var finishedRecording: Bool!
+    
+    var audioRecorder: AVAudioRecorder?
+    var player : AVAudioPlayer?
+    var recordedURL: URL!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        initializeChatterRoomScrollView()
+        self.finishedRecording = false
     }
     
     func initializeChatterRoomScrollView() {
@@ -60,10 +75,89 @@ class DirectChatterRoomView: UIView{
             chatterRoomScrollView.contentSize = CGSize(width: scrollViewContentSize, height: imageHeight)
         }
         
-        //        waveView.addSubview(waveScrollView)
+        let longRecordGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapRecord))
+        chatterRoomScrollView.addGestureRecognizer(longRecordGesture)
         
         self.addSubview(chatterRoomView)
         self.addSubview(chatterRoomScrollView)
+    }
+    
+    @objc func longTapRecord(_ sender: AnyObject) {
+        if (!finishedRecording) {
+            if sender.state == UIGestureRecognizerState.began
+            {
+                // Code to start recording
+                startRecording()
+                
+                self.recordProgressRing.setProgress(value: 100, animationDuration: 20.0) {
+                    if (self.recordProgressRing.currentValue == 100) {
+                        //Code to stop recording
+                        self.finishedRecording = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
+                            self.recordProgressRing.setProgress(value: 0, animationDuration: 0.6) {print("CLOSING")}
+                        }
+                    }
+                }
+            }
+            else if (sender.state == UIGestureRecognizerState.ended)
+            {
+                // Case if recording ends before time limit
+                self.recordProgressRing.setProgress(value: 0, animationDuration: 0.5) {
+                    print("FINISHED RECORDING.")
+                    
+                    //Code to stop recording
+                    self.finishedRecording = true
+                    self.stopRecordProgress()
+                }
+            }
+        }
+    }
+    
+    // Recording Utilities -------------------------------------------------------
+    
+    func startRecording() {
+        //1. create the session
+        let session = AVAudioSession.sharedInstance()
+        
+        do {
+            // 2. configure the session for recording and playback
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
+            try session.setActive(true)
+            // 3. set up a high-quality recording session
+            let settings = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 44100,
+                AVNumberOfChannelsKey: 2,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            // 4. create the audio recording, and assign ourselves as the delegate
+            audioRecorder = try AVAudioRecorder(url: getAudioFileUrl(), settings: settings)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+        }
+        catch let error {
+            print("Failed to record!!!")
+        }
+    }
+    
+    func getAudioFileUrl() -> URL{
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let docsDirect = paths[0]
+        let audioUrl = docsDirect.appendingPathComponent("currentRecording.m4a")
+        return audioUrl
+    }
+    
+    func stopRecordProgress() {
+        print("STOPPING")
+        self.finishedRecording = true
+        audioRecorder?.stop()
+        
+        // Send recorded URL to modal and show modal
+        self.recordedURL = getAudioFileUrl()
+        
+        // Bring up the recordEdit modal
+        self.recordEditDelegate?.performSegueToRecordEdit(recordedURL: self.recordedURL)
     }
     
     required init?(coder aDecoder: NSCoder) {

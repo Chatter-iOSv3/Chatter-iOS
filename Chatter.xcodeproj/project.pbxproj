@@ -39,6 +39,8 @@
 		1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7B20563A4F001434D0 /* InvitesView.swift */; };
 		1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */; };
 		1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA4C6A02056181300AD3980 /* FollowModal.swift */; };
+		1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB591092084189F00451AA6 /* DirectRecordEditModal.swift */; };
+		1AB5910C208418D900451AA6 /* DirectEmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */; };
 		1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC61FBC204696CF0016AB83 /* LandingRecord.swift */; };
 		1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD7925B20510C8B007131CB /* DrawWaveForm.swift */; };
 		1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD3C2043F79500AF1B8A /* Login.swift */; };
@@ -105,6 +107,8 @@
 		1A928A7B20563A4F001434D0 /* InvitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesView.swift; sourceTree = "<group>"; };
 		1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesTableViewCell.swift; sourceTree = "<group>"; };
 		1AA4C6A02056181300AD3980 /* FollowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowModal.swift; sourceTree = "<group>"; };
+		1AB591092084189F00451AA6 /* DirectRecordEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectRecordEditModal.swift; sourceTree = "<group>"; };
+		1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectEmojiViewModal.swift; sourceTree = "<group>"; };
 		1AC61FBC204696CF0016AB83 /* LandingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecord.swift; sourceTree = "<group>"; };
 		1AD7925B20510C8B007131CB /* DrawWaveForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawWaveForm.swift; sourceTree = "<group>"; };
 		1AF2BD3C2043F79500AF1B8A /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		1A0D250620780F52000BC472 /* DirectFeed */ = {
 			isa = PBXGroup;
 			children = (
+				1AB591082084188800451AA6 /* RecordUtilities */,
 				1A0D25012074A3E3000BC472 /* DirectChatter.swift */,
 				1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */,
 				1A386F87208176D100CB76AB /* DirectChatterSegmentView.swift */,
@@ -266,8 +271,7 @@
 		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
 			isa = PBXGroup;
 			children = (
-				1A0D24FE206DE904000BC472 /* RecordingEdit */,
-				1A386F80207ADB2C00CB76AB /* ChooseAudience */,
+				1AB591072083F72E00451AA6 /* RecordUtilities */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 				1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */,
@@ -334,6 +338,24 @@
 				1A386F8320815C4700CB76AB /* DrawDirectWaveForm.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1AB591072083F72E00451AA6 /* RecordUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				1A0D24FE206DE904000BC472 /* RecordingEdit */,
+				1A386F80207ADB2C00CB76AB /* ChooseAudience */,
+			);
+			path = RecordUtilities;
+			sourceTree = "<group>";
+		};
+		1AB591082084188800451AA6 /* RecordUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				1AB591092084189F00451AA6 /* DirectRecordEditModal.swift */,
+				1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */,
+			);
+			path = RecordUtilities;
 			sourceTree = "<group>";
 		};
 		6BC074ED3A3E9E2376D08FB2 /* Pods */ = {
@@ -682,6 +704,7 @@
 				1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
+				1AB5910C208418D900451AA6 /* DirectEmojiViewModal.swift in Sources */,
 				1A386F82207F374600CB76AB /* FriendsTableViewCell.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
@@ -696,6 +719,7 @@
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
 				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
+				1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A386F88208176D100CB76AB /* DirectChatterSegmentView.swift in Sources */,
 				1A40B9CD20426F10006D61CC /* ChatterFeed.swift in Sources */,
