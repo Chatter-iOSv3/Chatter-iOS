@@ -13,7 +13,7 @@ import UICircularProgressRing
 import Firebase
 
 protocol RecordEditDelegate {
-    func performSegueToRecordEdit(recordedURL: URL)
+    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView)
 }
 
 class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
@@ -157,7 +157,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         self.recordedURL = getAudioFileUrl()
         
         // Bring up the recordEdit modal
-        self.recordEditDelegate?.performSegueToRecordEdit(recordedURL: self.recordedURL)
+        self.recordEditDelegate?.performSegueToRecordEdit(recordedURL: self.recordedURL, chatterRoom: self)
     }
     
     required init?(coder aDecoder: NSCoder) {

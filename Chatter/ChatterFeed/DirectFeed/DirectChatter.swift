@@ -34,6 +34,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
     var imageHeight:CGFloat = 100
     
     var recordedURL: URL!
+    var currChatterRoom: DirectChatterRoomView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? DirectRecordEditModal {
             destination.recordedUrl = self.recordedURL
+            destination.chatterRoom = self.currChatterRoom
         }
     }
     
@@ -204,9 +206,10 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         self.recordProgressRing.shouldShowValueText = false
     }
     
-    func performSegueToRecordEdit(recordedURL: URL) {
+    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView) {
         print("DELEGATE")
         self.recordedURL = recordedURL
+        self.currChatterRoom = chatterRoom
         performSegue(withIdentifier: "showDirectRecordEdit", sender: self)
     }
     

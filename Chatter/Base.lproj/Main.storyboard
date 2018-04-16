@@ -460,7 +460,9 @@
                                         <state key="normal" image="X"/>
                                         <connections>
                                             <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="tUe-Xt-WfI"/>
-                                            <action selector="closeRecordEdit:" destination="eOO-cO-i87" eventType="touchUpInside" id="NvW-eq-tCG"/>
+                                            <action selector="closeDirectRecordEdit:" destination="wae-PY-mXW" eventType="touchUpInside" id="TJ8-2i-ev5"/>
+                                            <action selector="closeDirectRecordModal:" destination="yiy-HK-F30" eventType="touchUpInside" id="cso-SR-yfx"/>
+                                            <action selector="closeDirectRecordModal:" destination="wae-PY-mXW" eventType="touchUpInside" id="qgF-pg-8Pg"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQN-QG-r2U">
@@ -468,6 +470,9 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.60320021899999998" green="0.85191521069999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="TTK-lb-HDH" appends="YES" id="n2O-ZP-iDo"/>
+                                        </connections>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6K-Ea-m11">
                                         <rect key="frame" x="296" y="3" width="35" height="35"/>
@@ -498,6 +503,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFX-8g-cLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="wae-PY-mXW" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="TTK-lb-HDH">
+                    <connections>
+                        <action selector="playRecordingWithSender:" destination="yiy-HK-F30" id="PTo-Fa-z8D"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4610" y="-1511"/>
         </scene>

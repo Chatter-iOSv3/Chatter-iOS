@@ -13,18 +13,11 @@ import AudioToolbox
 import Firebase
 import AKPickerView_Swift
 
-protocol DirectTrashRecordingDelegate
-{
-    func trashRecording()
-}
-
 class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, AKPickerViewDataSource, AKPickerViewDelegate {
     
     @IBOutlet weak var recordEditModalView: UIView!
     @IBOutlet weak var recordWaveFormView: UIView!
     @IBOutlet weak var filtersPickerView: AKPickerView!
-    
-    var trashDelegate:DirectTrashRecordingDelegate?
     
     var audioID: String?
     
@@ -32,6 +25,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
     var player : AVAudioPlayer?
     var recordedUrl: URL?
     var multiplier: Float?
+    var chatterRoom: DirectChatterRoomView!
     
     // Initialize Firebase vars
     let storage = Storage.storage()
@@ -43,8 +37,6 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
     var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Running", "BadMouth", "Emoji"]
     
     var addIntent: Int = 0
-    
-    var friendsList: [LandingRecord.friendItem]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,11 +83,6 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
     }
     
     // Actions --------------------------------------------------------------------------------------
-    
-    @IBAction func closeRecordEdit(_ sender: Any) {
-        trashDelegate?.trashRecording()
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func confirmRecording(sender: AnyObject) {}
     
@@ -183,6 +170,14 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
             self.addIntent = 0
             performSegue(withIdentifier: "showDirectEmojiPicker", sender: nil)
         }
+    }
+    
+    @IBAction func closeDirectRecordModal(_ sender: Any) {
+        self.player?.stop()
+        
+        self.chatterRoom.finishedRecording = false
+        
+        dismiss(animated: true, completion: nil)
     }
     
     // OTHER UTILITIES --------------------------------------------------
