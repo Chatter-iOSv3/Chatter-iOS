@@ -21,6 +21,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var audioLength: Double!
     
     var waveView: UIView?
+    var waveColor: UIColor?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -101,7 +102,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         let audioDuration = asset.duration
         let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
         
-        self .audioLength = audioDurationSeconds
+        self.audioLength = audioDurationSeconds
         
         return Float(audioDurationSeconds * 25)
     }
@@ -113,13 +114,14 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         let buf = AVAudioPCMBuffer(pcmFormat: format!, frameCapacity: UInt32(file.length))//Buffer
         try! file.read(into: buf!)//Read Floats
         
-        let waveForm = DrawWaveform()
+        let waveForm = DrawDirectWaveForm()
         waveForm.frame.size.width = CGFloat(self.audioLength * 25)
         waveForm.frame.size.height = 65
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
         // Set multiplier
         waveForm.multiplier = self.multiplier
+        waveForm.waveColor = self.waveColor
         
         //Store the array of floats in the struct
         waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))

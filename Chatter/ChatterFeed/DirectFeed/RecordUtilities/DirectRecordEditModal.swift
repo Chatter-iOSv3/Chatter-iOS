@@ -26,10 +26,12 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
     var recordedUrl: URL?
     var multiplier: Float?
     var chatterRoom: DirectChatterRoomView!
+    var chatterRoomID: String!
     
     // Initialize Firebase vars
     let storage = Storage.storage()
     var ref: DatabaseReference!
+    var userID: String!
     
     // Image Asset Items
     var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "BadMouth")!, UIImage(named: "Plus")!]
@@ -42,6 +44,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         super.viewDidLoad()
         
         ref = Database.database().reference()
+        userID = Auth.auth().currentUser?.uid
         
         recordEditModalView.layer.cornerRadius = 20
         recordWaveFormView.layer.cornerRadius = 20
@@ -60,6 +63,9 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         self.sizeControlFilterImageArr()
         self.loadPickerLabelArray()
     }
+    
+        // Actions --------------------------------------------------------------------------------------
+    
     
     @IBAction func playRecording(sender: Any) {
         let url = self.recordedUrl!
@@ -82,8 +88,6 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         }
     }
     
-    // Actions --------------------------------------------------------------------------------------
-    
     @IBAction func confirmRecording(sender: AnyObject) {}
     
     @IBAction func animateButton(sender: UIButton) {
@@ -100,6 +104,45 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         },
                        completion: { Void in()  }
         )
+    }
+    
+    @IBAction func closeDirectRecordModal(_ sender: Any) {
+        self.player?.stop()
+        
+        self.chatterRoom.finishedRecording = false
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func saveDirectRecording(_ sender: Any) {
+        // Initialize FB storage ref
+        let storageRef = storage.reference()
+        self.audioID = self.randomString(length: 10)
+        
+        // Get audio url and generate a unique ID for the audio file
+        let audioUrl = self.recordedUrl!
+        let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+        
+        // Saving the recording to FB
+        let audioRef = storageRef.child("audio/\(fullAudioID)")
+        
+        audioRef.putFile(from: audioUrl, metadata: nil) { metadata, error in
+            if let error = error {
+                print(error)
+            } else {
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                //                    let downloadURL = metadata!.downloadURL()
+                
+                self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").observeSingleEvent(of: .value, with: { (snapshot) in
+                    let timestamp = String(Int(NSDate().timeIntervalSince1970))
+                    let childUpdates = [timestamp: fullAudioID]
+                    
+                    self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").updateChildValues(childUpdates) {error, ref in
+                        print("UPDATE PROCESS COMPLETE: \(childUpdates)")
+                    }
+                })
+            }
+        }
     }
     
     // Waveform Methods -------------------------------------------------------
@@ -172,14 +215,6 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         }
     }
     
-    @IBAction func closeDirectRecordModal(_ sender: Any) {
-        self.player?.stop()
-        
-        self.chatterRoom.finishedRecording = false
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
     // OTHER UTILITIES --------------------------------------------------
     
     func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
@@ -227,5 +262,21 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         for label in self.filterLabelArr {
             self.filtersPickerView.labelArray.append(label)
         }
+    }
+    
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
 }

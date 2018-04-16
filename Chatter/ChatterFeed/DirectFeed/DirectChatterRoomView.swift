@@ -13,14 +13,15 @@ import UICircularProgressRing
 import Firebase
 
 protocol RecordEditDelegate {
-    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView)
+    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView, chatterRoomID: String)
 }
 
 class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     var shouldSetupConstraints = true
-    var recordingURLArr: NSArray!
+    var recordingURLDict: NSDictionary!
     var chatterRoomView: UIView?
     
+    var chatterRoomID: String!
     var recordEditDelegate : RecordEditDelegate?
     
     var recordProgressRing: UICircularProgressRingView!
@@ -29,6 +30,8 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     var audioRecorder: AVAudioRecorder?
     var player : AVAudioPlayer?
     var recordedURL: URL!
+    
+    var userID: String = (Auth.auth().currentUser?.uid)!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,13 +56,29 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         chatterRoomScrollView.frame.size.width = 300
         chatterRoomScrollView.backgroundColor = .clear
         
-        for chatterRoomSegment in self.recordingURLArr {
-            let chatterRoomSegment = chatterRoomSegment as! String
+        let chatterRoomSegmentTupleArr = self.recordingURLDict.sorted{
+            guard let d1 = $0.key as? String, let d2 = $1.key as? String else { return false }
+            return d1 < d2
+        }
+        
+        for chatterRoomSegment in chatterRoomSegmentTupleArr {
+            let chatterRoomSegment = chatterRoomSegment.value as! String
+            let chatterRoomData = chatterRoomSegment.components(separatedBy: " | ")
             
-            var chatterRoomSegmentView = DirectChatterSegmentView()
+            let chatterSegmentUser = chatterRoomData.first
+            let chatterSegmentID = chatterRoomData.last
+            
+            let chatterRoomSegmentView = DirectChatterSegmentView()
             chatterRoomSegmentView.frame.size.height = 65
             chatterRoomSegmentView.frame.size.width = 100
             chatterRoomSegmentView.backgroundColor = .clear
+            
+            // Decides what color the wave forms are based on user
+            if (chatterSegmentUser! != self.userID) {
+                chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
+            } else {
+                chatterRoomSegmentView.waveColor = UIColor.white
+            }
             
             chatterRoomSegmentView.frame.origin.x = xPosition
             
@@ -68,7 +87,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             scrollViewContentSize+=imageWidth
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let localURL = documentsURL.appendingPathComponent("\(chatterRoomSegment.suffix(10)).m4a")
+            let localURL = documentsURL.appendingPathComponent("\(chatterSegmentID).m4a")
             chatterRoomSegmentView.generateAudioFile(audioURL: localURL, id: chatterRoomSegment)
             
             // Calculates running total of how long the scrollView needs to be with the variables
@@ -157,7 +176,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         self.recordedURL = getAudioFileUrl()
         
         // Bring up the recordEdit modal
-        self.recordEditDelegate?.performSegueToRecordEdit(recordedURL: self.recordedURL, chatterRoom: self)
+        self.recordEditDelegate?.performSegueToRecordEdit(recordedURL: self.recordedURL, chatterRoom: self, chatterRoomID: self.chatterRoomID)
     }
     
     required init?(coder aDecoder: NSCoder) {

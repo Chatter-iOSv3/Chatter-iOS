@@ -200,7 +200,8 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                     let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
                     
                     // Add ChatterRoomID to overall DB
-                    let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": ["0": fullAudioID]]]
+                    let timestamp = String(Int(NSDate().timeIntervalSince1970))
+                    let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": [timestamp: fullAudioID]]]
                     self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
                         // Close modal and redirect to Direct Messages page
                         self.dismiss(animated: true, completion: nil)

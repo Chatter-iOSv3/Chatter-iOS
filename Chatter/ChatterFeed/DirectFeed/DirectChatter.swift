@@ -34,7 +34,8 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
     var imageHeight:CGFloat = 100
     
     var recordedURL: URL!
-    var currChatterRoom: DirectChatterRoomView!
+    var currChatterRoomRecord: DirectChatterRoomView!
+    var currChatterRoomID: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,12 +72,12 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
                 
                 self.ref.child("chatterRooms").child(chatterRoomID).observeSingleEvent(of: .value, with: { (chatterRoomSnapshot) -> Void in
                     let chatterRoomValue = chatterRoomSnapshot.value as? NSDictionary
-                    if let chatterRoomSegments = chatterRoomValue?["chatterRoomSegments"] as? NSArray {
+                    if let chatterRoomSegments = chatterRoomValue?["chatterRoomSegments"] as? NSDictionary {
                         print("Segments Exist! \(users)")
-                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments)
+                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments, chatterRoomID: snapshot.key)
                         self.directChatterRoomsIDArray.append(snapshot.key)
                     }   else {
-                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: [])
+                        self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: [:], chatterRoomID: snapshot.key)
                         self.directChatterRoomsIDArray.append(snapshot.key)
                     }
                 })
@@ -87,13 +88,14 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? DirectRecordEditModal {
             destination.recordedUrl = self.recordedURL
-            destination.chatterRoom = self.currChatterRoom
+            destination.chatterRoom = self.currChatterRoomRecord
+            destination.chatterRoomID = self.currChatterRoomID
         }
     }
     
     // View Methods ----------------------------------------------------------------------------------
     
-    func constructDirectChatterRooms(users: String, chatterRoomSegments: NSArray) {
+    func constructDirectChatterRooms(users: String, chatterRoomSegments: NSDictionary, chatterRoomID: String) {
         // Generate the view for the ChatterSegment
         let newView = DirectChatterRoomView()
         newView.contentMode = UIViewContentMode.scaleAspectFit
@@ -102,7 +104,8 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newView.frame.origin.x = newView.frame.origin.x + 65
         newView.frame.origin.y = self.yPosition + 5
         newView.layer.cornerRadius = 30
-        newView.recordingURLArr = chatterRoomSegments
+        newView.recordingURLDict = chatterRoomSegments
+        newView.chatterRoomID = chatterRoomID
         newView.initializeChatterRoomScrollView()
         
         // Generate Segment Divider
@@ -206,10 +209,11 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         self.recordProgressRing.shouldShowValueText = false
     }
     
-    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView) {
+    func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView, chatterRoomID: String) {
         print("DELEGATE")
         self.recordedURL = recordedURL
-        self.currChatterRoom = chatterRoom
+        self.currChatterRoomRecord = chatterRoom
+        self.currChatterRoomID = chatterRoomID
         performSegue(withIdentifier: "showDirectRecordEdit", sender: self)
     }
     

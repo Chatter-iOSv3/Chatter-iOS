@@ -16,6 +16,7 @@ class DrawDirectWaveForm: UIView {
     var points:[CGFloat] = []
     
     var multiplier: Float?
+    var waveColor: UIColor?
     
     //This is where we're going to draw the waveform
     override func draw(_ rect: CGRect) {
@@ -61,7 +62,7 @@ class DrawDirectWaveForm: UIView {
         
         aPath.lineJoinStyle = .round
         
-        UIColor.white.set()
+        self.waveColor?.set()
         aPath.stroke()
         
         //If you want to fill it as well
@@ -93,7 +94,7 @@ class DrawDirectWaveForm: UIView {
         aPath2.lineJoinStyle = .round
         
         //If you want to stroke it with a Orange color
-        UIColor.white.set()
+        self.waveColor?.set()
         
         //Reflection and make it transparent
         //        aPath2.stroke(with: CGBlendMode.normal, alpha: 0.5)

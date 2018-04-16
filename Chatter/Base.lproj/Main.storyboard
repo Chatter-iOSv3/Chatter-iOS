@@ -460,6 +460,7 @@
                                         <state key="normal" image="X"/>
                                         <connections>
                                             <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="tUe-Xt-WfI"/>
+                                            <action selector="animateButtonWithSender:" destination="yiy-HK-F30" eventType="touchUpInside" id="uCI-Lj-DuW"/>
                                             <action selector="closeDirectRecordEdit:" destination="wae-PY-mXW" eventType="touchUpInside" id="TJ8-2i-ev5"/>
                                             <action selector="closeDirectRecordModal:" destination="yiy-HK-F30" eventType="touchUpInside" id="cso-SR-yfx"/>
                                             <action selector="closeDirectRecordModal:" destination="wae-PY-mXW" eventType="touchUpInside" id="qgF-pg-8Pg"/>
@@ -479,8 +480,8 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="RightArrowCircle"/>
                                         <connections>
-                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="JTg-UZ-595"/>
-                                            <action selector="confirmRecordingWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="SuW-Ha-84o"/>
+                                            <action selector="animateButtonWithSender:" destination="yiy-HK-F30" eventType="touchUpInside" id="ydb-wc-Zzu"/>
+                                            <action selector="saveDirectRecording:" destination="yiy-HK-F30" eventType="touchUpInside" id="los-Jx-CNx"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DiL-a8-QUz" customClass="AKPickerView" customModule="AKPickerView_Swift">
