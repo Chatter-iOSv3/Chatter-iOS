@@ -18,7 +18,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var player: AVAudioPlayer?
     var multiplier: Float?
     var audioPathURL: URL!
-    var audioLength: Double!
+    var audioLength: Float!
     
     var waveView: UIView?
     var waveColor: UIColor?
@@ -28,13 +28,6 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         
         let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
         self.addGestureRecognizer(playGesture)
-        
-        let waveView = UIView()
-        waveView.frame.size.height = 65
-        waveView.frame.size.width = 100
-        waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
-        waveView.layer.cornerRadius = 20
-        self.addSubview(waveView)
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopChatterFeedAudio(notification:)), name: .stopChatterFeedAudio, object: nil)
     }
@@ -100,11 +93,11 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     func calculateMultiplierWithAudio(audioUrl: URL) -> Float {
         let asset = AVURLAsset(url: audioUrl)
         let audioDuration = asset.duration
-        let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+        let audioDurationSeconds = Float(CMTimeGetSeconds(audioDuration))
         
         self.audioLength = audioDurationSeconds
         
-        return Float(audioDurationSeconds * 25)
+        return Float((audioDurationSeconds * 9.5) / (audioDurationSeconds / 20))
     }
     
     func generateWaveForm(audioURL: URL) {
@@ -115,7 +108,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         try! file.read(into: buf!)//Read Floats
         
         let waveForm = DrawDirectWaveForm()
-        waveForm.frame.size.width = CGFloat(self.audioLength * 25)
+        waveForm.frame.size.width = CGFloat(300 * (self.audioLength / 20))
         waveForm.frame.size.height = 65
         waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         

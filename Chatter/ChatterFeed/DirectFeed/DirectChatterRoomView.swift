@@ -40,7 +40,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     }
     
     func initializeChatterRoomScrollView() {
-        let imageWidth:CGFloat = 100
+        var imageWidth:CGFloat = 300
         var imageHeight:CGFloat = 60
         var xPosition:CGFloat = 0
         var scrollViewContentSize:CGFloat=0;
@@ -62,19 +62,23 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         }
         
         for chatterRoomSegment in chatterRoomSegmentTupleArr {
-            let chatterRoomSegment = chatterRoomSegment.value as! String
-            let chatterRoomData = chatterRoomSegment.components(separatedBy: " | ")
+            let chatterRoomSegment = chatterRoomSegment.value as! NSDictionary
+            let chatterRoomData = chatterRoomSegment["fullAudioID"] as! String
+            let chatterRoomDataArr = chatterRoomData.components(separatedBy: " | ")
             
-            let chatterSegmentUser = chatterRoomData.first
-            let chatterSegmentID = chatterRoomData.last
+            let chatterSegmentUser = chatterRoomDataArr[0]
+            let chatterSegmentID = chatterRoomDataArr[1]
+            
+            let chatterSegmentLength = chatterRoomSegment["duration"] as! String
+            imageWidth = CGFloat((Float(chatterSegmentLength)! / 20.0) * 300.0)
             
             let chatterRoomSegmentView = DirectChatterSegmentView()
             chatterRoomSegmentView.frame.size.height = 65
-            chatterRoomSegmentView.frame.size.width = 100
+            chatterRoomSegmentView.frame.size.width = imageWidth
             chatterRoomSegmentView.backgroundColor = .clear
             
             // Decides what color the wave forms are based on user
-            if (chatterSegmentUser! != self.userID) {
+            if (chatterSegmentUser != self.userID) {
                 chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
             } else {
                 chatterRoomSegmentView.waveColor = UIColor.white
@@ -88,7 +92,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let localURL = documentsURL.appendingPathComponent("\(chatterSegmentID).m4a")
-            chatterRoomSegmentView.generateAudioFile(audioURL: localURL, id: chatterRoomSegment)
+            chatterRoomSegmentView.generateAudioFile(audioURL: localURL, id: chatterRoomData)
             
             // Calculates running total of how long the scrollView needs to be with the variables
             chatterRoomScrollView.contentSize = CGSize(width: scrollViewContentSize, height: imageHeight)

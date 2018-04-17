@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import AVFoundation
 
 class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var chooseAudienceModal: UIView!
@@ -201,7 +202,14 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                     
                     // Add ChatterRoomID to overall DB
                     let timestamp = String(Int(NSDate().timeIntervalSince1970))
-                    let chatterRoomData: [String: [String: [String: String]]] = [newChatterRoomID: ["chatterRoomSegments": [timestamp: fullAudioID]]]
+                    
+                    let asset = AVURLAsset(url: audioUrl)
+                    let audioDuration = asset.duration
+                    let audioDurationSeconds = Float(CMTimeGetSeconds(audioDuration))
+                    
+                    let childUpdates = [timestamp: ["fullAudioID": fullAudioID, "duration": audioDurationSeconds]]
+                    
+                    let chatterRoomData: [String: [String: [String: [String: String]]]] = [newChatterRoomID: ["chatterRoomSegments": [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds)]]]]
                     self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
                         // Close modal and redirect to Direct Messages page
                         self.dismiss(animated: true, completion: nil)
