@@ -207,9 +207,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                     let audioDuration = asset.duration
                     let audioDurationSeconds = Float(CMTimeGetSeconds(audioDuration))
                     
-                    let childUpdates = [timestamp: ["fullAudioID": fullAudioID, "duration": audioDurationSeconds]]
-                    
-                    let chatterRoomData: [String: [String: [String: [String: String]]]] = [newChatterRoomID: ["chatterRoomSegments": [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds)]]]]
+                    let chatterRoomData: [String: [String: [String: [String: String]]]] = [newChatterRoomID: ["chatterRoomSegments": [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds), "readStatus": "unread"]]]]
                     self.ref.child("chatterRooms").updateChildValues(chatterRoomData) { (error, ref) -> Void in
                         // Close modal and redirect to Direct Messages page
                         self.dismiss(animated: true, completion: nil)

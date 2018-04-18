@@ -140,7 +140,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
                     let audioDuration = asset.duration
                     let audioDurationSeconds = Float(CMTimeGetSeconds(audioDuration))
                     
-                    let childUpdates = [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds)]]
+                    let childUpdates = [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds), "readStatus": "unread"]]
                     
                     self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").updateChildValues(childUpdates) {error, ref in
                         print("UPDATE PROCESS COMPLETE: \(childUpdates)")

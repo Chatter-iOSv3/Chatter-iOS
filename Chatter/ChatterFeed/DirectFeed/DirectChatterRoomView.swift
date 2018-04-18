@@ -62,12 +62,16 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         }
         
         for chatterRoomSegment in chatterRoomSegmentTupleArr {
+            let chatterRoomTimestamp = chatterRoomSegment.key as! String
             let chatterRoomSegment = chatterRoomSegment.value as! NSDictionary
+            
             let chatterRoomData = chatterRoomSegment["fullAudioID"] as! String
             let chatterRoomDataArr = chatterRoomData.components(separatedBy: " | ")
             
             let chatterSegmentUser = chatterRoomDataArr[0]
             let chatterSegmentID = chatterRoomDataArr[1]
+            
+            let chatterSegmentReadStatus = chatterRoomSegment["readStatus"] as! String
             
             let chatterSegmentLength = chatterRoomSegment["duration"] as! String
             imageWidth = CGFloat((Float(chatterSegmentLength)! / 20.0) * 300.0)
@@ -76,12 +80,18 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             chatterRoomSegmentView.frame.size.height = 65
             chatterRoomSegmentView.frame.size.width = imageWidth
             chatterRoomSegmentView.backgroundColor = .clear
+            chatterRoomSegmentView.chatterRoomID = self.chatterRoomID
+            chatterRoomSegmentView.chatterRoomTimestamp = chatterRoomTimestamp as! String
             
             // Decides what color the wave forms are based on user
-            if (chatterSegmentUser != self.userID) {
+            if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "unread") {
                 chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
-            } else {
+            } else if (chatterSegmentUser == self.userID && chatterSegmentReadStatus == "unread") {
                 chatterRoomSegmentView.waveColor = UIColor.white
+            }   else if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "read") {
+                chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 0.7)
+            }   else if (chatterSegmentUser == self.userID && chatterSegmentReadStatus == "read") {
+                chatterRoomSegmentView.waveColor = UIColor.lightGray
             }
             
             chatterRoomSegmentView.frame.origin.x = xPosition

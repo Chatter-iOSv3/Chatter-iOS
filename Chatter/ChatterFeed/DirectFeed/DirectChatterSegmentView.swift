@@ -20,11 +20,20 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var audioPathURL: URL!
     var audioLength: Float!
     
+    var chatterRoomID: String!
+    var chatterRoomTimestamp: String!
+    
+    var ref: DatabaseReference!
+    var userID: String!
+    
     var waveView: UIView?
     var waveColor: UIColor?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        ref = Database.database().reference()
+        userID = Auth.auth().currentUser?.uid
         
         let playGesture = UITapGestureRecognizer(target: self, action:  #selector(self.playAudio (_:)))
         self.addGestureRecognizer(playGesture)
@@ -54,6 +63,8 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         player?.currentTime = 0
         //            player?.volume = 10.0
         player?.play()
+        
+        self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").child(self.chatterRoomTimestamp).child("readStatus").setValue("read")
     }
     
     @objc func stopChatterFeedAudio(notification:NSNotification) {
