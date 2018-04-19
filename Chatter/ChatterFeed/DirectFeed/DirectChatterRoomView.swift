@@ -133,6 +133,8 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         
         let longRecordGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapRecord))
         chatterRoomScrollView.addGestureRecognizer(longRecordGesture)
+        chatterRoomScrollView.showsHorizontalScrollIndicator = false
+        chatterRoomScrollView.showsVerticalScrollIndicator = false
         
         self.addSubview(chatterRoomView)
         self.addSubview(chatterRoomScrollView)
