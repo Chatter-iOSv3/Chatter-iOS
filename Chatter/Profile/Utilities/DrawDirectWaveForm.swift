@@ -147,7 +147,6 @@ class DrawDirectWaveForm: UIView {
         
         //convert [Float] to [CGFloat] array
         self.points = downSampledData.map{CGFloat($0)}
-        
     }
     
     func generateRandomColor() -> UIColor {

@@ -22,6 +22,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     var chatterRoomView: UIView?
     
     var chatterRoomID: String!
+    var chatterRoomUsers: String!
     var recordEditDelegate : RecordEditDelegate?
     
     var recordProgressRing: UICircularProgressRingView!
@@ -31,12 +32,21 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     var player : AVAudioPlayer?
     var recordedURL: URL!
     
+    // Initialize Firebase
+    var ref: DatabaseReference!
     var userID: String = (Auth.auth().currentUser?.uid)!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        ref = Database.database().reference()
+        
         self.finishedRecording = false
+        
+        // Set observer for any DB changes in the Chatter Room
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.observeForChatterRoomChanges()
+        }
     }
     
     func initializeChatterRoomScrollView() {
@@ -85,12 +95,16 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             
             // Decides what color the wave forms are based on user
             if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "unread") {
+                chatterRoomSegmentView.readStatus = "unread"
                 chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
             } else if (chatterSegmentUser == self.userID && chatterSegmentReadStatus == "unread") {
+                chatterRoomSegmentView.readStatus = "unread"
                 chatterRoomSegmentView.waveColor = UIColor.white
             }   else if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "read") {
-                chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 0.7)
+                chatterRoomSegmentView.readStatus = "read"
+                chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 0.1)
             }   else if (chatterSegmentUser == self.userID && chatterSegmentReadStatus == "read") {
+                chatterRoomSegmentView.readStatus = "read"
                 chatterRoomSegmentView.waveColor = UIColor.lightGray
             }
             
@@ -113,6 +127,31 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         
         self.addSubview(chatterRoomView)
         self.addSubview(chatterRoomScrollView)
+    }
+    
+    func observeForChatterRoomChanges() {
+        self.ref.child("chatterRooms").child(self.chatterRoomID).observe(.childChanged, with: { (snapshot) -> Void in
+            if let segmentsValue = snapshot.value as? NSDictionary {
+                self.recordingURLDict = segmentsValue
+                self.rerenderChatterRoomScrollView()
+                
+                // Only call removeOldSubviews if wasnt called by Read/Unread delegate
+                self.removeOldSubviews()
+            }
+        })
+    }
+    
+    // Adjusted Chatter room initializer called when DB changes
+    func rerenderChatterRoomScrollView() {
+        self.initializeChatterRoomScrollView()
+    }
+    
+    func removeOldSubviews() {
+        for (index, view) in self.subviews.enumerated() {
+            if (index == 1 || index == 2) {
+                view.removeFromSuperview()
+            }
+        }
     }
     
     @objc func longTapRecord(_ sender: AnyObject) {

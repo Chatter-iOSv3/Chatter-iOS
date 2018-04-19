@@ -26,8 +26,10 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var ref: DatabaseReference!
     var userID: String!
     
+    var readStatus: String!
     var waveView: UIView?
     var waveColor: UIColor?
+    var waveForm: DrawDirectWaveForm!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,7 +66,15 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         //            player?.volume = 10.0
         player?.play()
         
-        self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").child(self.chatterRoomTimestamp).child("readStatus").setValue("read")
+        // When finished playing, it should notify the Direct parent
+        player?.delegate = self as? AVAudioPlayerDelegate
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("SEGMENT DONE PLAYING")
+        if (self.readStatus == "unread") {
+            self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").child(self.chatterRoomTimestamp).child("readStatus").setValue("read")
+        }
     }
     
     @objc func stopChatterFeedAudio(notification:NSNotification) {
@@ -118,20 +128,20 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         let buf = AVAudioPCMBuffer(pcmFormat: format!, frameCapacity: UInt32(file.length))//Buffer
         try! file.read(into: buf!)//Read Floats
         
-        let waveForm = DrawDirectWaveForm()
-        waveForm.frame.size.width = CGFloat(300 * (self.audioLength / 20))
-        waveForm.frame.size.height = 65
-        waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
+        self.waveForm = DrawDirectWaveForm()
+        self.waveForm.frame.size.width = CGFloat(300 * (self.audioLength / 20))
+        self.waveForm.frame.size.height = 65
+        self.waveForm.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
         // Set multiplier
-        waveForm.multiplier = self.multiplier
-        waveForm.waveColor = self.waveColor
+        self.waveForm.multiplier = self.multiplier
+        self.waveForm.waveColor = self.waveColor
         
         //Store the array of floats in the struct
-        waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
+        self.waveForm.arrayFloatValues = Array(UnsafeBufferPointer(start: buf?.floatChannelData?[0], count:Int(buf!.frameLength)))
         
         UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: {
-            self.addSubview(waveForm)
+            self.addSubview(self.waveForm)
         }, completion: nil)
     }
 }

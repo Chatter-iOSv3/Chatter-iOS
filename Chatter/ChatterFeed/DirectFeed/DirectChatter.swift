@@ -13,6 +13,8 @@ import Firebase
 import UICircularProgressRing
 
 class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate {
+    
+    
     @IBOutlet weak var directScrollView: UIScrollView!
     @IBOutlet var directView: UIView!
     var recordProgressRing: UICircularProgressRingView!
@@ -106,6 +108,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newView.layer.cornerRadius = 30
         newView.recordingURLDict = chatterRoomSegments
         newView.chatterRoomID = chatterRoomID
+        newView.chatterRoomUsers = users
         newView.initializeChatterRoomScrollView()
         
         // Generate Segment Divider
@@ -210,7 +213,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
     }
     
     func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView, chatterRoomID: String) {
-        print("DELEGATE")
         self.recordedURL = recordedURL
         self.currChatterRoomRecord = chatterRoom
         self.currChatterRoomID = chatterRoomID
