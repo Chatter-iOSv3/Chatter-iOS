@@ -120,6 +120,15 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             
             // Calculates running total of how long the scrollView needs to be with the variables
             chatterRoomScrollView.contentSize = CGSize(width: scrollViewContentSize, height: imageHeight)
+            
+            // Automatically starting user and the right-most new Directs
+            var bottomOffset: CGPoint;
+            if (scrollViewContentSize - 300 > 0) {
+                bottomOffset = CGPoint(x: scrollViewContentSize - 300, y: 0)
+            }   else {
+                bottomOffset = CGPoint(x: 0, y: 0)
+            }
+            chatterRoomScrollView.setContentOffset(bottomOffset, animated: false)
         }
         
         let longRecordGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapRecord))
