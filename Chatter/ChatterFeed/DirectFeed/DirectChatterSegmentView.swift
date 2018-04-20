@@ -22,6 +22,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     
     var chatterRoomID: String!
     var chatterRoomTimestamp: String!
+    var chatterSegmentUser: String!
     
     var ref: DatabaseReference!
     var userID: String!
@@ -72,8 +73,11 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("SEGMENT DONE PLAYING")
-        if (self.readStatus == "unread") {
+        if (self.readStatus == "unread" && self.chatterSegmentUser != self.userID) {
             self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").child(self.chatterRoomTimestamp).child("readStatus").setValue("read")
+            
+            // Send notification to Parent to update badge count
+            NotificationCenter.default.post(name: .directChatterInboxChanged, object: nil, userInfo: ["readStatus": "read", "chatterSegmentID": self.chatterRoomTimestamp])
         }
     }
     

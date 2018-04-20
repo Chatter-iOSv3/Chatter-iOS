@@ -91,12 +91,16 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             chatterRoomSegmentView.frame.size.width = imageWidth
             chatterRoomSegmentView.backgroundColor = .clear
             chatterRoomSegmentView.chatterRoomID = self.chatterRoomID
-            chatterRoomSegmentView.chatterRoomTimestamp = chatterRoomTimestamp as! String
+            chatterRoomSegmentView.chatterRoomTimestamp = chatterRoomTimestamp
+            chatterRoomSegmentView.chatterSegmentUser = chatterSegmentUser 
             
             // Decides what color the wave forms are based on user
             if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "unread") {
                 chatterRoomSegmentView.readStatus = "unread"
                 chatterRoomSegmentView.waveColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
+                
+                // Send notification to Parent to update badge count
+                NotificationCenter.default.post(name: .directChatterInboxChanged, object: nil, userInfo: ["readStatus": "unread", "chatterSegmentID": chatterSegmentID])
             } else if (chatterSegmentUser == self.userID && chatterSegmentReadStatus == "unread") {
                 chatterRoomSegmentView.readStatus = "unread"
                 chatterRoomSegmentView.waveColor = UIColor.white

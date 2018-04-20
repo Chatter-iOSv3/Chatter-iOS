@@ -131,4 +131,7 @@ extension Notification.Name {
     
     // When Chatter audio is changed, stops previous play
     static let stopChatterFeedAudio = Notification.Name("stopChatterFeedAudio")
+    
+    // When DirectChatter inbox has activity
+    static let directChatterInboxChanged = Notification.Name("directChatterInboxChanged")
 }

@@ -366,6 +366,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35W-h6-tSX">
+                                <rect key="frame" x="314" y="116" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.24215632446416735" blue="0.15284854019521676" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="0">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bvE-9a-5Jw"/>
@@ -374,6 +382,7 @@
                         <outlet property="buttonBarView" destination="xfh-hF-Rgs" id="CU9-JU-uZ2"/>
                         <outlet property="containerView" destination="YGd-OQ-x14" id="oCM-a2-ZFz"/>
                         <outlet property="curveViewPlaceholder" destination="IoS-A6-n7K" id="UzC-si-Byd"/>
+                        <outlet property="directChatterInboxBadge" destination="35W-h6-tSX" id="2XM-6I-7YY"/>
                         <outlet property="feedPageAvatarView" destination="utb-iL-Xpf" id="xrA-sr-RmS"/>
                     </connections>
                 </viewController>

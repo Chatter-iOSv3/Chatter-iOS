@@ -12,6 +12,10 @@ import XLPagerTabStrip
 class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var curveViewPlaceholder: UIView!
     @IBOutlet weak var feedPageAvatarView: UIView!
+    @IBOutlet weak var directChatterInboxBadge: UIButton!
+    
+    var directChatterInboxBadgeCount: Int! = 0
+    var directChatterUnreadArr: [String]! = []
     
     var chatterViewController: UIViewController?
     var directViewController: UIViewController?
@@ -46,11 +50,19 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
                 self?.configureCellsOnDirect(oldCell: oldCell, newCell: newCell)
             }
         }
+        
+        // Initial styling for inboxBadge
+        directChatterInboxBadge.alpha = 0.0
+        directChatterInboxBadge.layer.cornerRadius = directChatterInboxBadge.frame.size.height / 2
+        
         super.viewDidLoad()
         
         // Listens for starting Direct Chatter and ProfileImage change
         NotificationCenter.default.addObserver(self, selector: #selector(goToDirectChatter(notification:)), name: .startDirectChatter, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(profileImageChanged(notification:)), name: .profileImageChanged, object: nil)
+
+        // Listens for inbox activity
+        NotificationCenter.default.addObserver(self, selector: #selector(directChatterInboxChanged(notification:)), name: .directChatterInboxChanged, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -169,6 +181,28 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     @objc func profileImageChanged(notification:NSNotification) {
         if let image = notification.userInfo?["image"] as? UIImage {
             self.feedPageAvatarView.backgroundColor = UIColor(patternImage: image)
+        }
+    }
+    
+    @objc func directChatterInboxChanged(notification: NSNotification) {
+        let readStatus = notification.userInfo?["readStatus"] as? String
+        let id = notification.userInfo?["chatterSegmentID"] as? String
+        
+        if (!self.directChatterUnreadArr.contains(id!)) {
+            if (readStatus == "unread") {
+                self.directChatterInboxBadgeCount = self.directChatterInboxBadgeCount + 1
+                self.directChatterInboxBadge.setTitle(String(self.directChatterInboxBadgeCount), for: .normal)
+                self.directChatterInboxBadge.alpha = 1.0
+            }   else if (readStatus == "read") {
+                self.directChatterInboxBadgeCount = self.directChatterInboxBadgeCount - 1
+                self.directChatterInboxBadge.setTitle(String(self.directChatterInboxBadgeCount), for: .normal)
+                
+                if (self.directChatterInboxBadgeCount == 0) {
+                    self.directChatterInboxBadge.alpha = 0.0
+                }
+            }
+            
+            self.directChatterUnreadArr.append(id!)
         }
     }
 }
