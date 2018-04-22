@@ -143,6 +143,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
                     let childUpdates = [timestamp: ["fullAudioID": fullAudioID, "duration": String(audioDurationSeconds), "readStatus": "unread"]]
                     
                     self.ref.child("chatterRooms").child(self.chatterRoomID).child("chatterRoomSegments").updateChildValues(childUpdates) {error, ref in
+                        self.dismiss(animated: true, completion: nil)
                         print("UPDATE PROCESS COMPLETE: \(childUpdates)")
                     }
                 })
@@ -255,7 +256,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
         // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
