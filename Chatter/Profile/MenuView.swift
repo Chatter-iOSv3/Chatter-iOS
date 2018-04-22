@@ -271,7 +271,9 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             }
             let image = UIImage(data: data as Data)
             
-            self.profileImageView.backgroundColor = UIColor(patternImage: image!)
+            let resizedSelectedImage = self.resizeImage(image: image!, targetSize: CGSize(width:90, height:90))
+            
+            self.profileImageView.backgroundColor = UIColor(patternImage: resizedSelectedImage)
             
             // Send loaded profile image to Feed page
             self.sendProfileImageToFeeds(image: image!)

@@ -23,9 +23,9 @@ class BubbleListCell: UITableViewCell {
                        initialSpringVelocity: CGFloat(12.0),
                        options: [],
                        animations: {
-                        self.landingFeedSegment.frame.size.width = 60
-                        self.landingFeedSegment.frame.size.height = 60
-                        self.landingFeedSegment.layer.cornerRadius = 30
+                        self.landingFeedSegment.frame.size.width = 50
+                        self.landingFeedSegment.frame.size.height = 50
+                        self.landingFeedSegment.layer.cornerRadius = 25
         },
                        completion: { Void in()  }
         )

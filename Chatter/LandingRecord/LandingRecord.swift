@@ -185,13 +185,16 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 print(error)
             }
             currImage = UIImage(data: data as Data)
-            newView.backgroundColor = UIColor(patternImage: currImage!)
+            
+            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 50, height:  50))
+            
+            newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
         })
     }
     
     func setBubbleLabel(firstnameLetter: String, newView: UIView) {
         // Label Avatar button
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         label.textAlignment = .center
         label.font = label.font.withSize(20)
         label.textColor = .white
@@ -538,6 +541,32 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 self.friendsList.append(newFriendItem)
             }
         }
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
     // Misc ---------------------------------------------------------------------------
