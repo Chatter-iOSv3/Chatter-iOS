@@ -39,8 +39,11 @@ class DrawWaveform: UIView {
         // PLACEHOLDER, SETTING RANDOM COLORS FOR NOW ************************
 //        let randomColor = generateRandomColor()
         
+        // Adder for random Amplitude
+        var ampAdderArr = [Int]()
+        
         //Loop the array
-        for _ in self.points{
+        for (index, _) in self.points.enumerated(){
             //Distance between points
             var x:CGFloat = 5.0
             //next location to draw
@@ -48,8 +51,20 @@ class DrawWaveform: UIView {
             
             //y is the amplitude of each square, 2 is the max height upwards
             var yAmplitude = aPath.currentPoint.y - (self.points[f] * 150) - 1.0
+            print("1: \(yAmplitude)")
             if (yAmplitude <= 10) {
                 yAmplitude = 10
+                
+                ampAdderArr.append(0)
+            } else if (yAmplitude >= 27) {
+                var ampAdder = Int(arc4random_uniform(5))
+                yAmplitude = CGFloat(27 - ampAdder)
+                
+                ampAdderArr.append(ampAdder)
+            }   else {
+                yAmplitude = yAmplitude - 5
+                
+                ampAdderArr.append(5)
             }
             aPath.addLine(to: CGPoint(x:aPath.currentPoint.x, y:yAmplitude))
             
@@ -71,14 +86,19 @@ class DrawWaveform: UIView {
         aPath2.move(to: CGPoint(x:0.0 , y:rect.height/2 ))
         
         //Reflection of waveform
-        for _ in self.points{
+        for (index, _) in self.points.enumerated(){
             var x:CGFloat = 5.0
             aPath2.move(to: CGPoint(x:aPath2.currentPoint.x + x , y:aPath2.currentPoint.y ))
             
             //y is the amplitude of each square, 62 is max height downwards
             var yAmplitude2 = aPath2.currentPoint.y - ((-1.0 * self.points[f]) * 150)
+            print("2: \(yAmplitude2)")
             if (yAmplitude2 > 55.0) {
                 yAmplitude2 = 55.0
+            }   else if (yAmplitude2 <= 37) {
+                yAmplitude2 = CGFloat(37 + ampAdderArr[index])
+            }   else {
+                yAmplitude2 = yAmplitude2 + 5
             }
             aPath2.addLine(to: CGPoint(x:aPath2.currentPoint.x  , y:yAmplitude2))
             
