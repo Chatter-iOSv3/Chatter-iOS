@@ -66,7 +66,11 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     @objc func playAudio(_ sender:UITapGestureRecognizer) {
         print("playing \(self.recordingURL)")
         
-        self.playAudio()
+        if (self.player?.isPlaying)! {
+            self.player?.stop()
+        }   else {
+            self.playAudio()
+        }
     }
     
     func playAudio() {
