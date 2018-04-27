@@ -12,6 +12,10 @@ import AVFoundation
 import AudioToolbox
 import Firebase
 
+protocol QueueDirectChatterDelegate {
+    func queueDirectChatter(index: Int)
+}
+
 class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var shouldSetupConstraints = true
     var recordingURL: URL!
@@ -19,6 +23,9 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var multiplier: Float?
     var audioPathURL: URL!
     var audioLength: Float!
+    var position: Int!
+    
+    var queueDirectChatterDelegate : QueueDirectChatterDelegate?
     
     var chatterRoomID: String!
     var chatterRoomTimestamp: String!
@@ -59,6 +66,10 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     @objc func playAudio(_ sender:UITapGestureRecognizer) {
         print("playing \(self.recordingURL)")
         
+        self.playAudio()
+    }
+    
+    func playAudio() {
         // Notifies other players to stop playing
         NotificationCenter.default.post(name: .stopChatterFeedAudio, object: nil)
         
@@ -79,6 +90,9 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
             // Send notification to Parent to update badge count
             NotificationCenter.default.post(name: .directChatterInboxChanged, object: nil, userInfo: ["readStatus": "read", "chatterSegmentID": self.chatterRoomTimestamp])
         }
+        
+        // Queue next Direct Chatter
+        self.queueDirectChatterDelegate?.queueDirectChatter(index: self.position)
     }
     
     @objc func stopChatterFeedAudio(notification:NSNotification) {

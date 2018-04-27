@@ -16,10 +16,11 @@ protocol RecordEditDelegate {
     func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView, chatterRoomID: String)
 }
 
-class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDelegate, QueueDirectChatterDelegate {
     var shouldSetupConstraints = true
     var recordingURLDict: NSDictionary!
     var chatterRoomView: UIView?
+    var chatterRoomSegmentArr: [DirectChatterSegmentView] = []
     
     var chatterRoomID: String!
     var chatterRoomUsers: String!
@@ -71,7 +72,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             return d1 < d2
         }
         
-        for chatterRoomSegment in chatterRoomSegmentTupleArr {
+        for (index, chatterRoomSegment) in chatterRoomSegmentTupleArr.enumerated() {
             let chatterRoomTimestamp = chatterRoomSegment.key as! String
             let chatterRoomSegment = chatterRoomSegment.value as! NSDictionary
             
@@ -92,7 +93,9 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             chatterRoomSegmentView.backgroundColor = .clear
             chatterRoomSegmentView.chatterRoomID = self.chatterRoomID
             chatterRoomSegmentView.chatterRoomTimestamp = chatterRoomTimestamp
-            chatterRoomSegmentView.chatterSegmentUser = chatterSegmentUser 
+            chatterRoomSegmentView.chatterSegmentUser = chatterSegmentUser
+            chatterRoomSegmentView.position = index
+            chatterRoomSegmentView.queueDirectChatterDelegate = self
             
             // Decides what color the wave forms are based on user
             if (chatterSegmentUser != self.userID && chatterSegmentReadStatus == "unread") {
@@ -121,6 +124,8 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let localURL = documentsURL.appendingPathComponent("\(chatterSegmentID).m4a")
             chatterRoomSegmentView.generateAudioFile(audioURL: localURL, id: chatterRoomData)
+            
+            self.chatterRoomSegmentArr.append(chatterRoomSegmentView)
             
             // Calculates running total of how long the scrollView needs to be with the variables
             chatterRoomScrollView.contentSize = CGSize(width: scrollViewContentSize, height: imageHeight)
@@ -249,6 +254,14 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    // Playback Methods ---------------------------------------------------------------------------------
+    
+    func queueDirectChatter(index: Int) {
+        if (index + 1 < chatterRoomSegmentArr.count) {
+            self.chatterRoomSegmentArr[index + 1].playAudio()
+        }
     }
 }
 
