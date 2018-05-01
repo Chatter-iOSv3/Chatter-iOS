@@ -134,14 +134,16 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.frame.size.height = 100
         cell.followerUsernameLabel.text = followerLabelArray[indexPath.row]
         let firstnameLetter = String(describing: followerLabelArray[indexPath.row].first!).uppercased()
-        cell.followerAvatarButton.setTitle(firstnameLetter, for: .normal)
+        cell.followerUsernameFirstLetter = firstnameLetter
+        cell.followerUserID = followerIDArray[indexPath.row]
+        
         let randomColor = generateRandomColor()
-        let currCellButton = cell.followerAvatarButton
-        configureAvatarButton(button: currCellButton!, color: randomColor)
+        let currCellAvatarView = cell.followerAvatarView
+        configureAvatarView(button: currCellAvatarView!, color: randomColor)
         return cell
     }
     
-    func configureAvatarButton(button: UIButton, color: UIColor) {
+    func configureAvatarView(button: UIView, color: UIColor) {
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.clipsToBounds = true
         button.backgroundColor = color

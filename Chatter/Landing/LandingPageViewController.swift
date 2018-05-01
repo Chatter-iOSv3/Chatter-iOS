@@ -16,10 +16,14 @@ class LandingPageViewController: UIPageViewController {
     }
     
     fileprivate lazy var pages: [UIViewController] = {
+        
+        // Main page routing VCs
         let menuViewController = self.getViewController(withIdentifier: "Menu")
         let landingRecordViewController = self.getViewController(withIdentifier: "LandingRecord")
         let parentChatterFeedViewController = self.getViewController(withIdentifier: "ParentChatterFeed")
         
+        
+        // Layout subviews
         menuViewController.view.layoutSubviews()
         landingRecordViewController.view.layoutSubviews()
         parentChatterFeedViewController.view.layoutSubviews()

@@ -1018,7 +1018,7 @@
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">
             <objects>
-                <viewController id="yQP-zv-6jl" customClass="FollowersView" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FollowersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yQP-zv-6jl" customClass="FollowersView" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8HS-cR-rZU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1047,18 +1047,15 @@
                                                     <color key="textColor" red="0.2125202588" green="0.21933694949999999" blue="0.21835542220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kaj-dX-T5o">
-                                                    <rect key="frame" x="37" y="27" width="40" height="40"/>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-gq-zsd">
+                                                    <rect key="frame" x="30" y="24" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                    <state key="normal" title="A">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                </button>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="followerAvatarButton" destination="Kaj-dX-T5o" id="7kG-I5-4i1"/>
+                                            <outlet property="followerAvatarView" destination="1Pe-gq-zsd" id="9rc-HS-OdY"/>
                                             <outlet property="followerUsernameLabel" destination="bdD-gG-p4w" id="qcI-xc-b2z"/>
                                         </connections>
                                     </tableViewCell>
