@@ -53,7 +53,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     struct friendItem {
         let userID: String
         let userName: String
-        let profileImage: UIView
+        let profileImage: UIImage
     }
     
     var friendsList: [friendItem]!

@@ -89,7 +89,7 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
                             
                             // Send notification with FollowerSet to composeModal
                             // ************* Implement profileImages
-                            let tempUIView = UIView()
+                            let tempUIView = UIImage()
                             let currFollowerItem = LandingRecord.friendItem(userID: followingID!, userName: followingUsername!, profileImage: tempUIView)
                             
                             NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])

@@ -18,6 +18,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
+    let storage = Storage.storage()
     
     var followerArray: [LandingRecord.friendItem]!
     var followerLabelArray: [String]!
@@ -81,7 +82,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
                             
                             // Send notification with FollowerSet to composeModal
                             // ************* Implement profileImages
-                            let tempUIView = UIView()
+                            let tempUIView = UIImage()
                             let currFollowerItem = LandingRecord.friendItem(userID: followerID!, userName: followerUsername!, profileImage: tempUIView)
 
                             NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
@@ -134,19 +135,17 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.frame.size.height = 100
         cell.followerUsernameLabel.text = followerLabelArray[indexPath.row]
         let firstnameLetter = String(describing: followerLabelArray[indexPath.row].first!).uppercased()
-        cell.followerUsernameFirstLetter = firstnameLetter
-        cell.followerUserID = followerIDArray[indexPath.row]
         
-        let randomColor = generateRandomColor()
+        setProfileImageAvatar(userDetails: followerIDArray[indexPath.row], newView: cell.followerAvatarView, followerUsername: followerLabelArray[indexPath.row])
+        
         let currCellAvatarView = cell.followerAvatarView
-        configureAvatarView(button: currCellAvatarView!, color: randomColor)
+        configureAvatarView(button: currCellAvatarView!)
         return cell
     }
     
-    func configureAvatarView(button: UIView, color: UIColor) {
+    func configureAvatarView(button: UIView) {
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.clipsToBounds = true
-        button.backgroundColor = color
     }
     
     func generateRandomColor() -> UIColor {
@@ -155,6 +154,70 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
         
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+    }
+    
+    // Avatar Methods ----------------------------------------------------------
+    
+    func setProfileImageAvatar(userDetails: String, newView: UIView, followerUsername: String) {
+        self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
+            (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            
+            if let profileImageURL = value?["profileImageURL"] as? String {
+                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, followerID: userDetails, followerUsername: followerUsername)
+            }
+        }
+    }
+    
+    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView, followerID: String, followerUsername: String) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        var currImage: UIImage?
+        
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            currImage = UIImage(data: data as Data)
+            
+            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
+            newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
+            
+            // Send notification with FollowerSet to composeModal
+            let currFollowerItem = LandingRecord.friendItem(userID: followerID, userName: followerUsername, profileImage: currImage!)
+            
+            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
+        })
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
 }
