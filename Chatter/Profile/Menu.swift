@@ -16,15 +16,30 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
     @IBOutlet weak var invitesView: UIView!
     @IBOutlet weak var followingView: UIView!
     
+    // Firebase Variables
+    var ref: DatabaseReference!
+    let storage = Storage.storage()
+    var storageRef: Any?
+    var userID: String!
+    
+    var followersVC: FollowersView!
+    
+    var preloadedFollowersList: [LandingRecord.friendItem]! = []
+    
+    var preloadingFollowers: Bool = true
+    
     override func viewDidLoad() {
+        // Firebase initializers
+        ref = Database.database().reference()
+        self.storageRef = storage.reference()
+        self.userID = Auth.auth().currentUser?.uid
+        
         self.menuView.alpha = 1.0
         self.invitesView.alpha = 0.0
         self.followerView.alpha = 0.0
         self.followingView.alpha = 0.0
-    }
-    
-    override func viewWillLayoutSubviews() {
-        print("CALLED")
+        
+        self.preloadFollowersList()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +55,7 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
         
         if let destination = segue.destination as? FollowersView {
             destination.switchDelegate = self
+            self.followersVC = destination
         }
         
         if let destination = segue.destination as? InvitesView {

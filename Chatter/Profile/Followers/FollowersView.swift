@@ -20,9 +20,9 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     let userID = Auth.auth().currentUser?.uid
     let storage = Storage.storage()
     
-    var followerArray: [LandingRecord.friendItem]!
     var followerLabelArray: [String]!
     var followerIDArray: [String]!
+    var followerItemArray: [LandingRecord.friendItem]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +32,11 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         followerTableView.delegate = self
         followerTableView.dataSource = self
         
-        RerenderFollowersTableView()
         SetFollowersObserver()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        RerenderFollowersTableView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,11 +83,10 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
                             self.followerLabelArray.append(followerUsername!)
                             self.followerIDArray.append(followerID!)
                             
+                            let tempProfileImage = UIImage()
+                            let currFollowerItem = LandingRecord.friendItem(userID: followerID!, userName: followerUsername!, profileImage: tempProfileImage)
+                            
                             // Send notification with FollowerSet to composeModal
-                            // ************* Implement profileImages
-                            let tempUIView = UIImage()
-                            let currFollowerItem = LandingRecord.friendItem(userID: followerID!, userName: followerUsername!, profileImage: tempUIView)
-
                             NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
                         }
                         
@@ -100,6 +102,15 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         })  { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func checkIfProfileImageLogged(followerID: String) -> UIImage? {
+        for followerItem in self.followerItemArray {
+            if (followerID == followerItem.userID) {
+                return followerItem.profileImage
+            }
+        }
+        return nil
     }
     
     func SetFollowersObserver() {
@@ -136,7 +147,12 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.followerUsernameLabel.text = followerLabelArray[indexPath.row]
         let firstnameLetter = String(describing: followerLabelArray[indexPath.row].first!).uppercased()
         
-        setProfileImageAvatar(userDetails: followerIDArray[indexPath.row], newView: cell.followerAvatarView, followerUsername: followerLabelArray[indexPath.row])
+        // Check if we have profile image downloaded already
+        if let currProfileImage = self.checkIfProfileImageLogged(followerID: followerIDArray[indexPath.row]) as? UIImage {
+            self.setProfileImageAvatarWithImage(image: currProfileImage, newView: cell.followerAvatarView)
+        }   else {
+            setProfileImageAvatar(userDetails: followerIDArray[indexPath.row], newView: cell.followerAvatarView, followerUsername: followerLabelArray[indexPath.row])
+        }
         
         let currCellAvatarView = cell.followerAvatarView
         configureAvatarView(button: currCellAvatarView!)
@@ -192,6 +208,11 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
             
             NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
         })
+    }
+    
+    func setProfileImageAvatarWithImage(image: UIImage, newView: UIView) {
+        var resizedCurrImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
+        newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

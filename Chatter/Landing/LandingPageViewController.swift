@@ -47,8 +47,6 @@ class LandingPageViewController: UIPageViewController {
         self.delegate   = self
         
         setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
-        setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
-        setViewControllers([pages[1]], direction: .forward, animated: true, completion: nil)
     }
 
 }
@@ -140,4 +138,5 @@ extension Notification.Name {
     
     // When DirectChatter inbox has activity
     static let directChatterInboxChanged = Notification.Name("directChatterInboxChanged")
+    
 }
