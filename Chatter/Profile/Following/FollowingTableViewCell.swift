@@ -11,10 +11,7 @@ import UIKit
 import Firebase
 
 class FollowingTableViewCell: UITableViewCell {
-    @IBOutlet weak var followingAvatarButton: UIButton!
+    @IBOutlet weak var followingAvatarView: UIView!
     @IBOutlet weak var followingUsernameLabel: UILabel!
-    
-    var ref = Database.database().reference()
-    let userID = Auth.auth().currentUser?.uid
 }
 

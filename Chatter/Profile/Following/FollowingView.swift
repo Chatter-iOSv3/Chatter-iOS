@@ -19,9 +19,11 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
+    let storage = Storage.storage()
     
     var followingLabelArray: [String]!
     var followingIDArray: [String]!
+    var followingItemArray: [LandingRecord.friendItem]!
     
     var rerendered: Bool!
     
@@ -65,7 +67,7 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     func RerenderFollowingTableView() {
-         // TODO: Debug the Followers List with a SET instead of Arrays to prevent duplicates
+         // TODO: Debug the Followings List with a SET instead of Arrays to prevent duplicates
         
         self.followingLabelArray = []
         self.followingIDArray = []
@@ -87,12 +89,11 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
                             self.followingLabelArray.append(followingUsername!)
                             self.followingIDArray.append(followingID!)
                             
-                            // Send notification with FollowerSet to composeModal
-                            // ************* Implement profileImages
-                            let tempUIView = UIImage()
-                            let currFollowerItem = LandingRecord.friendItem(userID: followingID!, userName: followingUsername!, profileImage: tempUIView)
+                            let tempProfileImage = UIImage()
+                            let currFollowingItem = LandingRecord.friendItem(userID: followingID!, userName: followingUsername!, profileImage: tempProfileImage)
                             
-                            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
+                            // Send notification with FollowingSet to composeModal
+                            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowingItem])
                         }
                         
                         // Populate the Table View as the invitations are loaded
@@ -109,13 +110,22 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
     }
     
+    func checkIfProfileImageLogged(followingID: String) -> UIImage? {
+        for followingItem in self.followingItemArray {
+            if (followingID == followingItem.userID) {
+                return followingItem.profileImage
+            }
+        }
+        return nil
+    }
+    
     func SetFollowingObserver() {
         self.ref.child("users").child(userID!).child("following").observe(.childAdded, with: { (snapshot) in
             print("FOLLOWING ADDED")
             
             self.RerenderFollowingTableView()
             
-            // Send notification to re-render follower tableView
+            // Send notification to re-render following tableView
             NotificationCenter.default.post(name: .invitationAcceptedRerender, object: nil)
         })
     }
@@ -147,25 +157,91 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.frame.size.height = 100
         cell.followingUsernameLabel.text = followingLabelArray[indexPath.row]
         let firstnameLetter = String(describing: followingLabelArray[indexPath.row].first!).uppercased()
-        cell.followingAvatarButton.setTitle(firstnameLetter, for: .normal)
-        let randomColor = generateRandomColor()
-        let currCellButton = cell.followingAvatarButton
-        configureAvatarButton(button: currCellButton!, color: randomColor)
+        
+        // Check if we have profile image downloaded already
+        if let currProfileImage = self.checkIfProfileImageLogged(followingID: followingIDArray[indexPath.row]) as? UIImage {
+            self.setProfileImageAvatarWithImage(image: currProfileImage, newView: cell.followingAvatarView)
+        }   else {
+            setProfileImageAvatar(userDetails: followingIDArray[indexPath.row], newView: cell.followingAvatarView, followingUsername: followingLabelArray[indexPath.row])
+        }
+        
+        let currCellAvatarView = cell.followingAvatarView
+        configureAvatarView(button: currCellAvatarView!)
         return cell
     }
     
-    func configureAvatarButton(button: UIButton, color: UIColor) {
+    func configureAvatarView(button: UIView) {
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.clipsToBounds = true
-        button.backgroundColor = color
     }
     
-    func generateRandomColor() -> UIColor {
-        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
-        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.8 // from 0.5 to 1.0 to stay away from white
-        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
+    // Avatar Methods ----------------------------------------------------------
+    
+    func setProfileImageAvatar(userDetails: String, newView: UIView, followingUsername: String) {
+        self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
+            (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            
+            if let profileImageURL = value?["profileImageURL"] as? String {
+                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, followerID: userDetails, followerUsername: followingUsername)
+            }
+        }
+    }
+    
+    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView, followerID: String, followerUsername: String) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        var currImage: UIImage?
         
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            currImage = UIImage(data: data as Data)
+            
+            let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
+            newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
+            
+            // Send notification with FollowerSet to composeModal
+            let currFollowerItem = LandingRecord.friendItem(userID: followerID, userName: followerUsername, profileImage: currImage!)
+            
+            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
+        })
+    }
+    
+    func setProfileImageAvatarWithImage(image: UIImage, newView: UIView) {
+        let resizedCurrImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
+        newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
 }

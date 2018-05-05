@@ -13,8 +13,4 @@ import Firebase
 class FollowersTableViewCell: UITableViewCell {
     @IBOutlet weak var followerAvatarView: UIView!
     @IBOutlet weak var followerUsernameLabel: UILabel!
-    
-    var ref = Database.database().reference()
-    let storage = Storage.storage()
-    let userID = Auth.auth().currentUser?.uid
 }

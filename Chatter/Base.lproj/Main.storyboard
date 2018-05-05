@@ -1413,20 +1413,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o26-Jf-Ufe">
-                                                    <rect key="frame" x="31" y="24" width="40" height="40"/>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pjk-3s-jLc">
+                                                    <rect key="frame" x="25" y="24" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal">
-                                                        <color key="titleColor" red="0.98884795984455953" green="0.98884795984455953" blue="0.98884795984455953" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="followingAvatarButton:" destination="Ywp-lw-Iy4" eventType="touchUpInside" id="sQp-sA-Tt9"/>
-                                                    </connections>
-                                                </button>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="followingAvatarButton" destination="o26-Jf-Ufe" id="hHk-00-jxq"/>
+                                            <outlet property="followingAvatarView" destination="Pjk-3s-jLc" id="FnZ-ul-Rcb"/>
                                             <outlet property="followingUsernameLabel" destination="63S-bK-xg0" id="zXg-Ih-UGW"/>
                                         </connections>
                                     </tableViewCell>
@@ -1458,7 +1453,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LXM-Bp-aG1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Ywp-lw-Iy4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2144.8000000000002" y="1208.1280788177341"/>
         </scene>

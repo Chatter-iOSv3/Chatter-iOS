@@ -23,10 +23,13 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
     var userID: String!
     
     var followersVC: FollowersView!
+    var followingsVC: FollowingView!
     
     var preloadedFollowersList: [LandingRecord.friendItem]! = []
+    var preloadedFollowingsList: [LandingRecord.friendItem]! = []
     
     var preloadingFollowers: Bool = true
+    var preloadingFollowings: Bool = true
     
     override func viewDidLoad() {
         // Firebase initializers
@@ -40,6 +43,7 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
         self.followingView.alpha = 0.0
         
         self.preloadFollowersList()
+        self.preloadFollowingsList()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,6 +68,7 @@ class Menu: UIViewController, SwitchMenuFollowersViewDelegate, SwitchMenuInvites
         
         if let destination = segue.destination as? FollowingView {
             destination.switchDelegate = self
+            self.followingsVC = destination
         }
     }
 

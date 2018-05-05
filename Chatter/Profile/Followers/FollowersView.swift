@@ -18,7 +18,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
-    let storage = Storage.storage()
+    var storage: Storage!
     
     var followerLabelArray: [String]!
     var followerIDArray: [String]!
@@ -28,6 +28,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
         super.viewDidLoad()
         
         ref = Database.database().reference()
+        storage = Storage.storage()
         
         followerTableView.delegate = self
         followerTableView.dataSource = self
@@ -200,7 +201,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
             currImage = UIImage(data: data as Data)
             
-            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
+            let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
             newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
             
             // Send notification with FollowerSet to composeModal
@@ -211,7 +212,7 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     func setProfileImageAvatarWithImage(image: UIImage, newView: UIView) {
-        var resizedCurrImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
+        let resizedCurrImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
         newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
     }
     
