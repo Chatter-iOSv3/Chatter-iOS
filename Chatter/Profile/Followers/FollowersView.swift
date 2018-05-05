@@ -83,12 +83,6 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
                         if (!self.followerLabelArray.contains(followerUsername!)) {
                             self.followerLabelArray.append(followerUsername!)
                             self.followerIDArray.append(followerID!)
-                            
-                            let tempProfileImage = UIImage()
-                            let currFollowerItem = LandingRecord.friendItem(userID: followerID!, userName: followerUsername!, profileImage: tempProfileImage)
-                            
-                            // Send notification with FollowerSet to composeModal
-                            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
                         }
                         
                         // Populate the Table View as the invitations are loaded
@@ -183,6 +177,8 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
             
             if let profileImageURL = value?["profileImageURL"] as? String {
                 self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, followerID: userDetails, followerUsername: followerUsername)
+            }   else {
+                // Doesnt have associated profile image
             }
         }
     }
@@ -204,9 +200,10 @@ class FollowersView: UIViewController, UITableViewDataSource, UITableViewDelegat
             let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
             newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
             
-            // Send notification with FollowerSet to composeModal
-            let currFollowerItem = LandingRecord.friendItem(userID: followerID, userName: followerUsername, profileImage: currImage!)
+            let currFollowerItem = LandingRecord.friendItem(userID: followerID, userName: followerUsername, profileImage: resizedCurrImage)
+            self.followerItemArray.append(currFollowerItem)
             
+            // Send notification with FollowerSet to composeModal
             NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
         })
     }

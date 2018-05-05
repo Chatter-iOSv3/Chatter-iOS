@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 
 class FriendsTableViewCell: UITableViewCell {
-    @IBOutlet weak var friendAvatarButton: UIButton!
+    @IBOutlet weak var friendAvatarView: UIView!
     @IBOutlet weak var friendUsernameLabel: UILabel!
     @IBOutlet weak var chooseFriendButton: UIButton!
     
@@ -22,8 +22,7 @@ class FriendsTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         // Style Avatar
-        let randomColor = generateRandomColor()
-        self.configureAvatarButton(button: friendAvatarButton, color: randomColor)
+        self.configureAvatarView(view: friendAvatarView)
         
         // Style Radio Button
         self.chooseFriendButton.layer.cornerRadius = self.chooseFriendButton.frame.size.height / 2
@@ -48,10 +47,9 @@ class FriendsTableViewCell: UITableViewCell {
         }
     }
     
-    func configureAvatarButton(button: UIButton, color: UIColor) {
-        button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.clipsToBounds = true
-        button.backgroundColor = color
+    func configureAvatarView(view: UIView) {
+        view.layer.cornerRadius = 0.5 * view.bounds.size.width
+        view.clipsToBounds = true
     }
     
     func generateRandomColor() -> UIColor {

@@ -948,13 +948,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="318" height="69.666666666666671"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWC-8o-m2m">
-                                                            <rect key="frame" x="15" y="9" width="50" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vy-dB-dHv">
                                                             <rect key="frame" x="85" y="17" width="188" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -970,11 +963,16 @@
                                                                 <action selector="friendChosen:" destination="26Q-s1-jXW" eventType="touchUpInside" id="9Rs-m0-KoJ"/>
                                                             </connections>
                                                         </button>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fCD-q8-dli">
+                                                            <rect key="frame" x="15" y="14" width="40" height="40"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="chooseFriendButton" destination="kF8-Yq-PUS" id="A4U-Vu-msA"/>
-                                                    <outlet property="friendAvatarButton" destination="uWC-8o-m2m" id="GN4-fh-X1M"/>
+                                                    <outlet property="friendAvatarView" destination="fCD-q8-dli" id="yes-NB-2Y7"/>
                                                     <outlet property="friendUsernameLabel" destination="3vy-dB-dHv" id="Lqw-Ap-UtQ"/>
                                                 </connections>
                                             </tableViewCell>

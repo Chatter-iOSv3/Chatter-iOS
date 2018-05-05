@@ -46,6 +46,8 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         
         // Configure views
         self.configureViews()
+        
+        print("&&&&&&&&&&&", friendsList)
     }
     
     func configureViews() {
@@ -251,12 +253,99 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         cell.frame.size.height = 70
         cell.friendUsernameLabel.text = friendsList[indexPath.row].userName
         let firstnameLetter = String(describing: friendsList[indexPath.row].userName.first!).uppercased()
-        cell.friendAvatarButton.setTitle(firstnameLetter, for: .normal)
+        
+        // Check if we have profile image downloaded already
+        if let currProfileImage = self.checkIfProfileImageLogged(friendID: friendsList[indexPath.row].userID) as? UIImage {
+            self.setProfileImageAvatarWithImage(image: currProfileImage, newView: cell.friendAvatarView)
+        }   else {
+            setProfileImageAvatar(userDetails: friendsList[indexPath.row].userID, newView: cell.friendAvatarView, friendUsername: friendsList[indexPath.row].userName)
+        }
+        
         cell.friendID = friendsList[indexPath.row].userID
         
         cell.ChooseAudienceVC = self
-        
         return cell
+    }
+    
+    // Avatar Methods ----------------------------------------------------------
+    
+    func checkIfProfileImageLogged(friendID: String) -> UIImage? {
+        for friendItem in self.friendsList {
+            if (friendID == friendItem.userID) {
+                return friendItem.profileImage
+            }
+        }
+        return nil
+    }
+    
+    func setProfileImageAvatar(userDetails: String, newView: UIView, friendUsername: String) {
+        self.ref.child("users").child(userDetails).observeSingleEvent(of: .value) {
+            (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            
+            if let profileImageURL = value?["profileImageURL"] as? String {
+                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, friendID: userDetails, friendUsername: friendUsername)
+            }   else {
+                // Doesnt have associated profile image
+            }
+        }
+    }
+    
+    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView, friendID: String, friendUsername: String) {
+        let profileImageDownloadRef = storage.reference(forURL: imageURL)
+        var currImage: UIImage?
+        
+        profileImageDownloadRef.downloadURL(completion: { (url, error) in
+            var data = Data()
+            
+            do {
+                data = try Data(contentsOf: url!)
+            } catch {
+                print(error)
+            }
+            currImage = UIImage(data: data as Data)
+            
+            let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
+            newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
+            
+            let currFriendItem = LandingRecord.friendItem(userID: friendID, userName: friendUsername, profileImage: resizedCurrImage)
+            self.friendsList.append(currFriendItem)
+            
+             // Send notification with FriendItem to composeModal
+            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFriendItem])
+        })
+    }
+    
+    func setProfileImageAvatarWithImage(image: UIImage, newView: UIView) {
+        let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 40, height:  40))
+        newView.backgroundColor = UIColor(patternImage: resizedImage)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
     
     // Utilities ----------------------------------------------

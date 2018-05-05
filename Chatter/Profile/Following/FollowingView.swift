@@ -88,12 +88,6 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
                         if (!self.followingLabelArray.contains(followingUsername!)) {
                             self.followingLabelArray.append(followingUsername!)
                             self.followingIDArray.append(followingID!)
-                            
-                            let tempProfileImage = UIImage()
-                            let currFollowingItem = LandingRecord.friendItem(userID: followingID!, userName: followingUsername!, profileImage: tempProfileImage)
-                            
-                            // Send notification with FollowingSet to composeModal
-                            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowingItem])
                         }
                         
                         // Populate the Table View as the invitations are loaded
@@ -184,12 +178,14 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
             let value = snapshot.value as? NSDictionary
             
             if let profileImageURL = value?["profileImageURL"] as? String {
-                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, followerID: userDetails, followerUsername: followingUsername)
+                self.setProfileImageAvatarWithURL(imageURL: profileImageURL, newView: newView, followingID: userDetails, followingUsername: followingUsername)
+            }   else {
+                // Doesnt have associated profile image
             }
         }
     }
     
-    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView, followerID: String, followerUsername: String) {
+    func setProfileImageAvatarWithURL(imageURL: String, newView: UIView, followingID: String, followingUsername: String) {
         let profileImageDownloadRef = storage.reference(forURL: imageURL)
         var currImage: UIImage?
         
@@ -206,10 +202,11 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
             let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 40, height:  40))
             newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
             
-            // Send notification with FollowerSet to composeModal
-            let currFollowerItem = LandingRecord.friendItem(userID: followerID, userName: followerUsername, profileImage: currImage!)
+            let currFollowingItem = LandingRecord.friendItem(userID: followingID, userName: followingUsername, profileImage: resizedCurrImage)
+            self.followingItemArray.append(currFollowingItem)
             
-            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowerItem])
+            // Send notification with FollowingSet to composeModal
+            NotificationCenter.default.post(name: .sendToComposeModalFriendsList, object: nil, userInfo: ["userData": currFollowingItem])
         })
     }
     
