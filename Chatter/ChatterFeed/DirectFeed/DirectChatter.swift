@@ -53,6 +53,11 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         self.retrieveDirectChatterAndRender()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // Send notification to stop ChatterFeedChatter
+        NotificationCenter.default.post(name: .stopChatterFeedChatter, object: nil)
+    }
+    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Direct")
     }
@@ -109,6 +114,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newView.recordingURLDict = chatterRoomSegments
         newView.chatterRoomID = chatterRoomID
         newView.chatterRoomUsers = users
+        newView.recordProgressRing = self.createRecordProgressRing()
         newView.initializeChatterRoomScrollView()
         
         // Generate Segment Divider
@@ -127,7 +133,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newAvatarView.layer.borderWidth = 3
         newAvatarView.layer.borderColor = UIColor.white.cgColor
         newAvatarView.layer.backgroundColor = self.generateRandomColor().cgColor
-        newAvatarView.addSubview(self.recordProgressRing)
+        newAvatarView.addSubview(newView.recordProgressRing)
         
         self.setProfileImageAvatar(userDetails: users, newView: newAvatarView)
         
@@ -141,7 +147,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         self.directScrollView.addSubview(newAvatarPlaceholderView)
         
         // Add the subviews
-        newView.recordProgressRing = self.recordProgressRing
         newView.recordEditDelegate = self
         self.directScrollView.addSubview(newView)
         self.directScrollView.addSubview(newAvatarView)
@@ -202,14 +207,15 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newView.addSubview(label)
     }
     
-    func createRecordProgressRing() {
+    func createRecordProgressRing() -> UICircularProgressRingView {
         // Create the recordRing
-        self.recordProgressRing = UICircularProgressRingView(frame: CGRect(x: 0, y: 0, width: 67, height: 67))
+        let newRecordProgressRing = UICircularProgressRingView(frame: CGRect(x: 0, y: 0, width: 67, height: 67))
         // Change any of the properties you'd like
-        self.recordProgressRing.startAngle = -CGFloat(90.0)
-        self.recordProgressRing.outerRingColor = UIColor.clear
-        self.recordProgressRing.innerRingColor = UIColor(red: 255/255, green: 4/255, blue: 0/255, alpha: 0.7)
-        self.recordProgressRing.shouldShowValueText = false
+        newRecordProgressRing.startAngle = -CGFloat(90.0)
+        newRecordProgressRing.outerRingColor = UIColor.clear
+        newRecordProgressRing.innerRingColor = UIColor(red: 255/255, green: 4/255, blue: 0/255, alpha: 0.7)
+        newRecordProgressRing.shouldShowValueText = false
+        return newRecordProgressRing
     }
     
     func performSegueToRecordEdit(recordedURL: URL, chatterRoom: DirectChatterRoomView, chatterRoomID: String) {

@@ -126,6 +126,8 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
         // Saving the recording to FB
         let audioRef = storageRef.child("audio/\(fullAudioID)")
         
+        self.chatterRoom.finishedRecording = false
+        
         audioRef.putFile(from: audioUrl, metadata: nil) { metadata, error in
             if let error = error {
                 print(error)

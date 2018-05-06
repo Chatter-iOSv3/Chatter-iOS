@@ -51,6 +51,8 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     }
     
     func initializeChatterRoomScrollView() {
+        self.chatterRoomSegmentArr = []
+        
         var imageWidth:CGFloat = 300
         var imageHeight:CGFloat = 60
         var xPosition:CGFloat = 0
@@ -212,6 +214,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     
     func startRecording() {
         //1. create the session
+        print("START RECORDING", self.finishedRecording)
         let session = AVAudioSession.sharedInstance()
         
         do {
@@ -262,6 +265,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
     
     func queueDirectChatter(index: Int) {
         if (index + 1 < chatterRoomSegmentArr.count) {
+            print("zsczsczsdc", chatterRoomSegmentArr.count)
             self.chatterRoomSegmentArr[index + 1].playAudio()
         }
     }
