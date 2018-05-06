@@ -67,12 +67,12 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newView.frame.size.width = imageWidth
             newView.frame.size.height = imageHeight
             newView.frame.origin.x = newView.frame.origin.x + 65
-            newView.frame.origin.y = yPosition + 5
+            newView.frame.origin.y = yPosition + 17
             newView.layer.cornerRadius = 30
             
             // Generate Segment Divider
             let dividerLine = CALayer()
-            dividerLine.frame = CGRect(x: newView.frame.width - self.chatterScrollView.frame.width + 10, y: newView.frame.height - 17, width: self.chatterFeedView.frame.width, height: 0.5)
+            dividerLine.frame = CGRect(x: newView.frame.width - self.chatterScrollView.frame.width + 10, y: -17, width: self.chatterFeedView.frame.width, height: 0.5)
             dividerLine.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0).cgColor
             newView.layer.addSublayer(dividerLine)
             
@@ -81,7 +81,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newAvatarView.frame.size.width = 66
             newAvatarView.frame.size.height = 66
             newAvatarView.frame.origin.x = 10
-            newAvatarView.frame.origin.y = yPosition + 4
+            newAvatarView.frame.origin.y = yPosition + 17
             newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
             newAvatarView.layer.borderWidth = 3
             newAvatarView.layer.borderColor = UIColor.white.cgColor
@@ -93,7 +93,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             newAvatarPlaceholderView.frame.size.width = 65
             newAvatarPlaceholderView.frame.size.height = 65
             newAvatarPlaceholderView.frame.origin.x = 40
-            newAvatarPlaceholderView.frame.origin.y = yPosition + 5
+            newAvatarPlaceholderView.frame.origin.y = yPosition + 17
             newAvatarPlaceholderView.layer.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0).cgColor
             self.chatterScrollView.addSubview(newAvatarPlaceholderView)
             

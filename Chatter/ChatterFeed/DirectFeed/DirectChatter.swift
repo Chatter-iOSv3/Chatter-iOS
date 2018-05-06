@@ -104,7 +104,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newView.frame.size.width = self.imageWidth
         newView.frame.size.height = self.imageHeight
         newView.frame.origin.x = newView.frame.origin.x + 65
-        newView.frame.origin.y = self.yPosition + 5
+        newView.frame.origin.y = self.yPosition + 17
         newView.layer.cornerRadius = 30
         newView.recordingURLDict = chatterRoomSegments
         newView.chatterRoomID = chatterRoomID
@@ -113,7 +113,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         
         // Generate Segment Divider
         let dividerLine = CALayer()
-        dividerLine.frame = CGRect(x: newView.frame.width - self.directScrollView.frame.width + 10, y: newView.frame.height - 17, width: self.directScrollView.frame.width, height: 0.5)
+        dividerLine.frame = CGRect(x: newView.frame.width - self.directScrollView.frame.width + 10, y: -17, width: self.directScrollView.frame.width, height: 0.5)
         dividerLine.backgroundColor = UIColor(red: 214/255, green: 214/255, blue: 214/255, alpha: 1.0).cgColor
         newView.layer.addSublayer(dividerLine)
         
@@ -122,7 +122,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newAvatarView.frame.size.width = 67
         newAvatarView.frame.size.height = 67
         newAvatarView.frame.origin.x = 10
-        newAvatarView.frame.origin.y = self.yPosition + 5
+        newAvatarView.frame.origin.y = self.yPosition + 17
         newAvatarView.layer.cornerRadius = newAvatarView.frame.size.height / 2
         newAvatarView.layer.borderWidth = 3
         newAvatarView.layer.borderColor = UIColor.white.cgColor
@@ -136,7 +136,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
         newAvatarPlaceholderView.frame.size.width = 65
         newAvatarPlaceholderView.frame.size.height = 65
         newAvatarPlaceholderView.frame.origin.x = 40
-        newAvatarPlaceholderView.frame.origin.y = self.yPosition + 5
+        newAvatarPlaceholderView.frame.origin.y = self.yPosition + 17
         newAvatarPlaceholderView.layer.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0).cgColor
         self.directScrollView.addSubview(newAvatarPlaceholderView)
         

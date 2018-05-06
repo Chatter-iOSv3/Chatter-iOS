@@ -27,14 +27,6 @@ extension ChatterFeedSegmentView {
         self.sliderView?.center = CGPoint(x: 7, y: (self.sliderView?.center.y)!)
     }
     
-    func toggleSlider() {
-        if (self.sliderView?.alpha == 0.0) {
-            self.sliderView?.alpha = 1.0
-        }   else {
-            self.sliderView?.alpha = 0.0
-        }
-    }
-    
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("SEGMENT DONE PLAYING")
     }

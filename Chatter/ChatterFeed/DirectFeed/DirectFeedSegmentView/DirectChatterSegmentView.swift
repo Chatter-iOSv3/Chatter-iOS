@@ -24,6 +24,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var audioPathURL: URL!
     var audioLength: Float!
     var position: Int!
+    var imageWidth: CGFloat!
     
     var queueDirectChatterDelegate : QueueDirectChatterDelegate?
     
@@ -38,6 +39,8 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     var waveView: UIView?
     var waveColor: UIColor?
     var waveForm: DrawDirectWaveForm!
+    
+    var sliderView: UIView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,7 +70,7 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         print("playing \(self.recordingURL)")
         
         if (self.player?.isPlaying)! {
-            self.player?.stop()
+            self.stopAudio()
         }   else {
             self.playAudio()
         }
@@ -84,6 +87,12 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
         
         // When finished playing, it should notify the Direct parent
         player?.delegate = self as? AVAudioPlayerDelegate
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Starts slider
+            self.sliderView?.alpha = 1.0
+            self.playSlider()
+        }
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -100,7 +109,14 @@ class DirectChatterSegmentView: UIView, AVAudioPlayerDelegate {
     }
     
     @objc func stopChatterFeedAudio(notification:NSNotification) {
+        self.stopAudio()
+    }
+    
+    func stopAudio() {
         player?.stop()
+        self.sliderView?.alpha = 0.0
+        self.sliderView?.center = CGPoint(x: 2.5, y: (self.sliderView?.center.y)!)
+        self.sliderView?.layer.removeAllAnimations()
     }
     
     func generateAudioFile(audioURL: URL, id: String) {

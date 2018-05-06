@@ -117,6 +117,8 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
             
             chatterRoomSegmentView.frame.origin.x = xPosition
             
+            chatterRoomSegmentView.setupDirectSegmentSlider(imageWidth: imageWidth)
+            
             chatterRoomScrollView.addSubview(chatterRoomSegmentView)
             xPosition+=imageWidth
             scrollViewContentSize+=imageWidth
