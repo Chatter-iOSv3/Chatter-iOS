@@ -130,8 +130,9 @@ extension Notification.Name {
     // When Profile picture is updated
     static let profileImageChanged = Notification.Name("profileImageChanged")
     
-    // When VCs are changed, stop Landing Chatter from playing
+    // When VCs are changed, stop Chatter from playing
     static let stopLandingChatter = Notification.Name("stopLandingChatter")
+    static let stopChatterFeedChatter = Notification.Name("stopChatterFeedChatter")
     
     // When Chatter audio is changed, stops previous play
     static let stopChatterFeedAudio = Notification.Name("stopChatterFeedAudio")

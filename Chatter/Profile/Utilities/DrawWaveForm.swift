@@ -51,7 +51,6 @@ class DrawWaveform: UIView {
             
             //y is the amplitude of each square, 2 is the max height upwards
             var yAmplitude = aPath.currentPoint.y - (self.points[f] * 150) - 1.0
-            print("1: \(yAmplitude)")
             if (yAmplitude <= 10) {
                 yAmplitude = 10
                 
@@ -92,7 +91,6 @@ class DrawWaveform: UIView {
             
             //y is the amplitude of each square, 62 is max height downwards
             var yAmplitude2 = aPath2.currentPoint.y - ((-1.0 * self.points[f]) * 150)
-            print("2: \(yAmplitude2)")
             if (yAmplitude2 > 55.0) {
                 yAmplitude2 = 55.0
             }   else if (yAmplitude2 <= 37) {

@@ -37,6 +37,9 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
         // Setting up UI Constructors
         chatterScrollView.contentSize = chatterFeedView.frame.size
         
+        // Listens for changing of VC
+        NotificationCenter.default.addObserver(self, selector: #selector(stopChatterFeedChatter(notification:)), name: .stopChatterFeedChatter, object: nil)
+        
         self.retrieveChatterFeedAndRender()
     }
     
@@ -143,7 +146,7 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
             }
             currImage = UIImage(data: data as Data)
             
-            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 65, height:  65))
+            let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 65, height:  65))
             newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
         })
     }
@@ -162,10 +165,10 @@ class ChatterFeed: UIViewController, IndicatorInfoProvider {
         return IndicatorInfo(title: "Feed")
     }
     
-    deinit {
-        print("DEINITIALIZING")
-        let userID = Auth.auth().currentUser?.uid
-//        self.ref.child("users").child(userID!).child("chatterFeed").removeAllObservers()
+    @objc func stopChatterFeedChatter(notification: NSNotification) {
+        for chatterFeedSegment in self.chatterFeedSegmentArray {
+            chatterFeedSegment.stopChatterFeedAudio(notification: notification)
+        }
     }
     
     @IBAction func animateButton(sender: UIButton) {

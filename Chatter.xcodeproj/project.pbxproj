@@ -18,6 +18,7 @@
 		1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */; };
 		1A115BCA209ADADA005EDC9F /* FollowersPreLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BC9209ADADA005EDC9F /* FollowersPreLoader.swift */; };
 		1A115BCD209E30B5005EDC9F /* FollowingsPreLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BCC209E30B5005EDC9F /* FollowingsPreLoader.swift */; };
+		1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegmentView.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -82,6 +83,7 @@
 		1A0D250920781C6A000BC472 /* DirectChatterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatterRoomView.swift; sourceTree = "<group>"; };
 		1A115BC9209ADADA005EDC9F /* FollowersPreLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersPreLoader.swift; sourceTree = "<group>"; };
 		1A115BCC209E30B5005EDC9F /* FollowingsPreLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsPreLoader.swift; sourceTree = "<group>"; };
+		1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentViewSlider.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentView.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -170,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				1A40B9CC20426F10006D61CC /* ChatterFeed.swift */,
-				1A271485204939650058B33D /* ChatterFeedSegmentView.swift */,
+				1A115BCE209E64E1005EDC9F /* ChatterFeedSegmentView */,
 			);
 			path = ChatterFeed;
 			sourceTree = "<group>";
@@ -193,6 +195,15 @@
 				1A115BCC209E30B5005EDC9F /* FollowingsPreLoader.swift */,
 			);
 			path = PreLoaders;
+			sourceTree = "<group>";
+		};
+		1A115BCE209E64E1005EDC9F /* ChatterFeedSegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				1A271485204939650058B33D /* ChatterFeedSegmentView.swift */,
+				1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */,
+			);
+			path = ChatterFeedSegmentView;
 			sourceTree = "<group>";
 		};
 		1A2E997A20420A29009A674C = {
@@ -735,6 +746,7 @@
 				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
 				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
 				1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */,
+				1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A115BCD209E30B5005EDC9F /* FollowingsPreLoader.swift in Sources */,
 				1A386F88208176D100CB76AB /* DirectChatterSegmentView.swift in Sources */,

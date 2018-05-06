@@ -116,6 +116,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.landingRecordLabel.layer.removeAllAnimations()
         self.landingRecordLabel.text = "Hold to Record"
         self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 2)
+        
+        // Send notification to stop ChatterFeedChatter
+        NotificationCenter.default.post(name: .stopChatterFeedChatter, object: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -17,8 +17,10 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
     var recordingURL: URL!
     var player: AVAudioPlayer?
     var multiplier: Float?
+    var audioDurationSeconds: Double!
     
     var waveView: UIView?
+    var sliderView: UIView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +34,12 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         waveView.backgroundColor = UIColor(red: 119/255, green: 211/255, blue: 239/255, alpha: 1.0)
         waveView.layer.cornerRadius = 20
         self.addSubview(waveView)
+        
+        sliderView = UIView(frame: CGRect(x: 7, y: -15, width: 2.5, height: 95))
+        sliderView?.backgroundColor = UIColor.purple
+        sliderView?.isUserInteractionEnabled = true
+        sliderView?.alpha = 0.0
+        self.addSubview(sliderView!)
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopChatterFeedAudio(notification:)), name: .stopChatterFeedAudio, object: nil)
     }
@@ -53,15 +61,26 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         
         // Notifies other players to stop playing
         NotificationCenter.default.post(name: .stopChatterFeedAudio, object: nil)
+        // When finished playing, it should notify
+        player?.delegate = self as? AVAudioPlayerDelegate
         
         player?.prepareToPlay()
         player?.currentTime = 0
         //            player?.volume = 10.0
         player?.play()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            // Starts slider
+            self.sliderView?.alpha = 1.0
+            self.playSlider()
+        }
     }
     
     @objc func stopChatterFeedAudio(notification:NSNotification) {
         player?.stop()
+        self.sliderView?.alpha = 0.0
+        self.sliderView?.center = CGPoint(x: 7, y: (self.sliderView?.center.y)!)
+        self.sliderView?.layer.removeAllAnimations()
     }
     
     func generateAudioFile(audioURL: URL, id: String) {
@@ -96,6 +115,7 @@ class ChatterFeedSegmentView: UIView, AVAudioPlayerDelegate {
         let asset = AVURLAsset(url: audioUrl)
         let audioDuration = asset.duration
         let audioDurationSeconds = CMTimeGetSeconds(audioDuration)
+        self.audioDurationSeconds = audioDurationSeconds
         
         return Float(audioDurationSeconds * 9.5)
     }
