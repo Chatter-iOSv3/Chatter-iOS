@@ -80,18 +80,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Initialize the Live Feed
         self.initLandingFeed()
         
-        // Changing progress bar height
-        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
-        recordProgress.alpha = 0.0
-        
-        // Set the rounded edge for the outer bar
-        recordProgress.layer.cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.clipsToBounds = true
-        
-        // Set the rounded edge for the inner bar
-        recordProgress.layer.sublayers![0].cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.layer.sublayers![1].cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.subviews[1].clipsToBounds = true
+        // Style progress bar
+        self.styleRecordProgressBar()
         
         // Configure bubble list
         self.configureBubbleListTable()
@@ -99,6 +89,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Create task for toggling labels
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
         
+        // Setup uploading
+        self.setupUploading()
+        
+        // Stopping landing Chatter
         NotificationCenter.default.addObserver(self, selector: #selector(stopLandingChatter(notification:)), name: .stopLandingChatter, object: nil)
         
         // Listens for Friends list from Followers/Following
@@ -126,6 +120,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             destination.trashDelegate = self
             destination.recordedUrl = self.recordedURL
             destination.friendsList = self.friendsList
+        }
+        
+        if let destination = segue.destination as? UploadModalViewController {
+            self.stopLandingChatter()
         }
     }
     
@@ -340,6 +338,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @objc func stopLandingChatter(notification: NSNotification) {
+        self.stopLandingChatter()
+    }
+    
+    func stopLandingChatter() {
         self.landingFeedViewArray.first?.player?.stop()
     }
     
@@ -544,6 +546,32 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
                 self.friendsList.append(newFriendItem)
             }
         }
+    }
+    
+    func styleRecordProgressBar() {
+        // Changing progress bar height
+        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
+        recordProgress.alpha = 0.0
+        
+        // Set the rounded edge for the outer bar
+        recordProgress.layer.cornerRadius = recordProgress.frame.size.height / 2 - 1
+        recordProgress.clipsToBounds = true
+        
+        // Set the rounded edge for the inner bar
+        recordProgress.layer.sublayers![0].cornerRadius = recordProgress.frame.size.height / 2 - 1
+        recordProgress.layer.sublayers![1].cornerRadius = recordProgress.frame.size.height / 2 - 1
+        recordProgress.subviews[1].clipsToBounds = true
+    }
+    
+    func setupUploading() {
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(presentUploadModal))
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        self.recordButton.addGestureRecognizer(swipeUp)
+    }
+    
+    @objc func presentUploadModal() {
+        print("Starting Upload Flow")
+        performSegue(withIdentifier: "showUploadModal", sender: nil)
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

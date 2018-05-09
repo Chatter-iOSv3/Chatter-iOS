@@ -20,6 +20,7 @@
 		1A115BCD209E30B5005EDC9F /* FollowingsPreLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BCC209E30B5005EDC9F /* FollowingsPreLoader.swift */; };
 		1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */; };
 		1A115BD3209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD2209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift */; };
+		1A115BD620A28D41005EDC9F /* UploadModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD520A28D41005EDC9F /* UploadModal.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegmentView.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -86,6 +87,7 @@
 		1A115BCC209E30B5005EDC9F /* FollowingsPreLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingsPreLoader.swift; sourceTree = "<group>"; };
 		1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentViewSlider.swift; sourceTree = "<group>"; };
 		1A115BD2209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatterSegmentViewSlider.swift; sourceTree = "<group>"; };
+		1A115BD520A28D41005EDC9F /* UploadModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModal.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentView.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -217,6 +219,14 @@
 			path = DirectFeedSegmentView;
 			sourceTree = "<group>";
 		};
+		1A115BD420A28CD3005EDC9F /* UploadUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				1A115BD520A28D41005EDC9F /* UploadModal.swift */,
+			);
+			path = UploadUtilities;
+			sourceTree = "<group>";
+		};
 		1A2E997A20420A29009A674C = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +317,7 @@
 		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
 			isa = PBXGroup;
 			children = (
+				1A115BD420A28CD3005EDC9F /* UploadUtilities */,
 				1AB591072083F72E00451AA6 /* RecordUtilities */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
@@ -732,6 +743,7 @@
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
 				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
+				1A115BD620A28D41005EDC9F /* UploadModal.swift in Sources */,
 				1A386F7F207AB78B00CB76AB /* ChooseAudienceModal.swift in Sources */,
 				1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */,
 				1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */,

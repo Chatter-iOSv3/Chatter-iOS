@@ -656,11 +656,70 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyc-0A-HR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2448.8000000000002" y="53.940886699507388"/>
+            <point key="canvasLocation" x="3457" y="41"/>
+        </scene>
+        <!--Upload Modal View Controller-->
+        <scene sceneID="Iwf-5m-u0F">
+            <objects>
+                <viewController id="B8a-nC-1jW" customClass="UploadModalViewController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iqo-Ce-laL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nZe-I4-gCZ">
+                                <rect key="frame" x="16" y="121" width="343" height="607"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZo-a9-GUQ">
+                                        <rect key="frame" x="23" y="20" width="25" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="X"/>
+                                        <connections>
+                                            <action selector="closeUpload:" destination="B8a-nC-1jW" eventType="touchUpInside" id="zzd-nt-6oj"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Yh-JQ-yYM">
+                                        <rect key="frame" x="128" y="37" width="86" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <color key="textColor" red="0.76766265619999996" green="0.4088012593" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9f-Ss-hkn">
+                                        <rect key="frame" x="103" y="149" width="136" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Upload from Videos"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uW7-Aq-MIW">
+                                        <rect key="frame" x="292" y="16" width="35" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="RightArrowCircle"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.39601706288343558" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="GP9-aY-eyB"/>
+                    </view>
+                    <connections>
+                        <outlet property="uploadFromVideosButton" destination="D9f-Ss-hkn" id="wQU-GJ-zLN"/>
+                        <outlet property="uploadModalView" destination="nZe-I4-gCZ" id="Sp7-Vp-5kZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLt-y0-Nqd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3456.8000000000002" y="816.50246305418727"/>
         </scene>
         <!--Landing Record-->
         <scene sceneID="n79-xy-DGq">
             <objects>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ciM-xQ-qpJ">
+                    <connections>
+                        <action selector="startRecord:" destination="Nqu-23-wci" id="NMW-yp-Vx9"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LandingRecord" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nqu-23-wci" customClass="LandingRecord" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NpF-id-SPE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -673,7 +732,6 @@
                                 <connections>
                                     <action selector="queueBubbleList" destination="Nqu-23-wci" eventType="touchUpInside" id="GlJ-GI-Cn1"/>
                                     <outletCollection property="gestureRecognizers" destination="ciM-xQ-qpJ" appends="YES" id="G9U-Eh-shu"/>
-                                    <outletCollection property="gestureRecognizers" destination="gNY-22-wLc" appends="YES" id="JX1-ky-2Oy"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-yN-olH">
@@ -746,19 +804,9 @@
                         <outlet property="recordProgress" destination="7Vw-fV-Qbd" id="Cvi-Sb-qVg"/>
                         <segue destination="eOO-cO-i87" kind="presentation" identifier="showRecordEdit" id="Y4N-fK-DMH"/>
                         <segue destination="tRd-DF-3Xc" kind="presentation" identifier="showLoadingModal" modalPresentationStyle="overCurrentContext" modalTransitionStyle="flipHorizontal" id="4NL-EB-m2N"/>
+                        <segue destination="B8a-nC-1jW" kind="presentation" identifier="showUploadModal" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="xJt-sa-Vap"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="up" id="gNY-22-wLc">
-                    <connections>
-                        <action selector="swipeHandler:" destination="Nqu-23-wci" id="Be2-Yj-AZu"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ciM-xQ-qpJ">
-                    <connections>
-                        <action selector="startRecord:" destination="Nqu-23-wci" id="NMW-yp-Vx9"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1480.8" y="-341.37931034482762"/>
         </scene>
@@ -838,7 +886,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2552.8000000000002" y="-707.88177339901483"/>
+            <point key="canvasLocation" x="3457" y="-720"/>
         </scene>
         <!--Emoji View Modal-->
         <scene sceneID="2q7-bN-EUb">
@@ -880,7 +928,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cEd-Sz-244" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3761" y="-708"/>
+            <point key="canvasLocation" x="4665" y="-721"/>
         </scene>
         <!--Choose Audience Modal-->
         <scene sceneID="ScS-m2-n3E">
@@ -1011,7 +1059,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gcs-Y0-esv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5qJ-AP-fM1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3760.8000000000002" y="53.940886699507388"/>
+            <point key="canvasLocation" x="4665" y="41"/>
         </scene>
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">
