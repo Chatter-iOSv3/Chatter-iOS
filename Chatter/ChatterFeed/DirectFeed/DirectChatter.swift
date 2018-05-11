@@ -192,7 +192,7 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
             }
             currImage = UIImage(data: data as Data)
             
-            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 65, height:  65))
+            let resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 65, height:  65))
             newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
         })
     }

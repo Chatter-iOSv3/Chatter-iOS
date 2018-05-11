@@ -266,12 +266,12 @@
 		1A2E998520420A29009A674C /* Chatter */ = {
 			isa = PBXGroup;
 			children = (
+				1A115BCB209ADCA8005EDC9F /* PreLoaders */,
 				1A78F5222064B3070040B1A7 /* LoginSignup */,
 				1A78F5232064B32B0040B1A7 /* Landing */,
 				1A78F5242064B34C0040B1A7 /* LandingRecord */,
 				1A78F5252064B3630040B1A7 /* ChatterFeed */,
 				1A78F5262064B3790040B1A7 /* Profile */,
-				1A115BCB209ADCA8005EDC9F /* PreLoaders */,
 				1A2E998620420A29009A674C /* AppDelegate.swift */,
 				1A2E998A20420A29009A674C /* Main.storyboard */,
 				1A2E99B82042389F009A674C /* Buttons.xcassets */,

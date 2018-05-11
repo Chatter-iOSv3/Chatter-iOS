@@ -245,7 +245,7 @@ class MenuView: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 if let error = error {
                     print(error)
                 } else {
-                    print(metadata?.downloadURL()!)
+                    print(metadata?.downloadURL()! as Any)
                     // Write profile pic URL to user's FB
                     
                     let childUpdates = ["profileImageURL": metadata?.downloadURL()?.absoluteString]

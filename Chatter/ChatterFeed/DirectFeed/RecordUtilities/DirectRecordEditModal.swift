@@ -235,7 +235,7 @@ class DirectRecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioP
     
     func sizeControlFilterImageArr() {
         for image in self.filterImageArr {
-            var resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 35, height: 35))
+            let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 35, height: 35))
             self.resizedFilterImageArr.append(resizedImage)
         }
     }

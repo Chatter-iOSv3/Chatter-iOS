@@ -74,7 +74,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         
         // Get audio url and generate a unique ID for the audio file
         let audioUrl = self.recordedUrl!
-        let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+        let fullAudioID = "\(self.userID) | \(self.audioID!)"
         
         // Saving the recording to FB
         let audioRef = storageRef.child("audio/\(fullAudioID)")
@@ -134,7 +134,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                                     let followerChildUpdates = ["\(followerCountIdentifier)": followerChatterFeedSegment]
                                     
                                     self.ref.child("users").child(followerID!).child("chatterFeed").updateChildValues(followerChildUpdates) {error, ref in
-                                        print("UPDATE PROCESS COMPLETE: \(followerID)")
+                                        print("UPDATE PROCESS COMPLETE: \(String(describing: followerID))")
                                     }
                                 })
                             }
@@ -161,7 +161,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         
         // Get audio url and generate a unique ID for the audio file
         let audioUrl = self.recordedUrl!
-        let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+        let fullAudioID = "\(self.userID ) | \(self.audioID!)"
         
         // Saving the recording to FB
         let audioRef = storageRef.child("audio/\(fullAudioID)")
@@ -200,7 +200,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
                         self.dismiss(animated: true, completion: nil)
                     }
                     
-                    let fullAudioID = "\(self.userID ?? "") | \(self.audioID!)"
+                    let fullAudioID = "\(self.userID) | \(self.audioID!)"
                     
                     // Add ChatterRoomID to overall DB
                     let timestamp = String(Int(NSDate().timeIntervalSince1970))
@@ -255,7 +255,7 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         let firstnameLetter = String(describing: friendsList[indexPath.row].userName.first!).uppercased()
         
         // Check if we have profile image downloaded already
-        if let currProfileImage = self.checkIfProfileImageLogged(friendID: friendsList[indexPath.row].userID) as? UIImage {
+        if let currProfileImage = self.checkIfProfileImageLogged(friendID: friendsList[indexPath.row].userID) {
             self.setProfileImageAvatarWithImage(image: currProfileImage, newView: cell.friendAvatarView)
         }   else {
             setProfileImageAvatar(userDetails: friendsList[indexPath.row].userID, newView: cell.friendAvatarView, friendUsername: friendsList[indexPath.row].userName)

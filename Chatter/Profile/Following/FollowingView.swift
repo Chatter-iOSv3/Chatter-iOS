@@ -153,7 +153,7 @@ class FollowingView: UIViewController, UITableViewDataSource, UITableViewDelegat
         let firstnameLetter = String(describing: followingLabelArray[indexPath.row].first!).uppercased()
         
         // Check if we have profile image downloaded already
-        if let currProfileImage = self.checkIfProfileImageLogged(followingID: followingIDArray[indexPath.row]) as? UIImage {
+        if let currProfileImage = self.checkIfProfileImageLogged(followingID: followingIDArray[indexPath.row]) {
             self.setProfileImageAvatarWithImage(image: currProfileImage, newView: cell.followingAvatarView)
         }   else {
             setProfileImageAvatar(userDetails: followingIDArray[indexPath.row], newView: cell.followingAvatarView, followingUsername: followingLabelArray[indexPath.row])

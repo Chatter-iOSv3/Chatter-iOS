@@ -54,7 +54,7 @@ class DirectChatterRoomView: UIView, AVAudioRecorderDelegate, AVAudioPlayerDeleg
         self.chatterRoomSegmentArr = []
         
         var imageWidth:CGFloat = 300
-        var imageHeight:CGFloat = 60
+        let imageHeight:CGFloat = 60
         var xPosition:CGFloat = 0
         var scrollViewContentSize:CGFloat=0;
         
