@@ -21,6 +21,8 @@
 		1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */; };
 		1A115BD3209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD2209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift */; };
 		1A115BD620A28D41005EDC9F /* UploadModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD520A28D41005EDC9F /* UploadModal.swift */; };
+		1A115BD920A559A3005EDC9F /* LandingRecordUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */; };
+		1A115BDB20A55B64005EDC9F /* LandingRecordAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegmentView.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -88,6 +90,8 @@
 		1A115BCF209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentViewSlider.swift; sourceTree = "<group>"; };
 		1A115BD2209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectChatterSegmentViewSlider.swift; sourceTree = "<group>"; };
 		1A115BD520A28D41005EDC9F /* UploadModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModal.swift; sourceTree = "<group>"; };
+		1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecordUI.swift; sourceTree = "<group>"; };
+		1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecordAudio.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentView.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -227,6 +231,16 @@
 			path = UploadUtilities;
 			sourceTree = "<group>";
 		};
+		1A115BD720A5592E005EDC9F /* LandingRecord */ = {
+			isa = PBXGroup;
+			children = (
+				1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */,
+				1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */,
+				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
+			);
+			path = LandingRecord;
+			sourceTree = "<group>";
+		};
 		1A2E997A20420A29009A674C = {
 			isa = PBXGroup;
 			children = (
@@ -317,10 +331,10 @@
 		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
 			isa = PBXGroup;
 			children = (
+				1A115BD720A5592E005EDC9F /* LandingRecord */,
 				1A115BD420A28CD3005EDC9F /* UploadUtilities */,
 				1AB591072083F72E00451AA6 /* RecordUtilities */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
-				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 				1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */,
 			);
 			path = LandingRecord;
@@ -752,6 +766,7 @@
 				1A0D25002074A0B4000BC472 /* ParentChatterFeedViewController.swift in Sources */,
 				1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */,
 				1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */,
+				1A115BD920A559A3005EDC9F /* LandingRecordUI.swift in Sources */,
 				1AB5910C208418D900451AA6 /* DirectEmojiViewModal.swift in Sources */,
 				1A386F82207F374600CB76AB /* FriendsTableViewCell.swift in Sources */,
 				1A115BCA209ADADA005EDC9F /* FollowersPreLoader.swift in Sources */,
@@ -768,6 +783,7 @@
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A115BD3209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift in Sources */,
 				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
+				1A115BDB20A55B64005EDC9F /* LandingRecordAudio.swift in Sources */,
 				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
 				1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */,
 				1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */,

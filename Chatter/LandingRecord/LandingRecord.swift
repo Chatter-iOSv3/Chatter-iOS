@@ -61,6 +61,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Initializing page -----------------------------------------------------------------------
         // Hide landing views initially: Loading modal is only an overlay
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             self.landingRecordLabel.alpha = 0.0
@@ -77,24 +78,21 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.storageRef = storage.reference()
         self.userID = Auth.auth().currentUser?.uid
         
+        // UI Initializers -------------------------------------------------------------
         // Initialize the Live Feed
         self.initLandingFeed()
-        
         // Style progress bar
         self.styleRecordProgressBar()
-        
         // Configure bubble list
         self.configureBubbleListTable()
-        
         // Create task for toggling labels
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
-        
         // Setup uploading
         self.setupUploading()
         
+        // Notifications ---------------------------------------------------------------
         // Stopping landing Chatter
         NotificationCenter.default.addObserver(self, selector: #selector(stopLandingChatter(notification:)), name: .stopLandingChatter, object: nil)
-        
         // Listens for Friends list from Followers/Following
         NotificationCenter.default.addObserver(self, selector: #selector(friendsListSetup(notification:)), name: .sendToComposeModalFriendsList, object: nil)
         self.friendsList = []
@@ -104,7 +102,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Set animation for HearChatter and HoldRecord labels
         NSObject.cancelPreviousPerformRequests(withTarget: self)
         self.toggleTask?.cancel()
-        
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
         
         self.landingRecordLabel.layer.removeAllAnimations()
@@ -127,10 +124,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         }
     }
     
-    // Initialize Landing Feed
-    
+    // Initialize Landing Feed ----------------------------------------------------------
     func initLandingFeed() {
-        // Upon initialization, this will fire for EACH child in chatterFeed, and observe for each NEW -------------------------------------
+        // Upon initialization, this will fire for EACH child in chatterFeed, and observe for each
         self.ref.child("users").child(self.userID!).child("chatterFeed").observe(.childAdded, with: { (snapshot) -> Void in
             // ************* Remember to add conditional to filter/delete based on date **************
             
@@ -144,7 +140,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             let newView = LandingFeedSegmentView()
             
-            // Generate audio file on UIView instance 
+            // Generate audio file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
             newView.frame.size.width = 50
             newView.frame.size.height = 50
@@ -171,36 +167,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             self.landingFeedViewArray.append(newView)
             self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
         })
-    }
-    
-    func setProfileImageWithURL(imageURL: String, newView: UIView) {
-        let profileImageDownloadRef = storage.reference(forURL: imageURL)
-        var currImage: UIImage?
-        
-        profileImageDownloadRef.downloadURL(completion: { (url, error) in
-            var data = Data()
-            
-            do {
-                data = try Data(contentsOf: url!)
-            } catch {
-                print(error)
-            }
-            currImage = UIImage(data: data as Data)
-            
-            var resizedCurrImage = self.resizeImage(image: currImage!, targetSize: CGSize(width: 50, height:  50))
-            
-            newView.backgroundColor = UIColor(patternImage: resizedCurrImage)
-        })
-    }
-    
-    func setBubbleLabel(firstnameLetter: String, newView: UIView) {
-        // Label Avatar button
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        label.textAlignment = .center
-        label.font = label.font.withSize(20)
-        label.textColor = .white
-        label.text = firstnameLetter
-        newView.addSubview(label)
     }
     
     // Actions --------------------------------------------
@@ -254,358 +220,4 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
-    
-    //    Audio Recording ---------------------------------------
-    
-    func startRecording() {
-        //1. create the session
-        let session = AVAudioSession.sharedInstance()
-        
-        do {
-            // 2. configure the session for recording and playback
-            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
-            try session.setActive(true)
-            // 3. set up a high-quality recording session
-            let settings = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 44100,
-                AVNumberOfChannelsKey: 2,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            // 4. create the audio recording, and assign ourselves as the delegate
-            audioRecorder = try AVAudioRecorder(url: getAudioFileUrl(), settings: settings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-        }
-        catch let error {
-            print("Failed to record!!!")
-        }
-    }
-    
-    func getAudioFileUrl() -> URL{
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let docsDirect = paths[0]
-        let audioUrl = docsDirect.appendingPathComponent("currentRecording.m4a")
-        return audioUrl
-    }
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if flag {
-            // Code
-        }else {
-            // Recording interrupted by other reasons like call coming, reached time limit.
-        }
-    }
-    
-    // Audio Playback ------------------------------------------------
-    
-    func playSound(){
-        
-        let url = getAudioFileUrl()
-        do {
-            // AVAudioPlayer setting up with the saved file URL
-            let sound = try AVAudioPlayer(contentsOf: url)
-            self.player = sound
-            
-            // Here conforming to AVAudioPlayerDelegate
-            sound.delegate = self
-            sound.prepareToPlay()
-//            sound.numberOfLoops = -1
-            sound.play()
-        } catch {
-            print("error loading file")
-            // couldn't load file :(
-        }
-    }
-    
-    func queueList(skip: Bool) {
-        if (self.landingFeedViewArray.count > 0 && !skip) {
-            self.landingFeedViewArray.first?.playAudio()
-        }   else if (self.landingFeedViewArray.count > 0 && skip) {
-            self.landingFeedViewArray.first?.player?.stop()
-            self.queueNext()
-        }
-    }
-    
-    func queueNext() {
-        self.landingFeedViewArray.removeFirst()
-        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
-        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-        let sections = NSIndexSet(indexesIn: range)
-        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
-        
-        self.queueList(skip: false)
-    }
-    
-    @objc func stopLandingChatter(notification: NSNotification) {
-        self.stopLandingChatter()
-    }
-    
-    func stopLandingChatter() {
-        self.landingFeedViewArray.first?.player?.stop()
-    }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if flag {
-            
-        }else {
-            // Playing interrupted by other reasons like call coming, the sound has not finished playing.
-        }
-    }
-    
-    // Recording Methods ---------------------------------------------------------
-    
-    func trashRecording() {
-
-        // Stop the looping
-        self.player?.stop()
-        
-        // Reset recording
-        finishedRecording = false
-        
-        // Return screen to bright background
-        self.recordProgress.alpha = 0.0
-        UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
-            self.recordButton.backgroundColor = UIColor(red: 151/255, green: 19/255, blue: 232/255, alpha: 1.0)
-        }, completion:nil)
-        
-        // Return labels
-        // Set animation for HearChatter and HoldRecord labels
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
-        self.toggleTask?.cancel()
-        
-        self.toggleTask = DispatchWorkItem { self.toggleLabels() }
-        
-        self.landingRecordLabel.layer.removeAllAnimations()
-        self.landingRecordLabel.text = "Hold to Record"
-        self.landingRecordLabel.alpha = 1.0
-        self.labelAlpha = 1.0
-        
-        self.perform(#selector(self.toggleLabels), with: nil, afterDelay: 1)
-    }
-    
-    @objc func startRecordProgress() {
-        
-        if (self.recordProgressValue < 1.0 && !finishedRecording) {
-            self.recordProgressValue = self.recordProgressValue + 0.05
-            
-            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear, animations: {
-                self.recordProgress.setProgress(Float(self.recordProgressValue), animated: true)
-            }, completion: nil)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.startRecordProgress()
-            }
-        }
-        else if (finishedRecording) {
-            print("ALREADY FINISHED RECORDING")
-        }
-        else {
-            print("TIME LIMIT REACHED")
-            self.recordProgressValue = 0.0
-            self.stopRecordProgress()
-        }
-        
-    }
-    
-    func stopRecordProgress() {
-        print("STOPPING")
-        self.recordProgressValue = 0.00
-        self.finishedRecording = true
-        audioRecorder?.stop()
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
-            self.recordProgress.setProgress(0.0, animated: true)
-        }, completion: nil)
-        
-        // Send recorded URL to modal and show modal
-        self.recordedURL = getAudioFileUrl()
-        performSegue(withIdentifier: "showRecordEdit", sender: nil)
-    }
-    
-    func presentLoadingModal() {
-        performSegue(withIdentifier: "showLoadingModal", sender: nil)
-    }
-    
-    // View methods ------------------------------------------
-    
-    @objc func exposeLabels() {
-        self.landingRecordLabel.alpha = 1.0
-        self.bubbleListButton.alpha = 1.0
-    }
-    
-    @objc func toggleLabels() {
-        //Toggle on views after loaded
-        self.landingRecordLabel.alpha = CGFloat(self.labelAlpha)
-        self.bubbleListButton.alpha = 1.0
-        
-        if (!isRecording) {
-            let labelText = (self.landingRecordLabel.text == "Tap to hear Chatter") ? "Hold to record" : "Tap to hear Chatter"
-            
-            UIView.transition(with: self.landingRecordLabel, duration: 1.0, options: .transitionCrossDissolve, animations: {
-                self.landingRecordLabel.text = labelText
-            }, completion: { completion in
-                self.blinkLabel()
-            })
-        }
-    }
-    
-    @objc func blinkLabel() {
-        UIView.transition(with: self.landingRecordLabel, duration: 1.5, options: [.repeat, .autoreverse, .transitionCrossDissolve], animations: {
-            UIView.setAnimationRepeatCount(6)
-            self.landingRecordLabel.textColor = UIColor(red: 160/255, green: 35/255, blue: 232/255, alpha: 1.0)
-        }, completion: { completion in
-            self.landingRecordLabel.textColor = UIColor(red: 190/255, green: 140/255, blue: 234/255, alpha: 1.0)
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9.0, execute: self.toggleTask!)
-    }
-    
-    func configureBubbleListTable() {
-        bubbleListButton?.layer.cornerRadius = (bubbleListButton?.frame.size.height)! / 2
-        
-        self.bubbleListTableView.dataSource = self
-        self.bubbleListTableView.tableFooterView = UIView()
-        
-        self.bubbleListTableView.rowHeight = 80.0
-        self.bubbleListTableView.allowsSelection = false
-        self.bubbleListTableView.separatorStyle = .none
-        
-        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.expanded && self.landingFeedViewArray.count > 6) {
-            return 6
-        } else if (self.expanded) {
-            return self.landingFeedViewArray.count;
-        }   else {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
-        
-        let avatarView = self.landingFeedViewArray[indexPath[1]]
-        
-        if (indexPath[1] % 2 == 0) {
-            avatarView.frame.origin.x = 20
-        }   else {
-            avatarView.frame.origin.x = 0
-        }
-        
-        cell.landingFeedSegment = avatarView
-        cell.addAvatarView()
-        
-        return cell;
-    }
-    
-    func toggleTableView() {
-        self.expanded = !self.expanded
-        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-        let sections = NSIndexSet(indexesIn: range)
-        
-        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
-        
-        print(self.expanded)
-        if (!self.expanded) {
-            self.resetBubbles()
-        }   else {
-            self.animateBubbles()
-        }
-    }
-    
-    func animateBubbles() {
-        let cells = self.bubbleListTableView.visibleCells
-        
-        for cell in cells {
-            let currCell: BubbleListCell = cell as! BubbleListCell
-            currCell.animateAvatarViews()
-        }
-    }
-    
-    func resetBubbles() {
-        let cells = self.landingFeedViewArray
-        
-        for cell in cells {
-            cell.frame.size.width = 50
-            cell.frame.size.height = 50
-            cell.layer.cornerRadius = 25
-        }
-    }
-    
-    @objc func friendsListSetup(notification: NSNotification) {
-        if let newFriendItem = notification.userInfo?["userData"] as? friendItem {
-            // Checks repetition of friends
-            if self.friendsList.index(where: {$0.userID == newFriendItem.userID}) == nil {
-                self.friendsList.append(newFriendItem)
-            }
-        }
-    }
-    
-    func styleRecordProgressBar() {
-        // Changing progress bar height
-        recordProgress.transform = recordProgress.transform.scaledBy(x: 1, y: 5)
-        recordProgress.alpha = 0.0
-        
-        // Set the rounded edge for the outer bar
-        recordProgress.layer.cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.clipsToBounds = true
-        
-        // Set the rounded edge for the inner bar
-        recordProgress.layer.sublayers![0].cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.layer.sublayers![1].cornerRadius = recordProgress.frame.size.height / 2 - 1
-        recordProgress.subviews[1].clipsToBounds = true
-    }
-    
-    func setupUploading() {
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(presentUploadModal))
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        self.recordButton.addGestureRecognizer(swipeUp)
-    }
-    
-    @objc func presentUploadModal() {
-        print("Starting Upload Flow")
-        performSegue(withIdentifier: "showUploadModal", sender: nil)
-    }
-    
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-    
-    // Misc ---------------------------------------------------------------------------
-    
-    func generateRandomColor() -> UIColor {
-        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
-        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
-        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.85 // from 0.5 to 1.0 to stay away from black
-        
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
-    }
 }
