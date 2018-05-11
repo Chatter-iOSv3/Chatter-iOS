@@ -493,7 +493,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         let avatarView = self.landingFeedViewArray[indexPath[1]]
         
         if (indexPath[1] % 2 == 0) {
-            print("EVEN \(avatarView.frame.origin.x)")
             avatarView.frame.origin.x = 20
         }   else {
             avatarView.frame.origin.x = 0

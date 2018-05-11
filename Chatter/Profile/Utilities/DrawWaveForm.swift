@@ -5,7 +5,6 @@
 //  Created by Austen Ma on 3/7/18.
 //  Copyright © 2018 Austen Ma. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import Accelerate
@@ -37,13 +36,10 @@ class DrawWaveform: UIView {
         aPath2.move(to: CGPoint(x:0.0 , y:rect.height ))
         
         // PLACEHOLDER, SETTING RANDOM COLORS FOR NOW ************************
-//        let randomColor = generateRandomColor()
-        
-        // Adder for random Amplitude
-        var ampAdderArr = [Int]()
+        //        let randomColor = generateRandomColor()
         
         //Loop the array
-        for (index, _) in self.points.enumerated(){
+        for _ in self.points{
             //Distance between points
             var x:CGFloat = 5.0
             //next location to draw
@@ -53,17 +49,6 @@ class DrawWaveform: UIView {
             var yAmplitude = aPath.currentPoint.y - (self.points[f] * 150) - 1.0
             if (yAmplitude <= 10) {
                 yAmplitude = 10
-                
-                ampAdderArr.append(0)
-            } else if (yAmplitude >= 27) {
-                var ampAdder = Int(arc4random_uniform(5))
-                yAmplitude = CGFloat(27 - ampAdder)
-                
-                ampAdderArr.append(ampAdder)
-            }   else {
-                yAmplitude = yAmplitude - 5
-                
-                ampAdderArr.append(5)
             }
             aPath.addLine(to: CGPoint(x:aPath.currentPoint.x, y:yAmplitude))
             
@@ -85,7 +70,7 @@ class DrawWaveform: UIView {
         aPath2.move(to: CGPoint(x:0.0 , y:rect.height/2 ))
         
         //Reflection of waveform
-        for (index, _) in self.points.enumerated(){
+        for _ in self.points{
             var x:CGFloat = 5.0
             aPath2.move(to: CGPoint(x:aPath2.currentPoint.x + x , y:aPath2.currentPoint.y ))
             
@@ -93,10 +78,6 @@ class DrawWaveform: UIView {
             var yAmplitude2 = aPath2.currentPoint.y - ((-1.0 * self.points[f]) * 150)
             if (yAmplitude2 > 55.0) {
                 yAmplitude2 = 55.0
-            }   else if (yAmplitude2 <= 37) {
-                yAmplitude2 = CGFloat(37 + ampAdderArr[index])
-            }   else {
-                yAmplitude2 = yAmplitude2 + 5
             }
             aPath2.addLine(to: CGPoint(x:aPath2.currentPoint.x  , y:yAmplitude2))
             
@@ -114,7 +95,7 @@ class DrawWaveform: UIView {
         UIColor.white.set()
         
         //Reflection and make it transparent
-//        aPath2.stroke(with: CGBlendMode.normal, alpha: 0.5)
+        //        aPath2.stroke(with: CGBlendMode.normal, alpha: 0.5)
         aPath2.stroke()
         
         //If you want to fill it as well
@@ -142,11 +123,11 @@ class DrawWaveform: UIView {
         //                   floatArrPtr, 1, sampleCount);
         //print(floatArr)
         
-//        var multiplier = 180.0
-//        print(multiplier)
-//        if multiplier < 1{
-//            multiplier = 1.0
-//        }
+        //        var multiplier = 180.0
+        //        print(multiplier)
+        //        if multiplier < 1{
+        //            multiplier = 1.0
+        //        }
         
         let samplesPerPixel = Int(75 * self.multiplier!)
         let filter = [Float](repeating: 1.0 / Float(samplesPerPixel),
