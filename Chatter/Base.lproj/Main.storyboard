@@ -667,7 +667,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nZe-I4-gCZ">
-                                <rect key="frame" x="16" y="121" width="343" height="607"/>
+                                <rect key="frame" x="16" y="540" width="343" height="223"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZo-a9-GUQ">
@@ -685,11 +685,6 @@
                                         <color key="textColor" red="0.76766265619999996" green="0.4088012593" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D9f-Ss-hkn">
-                                        <rect key="frame" x="103" y="149" width="136" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Upload from Videos"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uW7-Aq-MIW">
                                         <rect key="frame" x="292" y="16" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -703,7 +698,6 @@
                         <viewLayoutGuide key="safeArea" id="GP9-aY-eyB"/>
                     </view>
                     <connections>
-                        <outlet property="uploadFromVideosButton" destination="D9f-Ss-hkn" id="wQU-GJ-zLN"/>
                         <outlet property="uploadModalView" destination="nZe-I4-gCZ" id="Sp7-Vp-5kZ"/>
                     </connections>
                 </viewController>

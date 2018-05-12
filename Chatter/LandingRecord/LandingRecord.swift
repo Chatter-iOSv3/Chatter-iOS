@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox.AudioServices
 import Firebase
 
-class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource, QueueNextDelegate{
+class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource, QueueNextDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // Firebase Variables
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -37,6 +37,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var recordProgressValue = 0.00
     var recordedURL: URL?
     var labelAlpha = 1.0
+    
+    // Upload Variables
+    var videoPicker: UIImagePickerController!
     
     // Player Variables
     var isPlaying = false

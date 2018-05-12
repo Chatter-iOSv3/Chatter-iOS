@@ -177,17 +177,6 @@ extension LandingRecord {
         recordProgress.subviews[1].clipsToBounds = true
     }
     
-    func setupUploading() {
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(presentUploadModal))
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        self.recordButton.addGestureRecognizer(swipeUp)
-    }
-    
-    @objc func presentUploadModal() {
-        print("Starting Upload Flow")
-        performSegue(withIdentifier: "showUploadModal", sender: nil)
-    }
-    
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
