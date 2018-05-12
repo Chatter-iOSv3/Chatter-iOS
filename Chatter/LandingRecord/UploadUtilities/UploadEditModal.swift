@@ -36,8 +36,40 @@ class UploadModalViewController: UIViewController, AVAudioRecorderDelegate, AVAu
         self.generateWaveForm(audioURL: self.uploadedUrl!)
     }
     
+    // Actions -------------------------------------------------------------
+    
     @IBAction func closeUpload(_ sender: Any) {
+        self.eraseFileUploaded()
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func playRecording(sender: Any) {
+        let url = self.uploadedUrl!
+        do {
+            // AVAudioPlayer setting up with the saved file URL
+            let sound = try AVAudioPlayer(contentsOf: url)
+            self.player = sound
+            
+            // If in the middle of another play
+            sound.stop()
+            
+            // Here conforming to AVAudioPlayerDelegate
+            sound.delegate = self
+            sound.prepareToPlay()
+            //            sound.numberOfLoops = -1
+            sound.play()
+        } catch {
+            print("error loading file")
+            // couldn't load file :(
+        }
+    }
+    
+    func eraseFileUploaded() {
+        do {
+            try FileManager.default.removeItem(at: self.uploadedUrl!)
+        } catch {
+            print(error)
+        }
     }
     
     func generateAudioFile(audioURL: URL, id: String) {

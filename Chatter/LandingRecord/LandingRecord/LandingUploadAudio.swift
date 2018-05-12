@@ -81,7 +81,7 @@ extension AVAsset {
                 return
         }
         
-        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("currentVideo1.m4a", isDirectory: false)
+        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("currentUpload.m4a", isDirectory: false)
         tempFileUrl = URL(fileURLWithPath: tempFileUrl.path)
         
         exportSession.outputURL = tempFileUrl

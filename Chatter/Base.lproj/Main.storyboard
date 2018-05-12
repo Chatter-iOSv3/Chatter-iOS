@@ -695,6 +695,9 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.60320021899999998" green="0.85191521069999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="FmC-5V-g95" appends="YES" id="83m-ho-ZSf"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -709,6 +712,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLt-y0-Nqd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="FmC-5V-g95">
+                    <connections>
+                        <action selector="playRecordingWithSender:" destination="B8a-nC-1jW" id="blW-Ru-Xro"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3456.8000000000002" y="816.50246305418727"/>
         </scene>
@@ -848,6 +856,11 @@
                                             <outletCollection property="gestureRecognizers" destination="S0k-QU-hH6" appends="YES" id="AB1-H0-2gc"/>
                                         </connections>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be4-bq-5g7">
+                                        <rect key="frame" x="25" y="62" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Dw-R7-UzT">
                                         <rect key="frame" x="296" y="3" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

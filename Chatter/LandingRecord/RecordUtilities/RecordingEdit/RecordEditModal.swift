@@ -104,6 +104,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     @IBAction func closeRecordEdit(_ sender: Any) {
         trashDelegate?.trashRecording()
+        self.player?.stop()
         dismiss(animated: true, completion: nil)
     }
     
