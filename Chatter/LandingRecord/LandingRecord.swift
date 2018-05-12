@@ -40,6 +40,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     
     // Upload Variables
     var videoPicker: UIImagePickerController!
+    var uploadedTempURL: URL!
     
     // Player Variables
     var isPlaying = false
@@ -124,6 +125,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         if let destination = segue.destination as? UploadModalViewController {
             self.stopLandingChatter()
+            destination.uploadedUrl = self.uploadedTempURL
         }
     }
     

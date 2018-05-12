@@ -679,7 +679,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Yh-JQ-yYM">
-                                        <rect key="frame" x="128" y="37" width="86" height="21"/>
+                                        <rect key="frame" x="128" y="26" width="86" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                         <color key="textColor" red="0.76766265619999996" green="0.4088012593" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -690,6 +690,12 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="RightArrowCircle"/>
                                     </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atE-L5-R2y">
+                                        <rect key="frame" x="16" y="66" width="311" height="65"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.60320021899999998" green="0.85191521069999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -699,6 +705,7 @@
                     </view>
                     <connections>
                         <outlet property="uploadModalView" destination="nZe-I4-gCZ" id="Sp7-Vp-5kZ"/>
+                        <outlet property="uploadWaveFormView" destination="atE-L5-R2y" id="6c4-pn-JHW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLt-y0-Nqd" userLabel="First Responder" sceneMemberID="firstResponder"/>

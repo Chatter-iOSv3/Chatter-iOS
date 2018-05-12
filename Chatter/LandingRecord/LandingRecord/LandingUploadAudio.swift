@@ -45,21 +45,20 @@ extension LandingRecord {
         print("info", info)
         // Process and extract the video selected
         let videoAsset = AVAsset(url: videoURL!) as AVAsset
-        print("*********", videoAsset.duration)
-        videoAsset._getDataFor(asset: videoAsset, completion: {_ in
-            print("Success")
-        }) 
-        
-        dismiss(animated: true, completion: nil)
-        
-        // Open uploadEdit modal
-        print("Starting Upload Flow")
-        performSegue(withIdentifier: "showUploadModal", sender: nil)
+        videoAsset._getDataFor(asset: videoAsset, completion: {tempFileURL in
+            print("Success", tempFileURL)
+            self.uploadedTempURL = tempFileURL
+            self.dismiss(animated: true, completion: nil)
+            
+            // Open uploadEdit modal
+            print("Starting Upload Flow")
+            self.performSegue(withIdentifier: "showUploadModal", sender: nil)
+        })
     }
 }
 
 extension AVAsset {
-    func _getDataFor(asset: AVAsset, completion: @escaping (Data?) -> ()) {
+    func _getDataFor(asset: AVAsset, completion: @escaping (URL?) -> ()) {
         guard asset.isExportable else {
             completion(nil)
             return
@@ -82,7 +81,7 @@ extension AVAsset {
                 return
         }
         
-        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("temp_video_data.m4a", isDirectory: false)
+        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("currentVideo1.m4a", isDirectory: false)
         tempFileUrl = URL(fileURLWithPath: tempFileUrl.path)
         
         exportSession.outputURL = tempFileUrl
@@ -96,81 +95,12 @@ extension AVAsset {
             case .completed:
                 print("EXPORT SUCCESS")
                 
-                let data = try? Data(contentsOf: tempFileUrl)
-                _ = try? FileManager.default.removeItem(at: tempFileUrl)
-                completion(data)
+//                let data = try? Data(contentsOf: tempFileUrl)
+//                _ = try? FileManager.default.removeItem(at: tempFileUrl)
+                completion(tempFileUrl)
             case .unknown, .waiting, .exporting, .failed, .cancelled:
                 print("FAILED EXPORT")
             }
         }
-    }
-    
-    // Provide a URL for where you wish to write
-    // the audio file if successful
-    func writeAudioTrack(to url: URL,
-                         success: @escaping () -> (),
-                         failure: @escaping (Error) -> ()) {
-        do {
-            let asset = try audioAsset()
-            asset.write(to: url, success: success, failure: failure)
-        } catch {
-            failure(error)
-        }
-    }
-    
-    private func write(to url: URL,
-                       success: @escaping () -> (),
-                       failure: @escaping (Error) -> ()) {
-        // Create an export session that will output an
-        // audio track (M4A file)
-        guard let exportSession = AVAssetExportSession(asset: self,
-                                                       presetName: AVAssetExportPresetAppleM4A) else {
-                                                        // This is just a generic error
-                                                        let error = NSError(domain: "domain",
-                                                                            code: 0,
-                                                                            userInfo: nil)
-                                                        failure(error)
-                                                        
-                                                        return
-        }
-        
-        exportSession.outputFileType = .m4a
-        exportSession.outputURL = url
-        
-        exportSession.exportAsynchronously {
-            switch exportSession.status {
-            case .completed:
-                success()
-            case .unknown, .waiting, .exporting, .failed, .cancelled:
-                let error = NSError(domain: "domain", code: 0, userInfo: nil)
-                failure(error)
-            }
-        }
-    }
-    
-    private func audioAsset() throws -> AVAsset {
-        // Create a new container to hold the audio track
-        let composition = AVMutableComposition()
-        // Create an array of audio tracks in the given asset
-        // Typically, there is only one
-        let audioTracks = tracks(withMediaType: .audio)
-        
-        // Iterate through the audio tracks while
-        // Adding them to a new AVAsset
-        for track in audioTracks {
-            let compositionTrack = composition.addMutableTrack(withMediaType: .audio,
-                                                               preferredTrackID: kCMPersistentTrackID_Invalid)
-            do {
-                // Add the current audio track at the beginning of
-                // the asset for the duration of the source AVAsset
-                try compositionTrack?.insertTimeRange(track.timeRange,
-                                                      of: track,
-                                                      at: track.timeRange.start)
-            } catch {
-                throw error
-            }
-        }
-        
-        return composition
     }
 }

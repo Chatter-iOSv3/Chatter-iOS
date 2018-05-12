@@ -80,7 +80,6 @@ class DirectChatter: UIViewController, IndicatorInfoProvider, RecordEditDelegate
                 self.ref.child("chatterRooms").child(chatterRoomID).observeSingleEvent(of: .value, with: { (chatterRoomSnapshot) -> Void in
                     let chatterRoomValue = chatterRoomSnapshot.value as? NSDictionary
                     if let chatterRoomSegments = chatterRoomValue?["chatterRoomSegments"] as? NSDictionary {
-                        print("Segments Exist! \(users)")
                         self.constructDirectChatterRooms(users: chatterRoomUsersArr[0], chatterRoomSegments: chatterRoomSegments, chatterRoomID: snapshot.key)
                         self.directChatterRoomsIDArray.append(snapshot.key)
                     }   else {
