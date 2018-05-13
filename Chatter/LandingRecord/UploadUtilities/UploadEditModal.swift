@@ -25,6 +25,9 @@ class UploadModalViewController: UIViewController, AVAudioRecorderDelegate, AVAu
     let storage = Storage.storage()
     var ref: DatabaseReference!
     
+    var friendsList: [LandingRecord.friendItem]!
+    var trashDelegate:TrashRecordingDelegate?
+    
     override func viewDidLoad() {
         ref = Database.database().reference()
         
@@ -34,6 +37,16 @@ class UploadModalViewController: UIViewController, AVAudioRecorderDelegate, AVAu
         // Generate Audio Wave form and calculate multiplier
         self.multiplier = self.calculateMultiplierWithAudio(audioUrl: self.uploadedUrl!)
         self.generateWaveForm(audioURL: self.uploadedUrl!)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is ChooseAudienceModal
+        {
+            let vc = segue.destination as? ChooseAudienceModal
+            vc?.recordedUrl = self.uploadedUrl
+            vc?.trashDelegate = self.trashDelegate
+            vc?.friendsList = self.friendsList
+        }
     }
     
     // Actions -------------------------------------------------------------

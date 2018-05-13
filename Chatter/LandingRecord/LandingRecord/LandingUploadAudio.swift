@@ -46,13 +46,15 @@ extension LandingRecord {
         // Process and extract the video selected
         let videoAsset = AVAsset(url: videoURL!) as AVAsset
         videoAsset._getDataFor(asset: videoAsset, completion: {tempFileURL in
-            print("Success", tempFileURL)
-            self.uploadedTempURL = tempFileURL
-            self.dismiss(animated: true, completion: nil)
-            
-            // Open uploadEdit modal
-            print("Starting Upload Flow")
-            self.performSegue(withIdentifier: "showUploadModal", sender: nil)
+            print("File URL", tempFileURL)
+            if ((tempFileURL) != nil) {
+                self.uploadedTempURL = tempFileURL
+                self.dismiss(animated: true, completion: nil)
+                
+                // Open uploadEdit modal
+                print("Starting Upload Flow")
+                self.performSegue(withIdentifier: "showUploadModal", sender: nil)
+            }
         })
     }
 }
@@ -81,7 +83,7 @@ extension AVAsset {
                 return
         }
         
-        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("currentUpload.m4a", isDirectory: false)
+        var tempFileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("uploadedAudio.m4a", isDirectory: false)
         tempFileUrl = URL(fileURLWithPath: tempFileUrl.path)
         
         exportSession.outputURL = tempFileUrl
@@ -95,11 +97,10 @@ extension AVAsset {
             case .completed:
                 print("EXPORT SUCCESS")
                 
-//                let data = try? Data(contentsOf: tempFileUrl)
-//                _ = try? FileManager.default.removeItem(at: tempFileUrl)
                 completion(tempFileUrl)
             case .unknown, .waiting, .exporting, .failed, .cancelled:
                 print("FAILED EXPORT")
+                completion(nil)
             }
         }
     }

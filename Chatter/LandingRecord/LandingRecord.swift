@@ -126,6 +126,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         if let destination = segue.destination as? UploadModalViewController {
             self.stopLandingChatter()
             destination.uploadedUrl = self.uploadedTempURL
+            destination.friendsList = self.friendsList
+            destination.trashDelegate = self
         }
     }
     

@@ -46,8 +46,6 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
         
         // Configure views
         self.configureViews()
-        
-        print("&&&&&&&&&&&", friendsList)
     }
     
     func configureViews() {
@@ -65,7 +63,9 @@ class ChooseAudienceModal: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBAction func sendToDirectChatter(_ sender: Any) {
-        self.startDirectChatter(selectedFriendsList: self.selectedFriendsList)
+        if (self.selectedFriendsList.count != 0) {
+            self.startDirectChatter(selectedFriendsList: self.selectedFriendsList)
+        }
     }
     
     func saveRecording() {

@@ -689,6 +689,9 @@
                                         <rect key="frame" x="292" y="16" width="35" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="RightArrowCircle"/>
+                                        <connections>
+                                            <segue destination="xiP-51-t9b" kind="presentation" id="kzD-8l-blZ"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atE-L5-R2y">
                                         <rect key="frame" x="16" y="66" width="311" height="65"/>
@@ -1597,6 +1600,7 @@
         <image name="X" width="166" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="kzD-8l-blZ"/>
         <segue reference="r4L-Dv-vRz"/>
     </inferredMetricsTieBreakers>
 </document>
