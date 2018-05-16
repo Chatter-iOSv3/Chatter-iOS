@@ -24,6 +24,7 @@
 		1A115BD920A559A3005EDC9F /* LandingRecordUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */; };
 		1A115BDB20A55B64005EDC9F /* LandingRecordAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */; };
 		1A115BDD20A6674E005EDC9F /* LandingUploadAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BDC20A6674E005EDC9F /* LandingUploadAudio.swift */; };
+		1A115BE020AC0A41005EDC9F /* SavedChatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A115BDF20AC0A41005EDC9F /* SavedChatter.swift */; };
 		1A271486204939650058B33D /* ChatterFeedSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A271485204939650058B33D /* ChatterFeedSegmentView.swift */; };
 		1A2E998720420A29009A674C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E998620420A29009A674C /* AppDelegate.swift */; };
 		1A2E998C20420A29009A674C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A2E998A20420A29009A674C /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecordUI.swift; sourceTree = "<group>"; };
 		1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecordAudio.swift; sourceTree = "<group>"; };
 		1A115BDC20A6674E005EDC9F /* LandingUploadAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingUploadAudio.swift; sourceTree = "<group>"; };
+		1A115BDF20AC0A41005EDC9F /* SavedChatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedChatter.swift; sourceTree = "<group>"; };
 		1A271485204939650058B33D /* ChatterFeedSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterFeedSegmentView.swift; sourceTree = "<group>"; };
 		1A2E998320420A29009A674C /* Chatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2E998620420A29009A674C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -244,6 +246,14 @@
 			path = LandingRecord;
 			sourceTree = "<group>";
 		};
+		1A115BDE20AC0A1A005EDC9F /* SavedChatter */ = {
+			isa = PBXGroup;
+			children = (
+				1A115BDF20AC0A41005EDC9F /* SavedChatter.swift */,
+			);
+			path = SavedChatter;
+			sourceTree = "<group>";
+		};
 		1A2E997A20420A29009A674C = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +360,7 @@
 				1A0D25032077F60E000BC472 /* ComposeModal.swift */,
 				1A0D250520780F42000BC472 /* ChatterFeed */,
 				1A0D250620780F52000BC472 /* DirectFeed */,
+				1A115BDE20AC0A1A005EDC9F /* SavedChatter */,
 			);
 			path = ChatterFeed;
 			sourceTree = "<group>";
@@ -791,6 +802,7 @@
 				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
 				1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */,
 				1A115BD0209E64FE005EDC9F /* ChatterFeedSegmentViewSlider.swift in Sources */,
+				1A115BE020AC0A41005EDC9F /* SavedChatter.swift in Sources */,
 				1A2E998720420A29009A674C /* AppDelegate.swift in Sources */,
 				1A115BCD209E30B5005EDC9F /* FollowingsPreLoader.swift in Sources */,
 				1A386F88208176D100CB76AB /* DirectChatterSegmentView.swift in Sources */,

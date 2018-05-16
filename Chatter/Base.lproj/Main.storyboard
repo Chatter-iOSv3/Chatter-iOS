@@ -322,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8UR-RW-a0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2999.1999999999998" y="-2247.5262368815593"/>
+            <point key="canvasLocation" x="4095" y="-2248"/>
         </scene>
         <!--Parent Chatter Feed View Controller-->
         <scene sceneID="Ofp-a7-qjI">
@@ -362,18 +362,34 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </scrollView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utb-iL-Xpf">
-                                <rect key="frame" x="312" y="48" width="40" height="40"/>
+                                <rect key="frame" x="23" y="48" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35W-h6-tSX">
-                                <rect key="frame" x="314" y="116" width="25" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jip-az-zyp">
+                                <rect key="frame" x="314" y="46" width="45" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.24215632446416735" blue="0.15284854019521676" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Direct"/>
+                                <connections>
+                                    <action selector="openDirectChatterWithSender:" destination="rZK-iM-7l1" eventType="touchUpInside" id="jwc-yT-3k9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35W-h6-tSX">
+                                <rect key="frame" x="314" y="44" width="15" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.33838391299999998" green="0.79899078609999996" blue="0.94894653559999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="0">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H4O-CY-ahs">
+                                <rect key="frame" x="0.0" y="127" width="375" height="695"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="sPV-MA-MUx" kind="embed" id="ESq-Tu-e2F"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="bvE-9a-5Jw"/>
@@ -382,13 +398,14 @@
                         <outlet property="buttonBarView" destination="xfh-hF-Rgs" id="CU9-JU-uZ2"/>
                         <outlet property="containerView" destination="YGd-OQ-x14" id="oCM-a2-ZFz"/>
                         <outlet property="curveViewPlaceholder" destination="IoS-A6-n7K" id="UzC-si-Byd"/>
+                        <outlet property="directChatterContainerView" destination="H4O-CY-ahs" id="aa9-2e-KYy"/>
                         <outlet property="directChatterInboxBadge" destination="35W-h6-tSX" id="2XM-6I-7YY"/>
                         <outlet property="feedPageAvatarView" destination="utb-iL-Xpf" id="xrA-sr-RmS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2c-0N-NCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1480.8" y="-1511.0837438423646"/>
+            <point key="canvasLocation" x="476" y="-1510.344827586207"/>
         </scene>
         <!--Chatter Feed-->
         <scene sceneID="iSk-eK-G1I">
@@ -415,41 +432,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORO-TI-ClC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2552.8000000000002" y="-1510.344827586207"/>
+            <point key="canvasLocation" x="1482" y="-1510"/>
         </scene>
-        <!--Direct Chatter-->
+        <!--Saved Chatter View Controller-->
         <scene sceneID="hLB-qO-Aa7">
             <objects>
-                <viewController storyboardIdentifier="ChatterFeedChild2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e60-jV-xTZ" customClass="DirectChatter" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="ChatterFeedChild2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e60-jV-xTZ" customClass="SavedChatterViewController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dBm-KW-YPN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVO-hH-e8P">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMG-v9-Pio">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="630"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </scrollView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.59224009509999997" green="0.07202803344" blue="0.90785670279999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="gVS-Mb-aRy"/>
                     </view>
                     <connections>
                         <outlet property="directScrollView" destination="yVO-hH-e8P" id="D71-Nm-Zbs"/>
-                        <outlet property="directView" destination="dBm-KW-YPN" id="7zF-aB-w1Y"/>
-                        <segue destination="yiy-HK-F30" kind="presentation" identifier="showDirectRecordEdit" id="uqg-gX-e3D"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3457" y="-1510"/>
+            <point key="canvasLocation" x="2384.8000000000002" y="-1510.344827586207"/>
         </scene>
         <!--Direct Record Edit Modal-->
         <scene sceneID="M3T-Hu-UTf">
             <objects>
                 <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="yiy-HK-F30" customClass="DirectRecordEditModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yHR-1I-KaH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="695"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WCB-uT-2pa">
@@ -520,14 +535,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4610" y="-1511"/>
+            <point key="canvasLocation" x="2447" y="-2248"/>
         </scene>
         <!--Direct Emoji View Modal-->
         <scene sceneID="XrD-wX-00E">
             <objects>
                 <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="7ot-5v-gOd" customClass="DirectEmojiViewModal" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GRE-gG-HZu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="695"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t6Y-GI-Es2">
@@ -562,7 +577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qbx-T5-6Nf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5738" y="-1511"/>
+            <point key="canvasLocation" x="3330" y="-2248"/>
         </scene>
         <!--Menu-->
         <scene sceneID="hdP-Pg-Kqr">
@@ -1582,6 +1597,32 @@
             </objects>
             <point key="canvasLocation" x="2144.8000000000002" y="1950"/>
         </scene>
+        <!--Direct Chatter-->
+        <scene sceneID="pov-99-N3Q">
+            <objects>
+                <viewController id="sPV-MA-MUx" customClass="DirectChatter" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UzS-mz-BIb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="695"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVO-hH-e8P">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="707"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="directScrollView" destination="yVO-hH-e8P" id="XWq-I2-xnZ"/>
+                        <outlet property="directView" destination="UzS-mz-BIb" id="YQM-bV-ubz"/>
+                        <segue destination="yiy-HK-F30" kind="presentation" identifier="showDirectRecordEdit" id="AJ3-Mm-0Ek"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zyL-eD-FzT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1480.8" y="-2247.4137931034484"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Add" width="33" height="33"/>
@@ -1589,6 +1630,7 @@
         <image name="Chatterv3" width="150" height="150"/>
         <image name="Check" width="166" height="166"/>
         <image name="Compose" width="45" height="45"/>
+        <image name="Direct" width="45" height="45"/>
         <image name="Gear" width="40" height="40"/>
         <image name="LeftPointingArrow" width="25" height="25"/>
         <image name="LoveLetter" width="25" height="25"/>
@@ -1600,7 +1642,7 @@
         <image name="X" width="166" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kzD-8l-blZ"/>
+        <segue reference="lMI-sT-p7f"/>
         <segue reference="r4L-Dv-vRz"/>
     </inferredMetricsTieBreakers>
 </document>

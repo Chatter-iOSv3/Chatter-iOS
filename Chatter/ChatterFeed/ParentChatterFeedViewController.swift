@@ -13,16 +13,19 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var curveViewPlaceholder: UIView!
     @IBOutlet weak var feedPageAvatarView: UIView!
     @IBOutlet weak var directChatterInboxBadge: UIButton!
+    @IBOutlet weak var directChatterContainerView: UIView!
     
     var directChatterInboxBadgeCount: Int! = 0
     var directChatterUnreadArr: [String]! = []
     
     var chatterViewController: UIViewController?
-    var directViewController: UIViewController?
+    var savedViewController: UIViewController?
     
     var profileImage: UIImage?
     
     override func viewDidLoad() {
+        // Hide Direct Chatter Initially
+        directChatterContainerView.alpha = 0.0
         
         // Styling for Placeholder view
         curveViewPlaceholder.layer.cornerRadius = 20
@@ -58,11 +61,23 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         // Listens for starting Direct Chatter and ProfileImage change
-        NotificationCenter.default.addObserver(self, selector: #selector(goToDirectChatter(notification:)), name: .startDirectChatter, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(goToSavedChatter(notification:)), name: .startDirectChatter, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(profileImageChanged(notification:)), name: .profileImageChanged, object: nil)
 
         // Listens for inbox activity
         NotificationCenter.default.addObserver(self, selector: #selector(directChatterInboxChanged(notification:)), name: .directChatterInboxChanged, object: nil)
+    }
+    
+    @IBAction func openDirectChatter(sender: Any) {
+        if (self.directChatterContainerView.alpha == 0.0) {
+            UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+                self.directChatterContainerView.alpha = 1.0
+            }, completion:nil)
+        }   else {
+            UIView.animate(withDuration: 0.5, delay: 0.0, options:.curveLinear, animations: {
+                self.directChatterContainerView.alpha = 0.0
+            }, completion:nil)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -168,13 +183,13 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         self.chatterViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild1")
         self.chatterViewController?.view.layoutSubviews()
-        self.directViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild2")
-        self.directViewController?.view.layoutSubviews()
-        return [self.chatterViewController! , self.directViewController!]
+        self.savedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatterFeedChild2")
+        self.savedViewController?.view.layoutSubviews()
+        return [self.chatterViewController! , self.savedViewController!]
     }
     
-    @objc func goToDirectChatter(notification:NSNotification) {
-        self.directViewController?.view.layoutSubviews()
+    @objc func goToSavedChatter(notification:NSNotification) {
+        self.savedViewController?.view.layoutSubviews()
         moveToViewController(at: 1)
     }
     
