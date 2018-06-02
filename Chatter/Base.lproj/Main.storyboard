@@ -257,7 +257,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eIn-Zk-Edi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-239" y="505"/>
+            <point key="canvasLocation" x="-239" y="420"/>
         </scene>
         <!--Compose Modal-->
         <scene sceneID="uqY-UX-afS">
@@ -437,7 +437,6 @@
         <!--Saved Chatter View Controller-->
         <scene sceneID="hLB-qO-Aa7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ChatterFeedChild2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e60-jV-xTZ" customClass="SavedChatterViewController" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dBm-KW-YPN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -456,6 +455,7 @@
                         <outlet property="directScrollView" destination="yVO-hH-e8P" id="D71-Nm-Zbs"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WIj-BZ-EE8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2384.8000000000002" y="-1510.344827586207"/>
         </scene>
@@ -671,7 +671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyc-0A-HR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3457" y="41"/>
+            <point key="canvasLocation" x="3457" y="22"/>
         </scene>
         <!--Upload Modal View Controller-->
         <scene sceneID="Iwf-5m-u0F">
@@ -741,12 +741,6 @@
         <!--Landing Record-->
         <scene sceneID="n79-xy-DGq">
             <objects>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ciM-xQ-qpJ">
-                    <connections>
-                        <action selector="startRecord:" destination="Nqu-23-wci" id="NMW-yp-Vx9"/>
-                    </connections>
-                </pongPressGestureRecognizer>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LandingRecord" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nqu-23-wci" customClass="LandingRecord" customModule="Chatter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NpF-id-SPE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -834,6 +828,12 @@
                         <segue destination="B8a-nC-1jW" kind="presentation" identifier="showUploadModal" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="xJt-sa-Vap"/>
                     </connections>
                 </viewController>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ciM-xQ-qpJ">
+                    <connections>
+                        <action selector="startRecord:" destination="Nqu-23-wci" id="NMW-yp-Vx9"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mRl-F6-Ksn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1480.8" y="-341.37931034482762"/>
         </scene>
@@ -1086,7 +1086,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gcs-Y0-esv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5qJ-AP-fM1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4665" y="41"/>
+            <point key="canvasLocation" x="4665" y="21"/>
         </scene>
         <!--Followers View-->
         <scene sceneID="FHu-I6-t6y">
@@ -1160,7 +1160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q4h-Dx-Kyd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="845.60000000000002" y="1211.0837438423646"/>
+            <point key="canvasLocation" x="1114" y="1236"/>
         </scene>
         <!--Menu View-->
         <scene sceneID="GRn-yw-BdW">
@@ -1366,7 +1366,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3aX-ac-rlB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gbM-pK-tkH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1479.2" y="1206.6502463054187"/>
+            <point key="canvasLocation" x="1746" y="1233"/>
         </scene>
         <!--Invites View-->
         <scene sceneID="JMU-UN-iz3">
@@ -1449,7 +1449,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A3d-vq-wRn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="205.59999999999999" y="1208.1280788177341"/>
+            <point key="canvasLocation" x="474" y="1233"/>
         </scene>
         <!--Following View-->
         <scene sceneID="b0c-E4-isk">
@@ -1527,7 +1527,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LXM-Bp-aG1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2144.8000000000002" y="1208.1280788177341"/>
+            <point key="canvasLocation" x="2414" y="1233"/>
         </scene>
         <!--Follow Modal-->
         <scene sceneID="rVt-VP-PCy">
@@ -1590,7 +1590,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6CA-dC-Lfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2144.8000000000002" y="1950"/>
+            <point key="canvasLocation" x="2414" y="1939"/>
         </scene>
         <!--Direct Chatter-->
         <scene sceneID="pov-99-N3Q">
@@ -1607,6 +1607,7 @@
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="qVD-ra-gX6"/>
                     </view>
                     <connections>
                         <outlet property="directScrollView" destination="yVO-hH-e8P" id="XWq-I2-xnZ"/>
@@ -1638,6 +1639,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lMI-sT-p7f"/>
-        <segue reference="r4L-Dv-vRz"/>
+        <segue reference="ehB-MA-WfB"/>
     </inferredMetricsTieBreakers>
 </document>

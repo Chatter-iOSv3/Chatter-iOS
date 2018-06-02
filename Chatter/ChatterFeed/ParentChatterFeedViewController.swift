@@ -33,14 +33,8 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
         feedPageAvatarView.layer.borderWidth = 2
         feedPageAvatarView.layer.borderColor = UIColor.white.cgColor
         
-//      Styling for bar buttons
-        settings.style.buttonBarItemBackgroundColor = .clear
-        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 17)
-        settings.style.selectedBarHeight = 2.0
-        settings.style.selectedBarBackgroundColor = .white
-        settings.style.buttonBarItemLeftRightMargin = 0
-        settings.style.buttonBarLeftContentInset = 35
-        settings.style.buttonBarRightContentInset = 35
+        // Styling for bar buttons
+        self.configureBarButtons()
 
         changeCurrentIndexProgressive = { [weak self] (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
@@ -49,7 +43,7 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             
             if (newCell?.label.text == "Feed" || newCell == nil) {
                 self?.configureCellsOnChatter(oldCell: oldCell, newCell: newCell)
-            }   else if (newCell?.label.text == "Direct") {
+            }   else if (newCell?.label.text == "Saved") {
                 self?.configureCellsOnDirect(oldCell: oldCell, newCell: newCell)
             }
         }
@@ -178,6 +172,16 @@ class ParentChatterFeedViewController: ButtonBarPagerTabStripViewController {
             newCellLayer.path = newCellPath.cgPath
             newCell?.layer.mask = newCellLayer
         }
+    }
+    
+    func configureBarButtons() {
+        settings.style.buttonBarItemBackgroundColor = .clear
+        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 17)
+        settings.style.selectedBarHeight = 2.0
+        settings.style.selectedBarBackgroundColor = .white
+        settings.style.buttonBarItemLeftRightMargin = 0
+        settings.style.buttonBarLeftContentInset = 35
+        settings.style.buttonBarRightContentInset = 35
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
