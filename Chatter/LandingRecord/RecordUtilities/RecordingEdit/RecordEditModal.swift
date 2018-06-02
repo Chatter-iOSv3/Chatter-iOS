@@ -37,12 +37,12 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     let storage = Storage.storage()
     var ref: DatabaseReference!
     
-    // Image Asset Items
+    // Image Asset Items (images and labels must be associated)
     var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "BadMouth")!, UIImage(named: "Plus")!]
-    var resizedFilterImageArr: [UIImage] = []
     var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Running", "BadMouth", "Emoji"]
+    var resizedFilterImageArr: [UIImage] = []
     
-    var addIntent: Int = 0
+    var addIntent: String = ""
     
     var friendsList: [LandingRecord.friendItem]!
     
@@ -176,7 +176,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         }
     }
     
-    // View Methods ----------------------------------------------------------------
+    // Picker Methods ----------------------------------------------------------------
     
     func numberOfItemsInPickerView(_ pickerView: AKPickerView) -> Int {
         return self.resizedFilterImageArr.count
@@ -187,12 +187,15 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
-        // Temporary: TODO -> Refer to notes
-        if (item == 6 && self.addIntent != 6) {
-            self.addIntent = 6
-        }   else if (item == 6 && self.addIntent == 6) {
-            self.addIntent = 0
+        // Add Emoji picker custom handler
+        if (self.filterLabelArr[item] == "Emoji" && self.addIntent != "Emoji") {
+            self.addIntent = "Emoji"
+        }   else if (self.filterLabelArr[item] == "Emoji" && self.addIntent == "Emoji") {
+            self.addIntent = ""
             performSegue(withIdentifier: "showEmojiPicker", sender: nil)
+        }   else {
+            // Other presets, Pass labels to handler
+            self.handleFilterSelected(filterID: self.filterLabelArr[item])
         }
     }
     

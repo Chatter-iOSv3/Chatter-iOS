@@ -48,6 +48,7 @@
 		1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7B20563A4F001434D0 /* InvitesView.swift */; };
 		1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */; };
 		1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA4C6A02056181300AD3980 /* FollowModal.swift */; };
+		1AB07EA720C2733700EA499B /* FilterHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB07EA620C2733700EA499B /* FilterHelpers.swift */; };
 		1AB5910A2084189F00451AA6 /* DirectRecordEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB591092084189F00451AA6 /* DirectRecordEditModal.swift */; };
 		1AB5910C208418D900451AA6 /* DirectEmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */; };
 		1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC61FBC204696CF0016AB83 /* LandingRecord.swift */; };
@@ -125,6 +126,7 @@
 		1A928A7B20563A4F001434D0 /* InvitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesView.swift; sourceTree = "<group>"; };
 		1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesTableViewCell.swift; sourceTree = "<group>"; };
 		1AA4C6A02056181300AD3980 /* FollowModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowModal.swift; sourceTree = "<group>"; };
+		1AB07EA620C2733700EA499B /* FilterHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelpers.swift; sourceTree = "<group>"; };
 		1AB591092084189F00451AA6 /* DirectRecordEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectRecordEditModal.swift; sourceTree = "<group>"; };
 		1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectEmojiViewModal.swift; sourceTree = "<group>"; };
 		1AC61FBC204696CF0016AB83 /* LandingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecord.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				1A3D59F4205FA2DF00AD2653 /* RecordEditModal.swift */,
 				1A0D24FC206DE8FA000BC472 /* EmojiViewModal.swift */,
+				1AB07EA520C2732200EA499B /* Filters */,
 			);
 			path = RecordingEdit;
 			sourceTree = "<group>";
@@ -413,6 +416,14 @@
 				1A386F8320815C4700CB76AB /* DrawDirectWaveForm.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1AB07EA520C2732200EA499B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				1AB07EA620C2733700EA499B /* FilterHelpers.swift */,
+			);
+			path = Filters;
 			sourceTree = "<group>";
 		};
 		1AB591072083F72E00451AA6 /* RecordUtilities */ = {
@@ -772,6 +783,7 @@
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
 				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
 				1A115BDD20A6674E005EDC9F /* LandingUploadAudio.swift in Sources */,
+				1AB07EA720C2733700EA499B /* FilterHelpers.swift in Sources */,
 				1A115BD620A28D41005EDC9F /* UploadEditModal.swift in Sources */,
 				1A386F7F207AB78B00CB76AB /* ChooseAudienceModal.swift in Sources */,
 				1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */,
