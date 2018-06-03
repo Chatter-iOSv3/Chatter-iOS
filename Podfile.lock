@@ -1,4 +1,5 @@
 PODS:
+  - AKPickerView-Swift (2.0.1)
   - Firebase/Auth (4.1.0):
     - Firebase/Core
     - FirebaseAuth (= 4.1.0)
@@ -44,6 +45,8 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.11)
+  - IQKeyboardManager (4.0.13)
+  - ISEmojiView (0.0.6)
   - leveldb-library (1.18.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -51,15 +54,37 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - UICircularProgressRing (1.7.0)
+  - XLPagerTabStrip (7.0.0)
 
 DEPENDENCIES:
+  - AKPickerView-Swift (from `https://github.com/Chatter-iOSv3/AKPickerView-Swift.git`, commit `ee72e72042ade0a445438547c815dd33fbb87334`)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - IQKeyboardManager
+  - ISEmojiView (from `https://github.com/Chatter-iOSv3/ISEmojiView.git`, commit `6dd8036e59ccc20270c330afffce8c732e2add39`)
   - UICircularProgressRing
+  - XLPagerTabStrip
+
+EXTERNAL SOURCES:
+  AKPickerView-Swift:
+    :commit: ee72e72042ade0a445438547c815dd33fbb87334
+    :git: https://github.com/Chatter-iOSv3/AKPickerView-Swift.git
+  ISEmojiView:
+    :commit: 6dd8036e59ccc20270c330afffce8c732e2add39
+    :git: https://github.com/Chatter-iOSv3/ISEmojiView.git
+
+CHECKOUT OPTIONS:
+  AKPickerView-Swift:
+    :commit: ee72e72042ade0a445438547c815dd33fbb87334
+    :git: https://github.com/Chatter-iOSv3/AKPickerView-Swift.git
+  ISEmojiView:
+    :commit: 6dd8036e59ccc20270c330afffce8c732e2add39
+    :git: https://github.com/Chatter-iOSv3/ISEmojiView.git
 
 SPEC CHECKSUMS:
+  AKPickerView-Swift: 4969de689bee54f720dd64700f7aaab02a8f2ddc
   Firebase: ebebf41db7f10e0c7668b6eaaa857fbe599aa478
   FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
   FirebaseAuth: 8d1d2389cf82f891048d6d50d27d044f55ae09a6
@@ -69,10 +94,13 @@ SPEC CHECKSUMS:
   FirebaseStorage: 661fc1f8d4131891d256b62e82a45ace8b3f0c3b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
+  ISEmojiView: f2b13e9e9ba5c08d322aa249bfaafa2f8f80d3b1
   leveldb-library: 10fb39c39e243db4af1828441162405bbcec1404
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   UICircularProgressRing: 35c3d291b679161ea27fb6216fee58c40a4bb597
+  XLPagerTabStrip: 9be80a66c6b7d60306b2c0a6004965016d68f813
 
-PODFILE CHECKSUM: 7b82567456282578cce3300d33e157791bb19725
+PODFILE CHECKSUM: 74ab0075c46c131634438112b88a9724279bad85
 
 COCOAPODS: 1.4.0

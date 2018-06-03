@@ -22,5 +22,9 @@ pod 'Firebase/Database'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'UICircularProgressRing'
+pod 'ISEmojiView', :git => 'https://github.com/Chatter-iOSv3/ISEmojiView.git', :commit => '6dd8036e59ccc20270c330afffce8c732e2add39'
+pod 'AKPickerView-Swift', :git => 'https://github.com/Chatter-iOSv3/AKPickerView-Swift.git', :commit => 'ee72e72042ade0a445438547c815dd33fbb87334'
+pod 'XLPagerTabStrip'
+pod 'IQKeyboardManager' 
 
 end

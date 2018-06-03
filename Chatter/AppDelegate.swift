@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         let storage = Storage.storage()
+        
+        IQKeyboardManager.shared().isEnabled = true
+        IQKeyboardManager.shared().disabledToolbarClasses.add(EmojiViewModal.self)
+        IQKeyboardManager.shared().disabledToolbarClasses.add(DirectEmojiViewModal.self)
         
         return true
     }
