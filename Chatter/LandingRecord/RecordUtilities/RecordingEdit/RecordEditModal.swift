@@ -32,6 +32,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var player : AVAudioPlayer?
     var recordedUrl: URL?
     var multiplier: Float?
+    var hasFilter: Bool?
+    var engine: AVAudioEngine!
+    var filterPlayer: AVAudioPlayerNode!
     
     // Initialize Firebase vars
     let storage = Storage.storage()
@@ -67,6 +70,14 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         // Regulate size of FilterImageArr
         self.sizeControlFilterImageArr()
         self.loadPickerLabelArray()
+        
+        // Initialize normal player
+        self.setupPlayer()
+        
+        // Initialize filter players
+        self.hasFilter = false
+        self.engine = AVAudioEngine()
+        self.filterPlayer = AVAudioPlayerNode()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,23 +91,41 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     @IBAction func playRecording(sender: Any) {
+        if (!self.hasFilter!) {
+            self.handleNormalPlayer()
+        }   else {
+            self.handleFilterPlayer()
+        }
+    }
+    
+    func setupPlayer() {
         let url = self.recordedUrl!
         do {
             // AVAudioPlayer setting up with the saved file URL
             let sound = try AVAudioPlayer(contentsOf: url)
             self.player = sound
-            
-            // If in the middle of another play
-            sound.stop()
-
-            // Here conforming to AVAudioPlayerDelegate
-            sound.delegate = self
-            sound.prepareToPlay()
-//            sound.numberOfLoops = -1
-            sound.play()
         } catch {
-            print("error loading file")
+            print("error setting up player")
             // couldn't load file :(
+        }
+    }
+    
+    func handleNormalPlayer() {
+        // If in the middle of another play
+        self.player?.stop()
+        
+        // Here conforming to AVAudioPlayerDelegate
+        self.player?.delegate = self
+        self.player?.prepareToPlay()
+        // Sound.numberOfLoops = -1
+        self.player?.play()
+    }
+    
+    func handleFilterPlayer() {
+        if (self.filterPlayer.isPlaying) {
+            self.filterPlayer.stop()
+        }   else {
+            self.filterPlayer.play()
         }
     }
     
@@ -187,6 +216,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
+        // Set current filter reference
+        self.hasFilter = self.filterLabelArr[item] != "Normal" ? true : false
+        
         // Add Emoji picker custom handler
         if (self.filterLabelArr[item] == "Emoji" && self.addIntent != "Emoji") {
             self.addIntent = "Emoji"
