@@ -14,17 +14,34 @@ import IQKeyboardManager
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    // The instance of `ExternalCommandManager` that the app uses for managing external command events.
+    var externalCommandManager: ExternalCommandManager!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // Initialize Firebase ----------------------------
         FirebaseApp.configure()
-        
         let storage = Storage.storage()
         
+        // Initialize Keyboard manager  -------------------------
         IQKeyboardManager.shared().isEnabled = true
         IQKeyboardManager.shared().disabledToolbarClasses.add(EmojiViewModal.self)
         IQKeyboardManager.shared().disabledToolbarClasses.add(DirectEmojiViewModal.self)
+        
+        // Initialize External Command handlers ----------------------------
+        // Initialize the `ExternalCommandManager`.
+        externalCommandManager = ExternalCommandManager()
+        
+        // Always enable playback commands in MPRemoteCommandCenter.
+        externalCommandManager.activatePlaybackCommands(true)
+        externalCommandManager.toggleNextTrackCommand(true)
+        externalCommandManager.togglePreviousTrackCommand(true)
+        externalCommandManager.toggleSeekForwardCommand(true)
+        externalCommandManager.toggleSeekBackwardCommand(true)
+        // Inject dependencies needed by the app.
+        
         
         return true
     }

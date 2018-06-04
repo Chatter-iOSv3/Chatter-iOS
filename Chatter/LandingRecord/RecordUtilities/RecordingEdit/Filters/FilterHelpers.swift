@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
-import AudioKit
+import AVFoundation
 
 extension RecordEditModal {
     func handleFilterSelected(filterID: String) {
