@@ -59,8 +59,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         let userName: String
         let profileImage: UIImage
     }
-    
     var friendsList: [friendItem]!
+    
+    // External Command Data source
+    var appDelegate: AppDelegate!
+    var externalCommandDataSource: ExternalCommandDataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +103,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Listens for Friends list from Followers/Following
         NotificationCenter.default.addObserver(self, selector: #selector(friendsListSetup(notification:)), name: .sendToComposeModalFriendsList, object: nil)
         self.friendsList = []
+        
+        // External Commands -------------------------------------------------------------
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
+        // Setup external commands
+        self.setupExternalCommands()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -227,4 +235,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @IBAction func unwindToLandingRecord(segue: UIStoryboardSegue) {}
+    
+    
+    // Setup External Commands --------------------------------------------------
+    func setupExternalCommands() {
+        self.externalCommandDataSource = ExternalCommandDataSource(externalCommandManager: self.appDelegate.externalCommandManager)
+    }
 }

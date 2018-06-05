@@ -11,63 +11,68 @@ import MediaPlayer
 
 class ExternalCommandManager: NSObject {
     // Reference of `MPRemoteCommandCenter` used to configure and setup remote control events in the application.
-    let remoteCommandCenter = MPRemoteCommandCenter.shared()
+    let externalCommandCenter = MPRemoteCommandCenter.shared()
     
     // Activate Handlers
     func activatePlaybackCommands(_ enable: Bool) {
+        print("Activating PB Controls")
         if enable {
-            remoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(ExternalCommandManager.handleTogglePlayPauseCommandEvent(_:)))
+            externalCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(ExternalCommandManager.handleTogglePlayPauseCommandEvent(_:)))
             
         }
         else {
-            remoteCommandCenter.togglePlayPauseCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleTogglePlayPauseCommandEvent(_:)))
+            externalCommandCenter.togglePlayPauseCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleTogglePlayPauseCommandEvent(_:)))
         }
         
-        remoteCommandCenter.togglePlayPauseCommand.isEnabled = enable
+        externalCommandCenter.togglePlayPauseCommand.isEnabled = enable
     }
     
     func toggleNextTrackCommand(_ enable: Bool) {
+        print("Activating NT")
         if enable {
-            remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(ExternalCommandManager.handleNextTrackCommandEvent(_:)))
+            externalCommandCenter.nextTrackCommand.addTarget(self, action: #selector(ExternalCommandManager.handleNextTrackCommandEvent(_:)))
         }
         else {
-            remoteCommandCenter.nextTrackCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleNextTrackCommandEvent(_:)))
+            externalCommandCenter.nextTrackCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleNextTrackCommandEvent(_:)))
         }
         
-        remoteCommandCenter.nextTrackCommand.isEnabled = enable
+        externalCommandCenter.nextTrackCommand.isEnabled = enable
     }
     
     func togglePreviousTrackCommand(_ enable: Bool) {
+        print("Activating PT")
         if enable {
-            remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(ExternalCommandManager.handlePreviousTrackCommandEvent(event:)))
+            externalCommandCenter.previousTrackCommand.addTarget(self, action: #selector(ExternalCommandManager.handlePreviousTrackCommandEvent(event:)))
         }
         else {
-            remoteCommandCenter.previousTrackCommand.removeTarget(self, action: #selector(ExternalCommandManager.handlePreviousTrackCommandEvent(event:)))
+            externalCommandCenter.previousTrackCommand.removeTarget(self, action: #selector(ExternalCommandManager.handlePreviousTrackCommandEvent(event:)))
         }
         
-        remoteCommandCenter.previousTrackCommand.isEnabled = enable
+        externalCommandCenter.previousTrackCommand.isEnabled = enable
     }
     
     func toggleSeekForwardCommand(_ enable: Bool) {
+        print("Activating SF")
         if enable {
-            remoteCommandCenter.seekForwardCommand.addTarget(self, action: #selector(ExternalCommandManager.handleSeekForwardCommandEvent(event:)))
+            externalCommandCenter.seekForwardCommand.addTarget(self, action: #selector(ExternalCommandManager.handleSeekForwardCommandEvent(event:)))
         }
         else {
-            remoteCommandCenter.seekForwardCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleSeekForwardCommandEvent(event:)))
+            externalCommandCenter.seekForwardCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleSeekForwardCommandEvent(event:)))
         }
         
-        remoteCommandCenter.seekForwardCommand.isEnabled = enable
+        externalCommandCenter.seekForwardCommand.isEnabled = enable
     }
     
     func toggleSeekBackwardCommand(_ enable: Bool) {
+        print("Activating SB")
         if enable {
-            remoteCommandCenter.seekBackwardCommand.addTarget(self, action: #selector(ExternalCommandManager.handleSeekBackwardCommandEvent(event:)))
+            externalCommandCenter.seekBackwardCommand.addTarget(self, action: #selector(ExternalCommandManager.handleSeekBackwardCommandEvent(event:)))
         }
         else {
-            remoteCommandCenter.seekBackwardCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleSeekBackwardCommandEvent(event:)))
+            externalCommandCenter.seekBackwardCommand.removeTarget(self, action: #selector(ExternalCommandManager.handleSeekBackwardCommandEvent(event:)))
         }
         
-        remoteCommandCenter.seekBackwardCommand.isEnabled = enable
+        externalCommandCenter.seekBackwardCommand.isEnabled = enable
     }
     
     // Command Handlers ----------------------------------------------

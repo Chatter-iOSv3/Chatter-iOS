@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import IQKeyboardManager
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,7 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         externalCommandManager.toggleSeekForwardCommand(true)
         externalCommandManager.toggleSeekBackwardCommand(true)
         // Inject dependencies needed by the app.
-        
+//        guard let landingPageViewController = window?.rootViewController as? LandingPageViewController else {return true}
+//
+//        landingPageViewController.externalCommandDataSource = ExternalCommandDataSource(externalCommandManager: externalCommandManager)
         
         return true
     }

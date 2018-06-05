@@ -9,6 +9,8 @@
 import UIKit
 
 class LandingPageViewController: UIPageViewController {
+    
+    var externalCommandDataSource: ExternalCommandDataSource!
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
