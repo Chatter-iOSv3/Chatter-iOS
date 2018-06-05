@@ -41,8 +41,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var ref: DatabaseReference!
     
     // Image Asset Items (images and labels must be associated)
-    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "BadMouth")!, UIImage(named: "Plus")!]
-    var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Running", "BadMouth", "Emoji"]
+    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "BadMouth")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Plus")!]
+    var filterLabelArr: [String] = ["Robot", "BadMouth", "Studio", "Normal", "Running", "Poop", "Emoji"]
     var resizedFilterImageArr: [UIImage] = []
     
     var addIntent: String = ""
@@ -108,6 +108,11 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
             print("error setting up player")
             // couldn't load file :(
         }
+    }
+    
+    func resetFilterPlayer() {
+        self.engine = AVAudioEngine()
+        self.filterPlayer = AVAudioPlayerNode()
     }
     
     func handleNormalPlayer() {
