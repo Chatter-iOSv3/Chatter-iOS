@@ -847,7 +847,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubbleListCell" rowHeight="80" id="ba3-NC-6O2" customClass="BubbleListCell" customModule="Chatter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="90" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ba3-NC-6O2" id="qmY-mZ-5BZ" customClass="LandingFeedSegmentView" customModule="Chatter" customModuleProvider="target">
@@ -917,7 +917,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="X"/>
                                         <connections>
-                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="rZQ-Ea-yci"/>
+                                            <action selector="animateButtonWithSender:" destination="eOO-cO-i87" eventType="touchUpInside" id="Yce-lo-2L2"/>
                                             <action selector="closeRecordEdit:" destination="eOO-cO-i87" eventType="touchUpInside" id="z4o-JU-lRo"/>
                                         </connections>
                                     </button>
@@ -1157,7 +1157,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowersTableViewCell" rowHeight="90" id="aoV-Ij-nve" userLabel="FollowersTableViewCell" customClass="FollowersTableViewCell" customModule="Chatter" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowersTableViewCell" rowHeight="90" id="aoV-Ij-nve" userLabel="FollowersTableViewCell" customClass="FollowersTableViewCell" customModule="Chatter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aoV-Ij-nve" id="Olj-XF-YcB">

@@ -32,7 +32,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var player : AVAudioPlayer?
     var recordedUrl: URL?
     var multiplier: Float?
-    var hasFilter: Bool?
+    var currFilter: String!
     var engine: AVAudioEngine!
     var filterPlayer: AVAudioPlayerNode!
     
@@ -75,7 +75,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         self.setupPlayer()
         
         // Initialize filter players
-        self.hasFilter = false
+        self.currFilter = "Normal"
         self.engine = AVAudioEngine()
         self.filterPlayer = AVAudioPlayerNode()
     }
@@ -91,7 +91,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     @IBAction func playRecording(sender: Any) {
-        if (!self.hasFilter!) {
+        self.animateWaveView(sender: self.recordWaveFormView.subviews[0])
+        
+        if (self.currFilter == "Normal") {
             self.handleNormalPlayer()
         }   else {
             self.handleFilterPlayer()
@@ -111,6 +113,8 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     func resetFilterPlayer() {
+        // If in the middle of another play
+        self.player?.stop()
         self.engine = AVAudioEngine()
         self.filterPlayer = AVAudioPlayerNode()
     }
@@ -127,11 +131,12 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     func handleFilterPlayer() {
-        if (self.filterPlayer.isPlaying) {
-            self.filterPlayer.stop()
-        }   else {
-            self.filterPlayer.play()
-        }
+        // Re-setup engine first
+        self.engine.stop()
+        self.handleFilterSelected(filterID: self.currFilter!)
+    
+        // Play
+        self.filterPlayer.play()
     }
     
     // Actions --------------------------------------------------------------------------------------
@@ -145,9 +150,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     @IBAction func confirmRecording(sender: AnyObject) {}
     
     @IBAction func animateButton(sender: UIButton) {
-
+        
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-
+        
         UIView.animate(withDuration: 1.25,
                        delay: 0,
                        usingSpringWithDamping: CGFloat(0.20),
@@ -222,7 +227,7 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     
     func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
         // Set current filter reference
-        self.hasFilter = self.filterLabelArr[item] != "Normal" ? true : false
+        self.currFilter = self.filterLabelArr[item]
         
         // Add Emoji picker custom handler
         if (self.filterLabelArr[item] == "Emoji" && self.addIntent != "Emoji") {
@@ -283,5 +288,21 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         for label in self.filterLabelArr {
             self.filtersPickerView.labelArray.append(label)
         }
+    }
+    
+    func animateWaveView(sender: UIView) {
+        
+        sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        
+        UIView.animate(withDuration: 1.0,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.30),
+                       initialSpringVelocity: CGFloat(6.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {
+                        sender.transform = CGAffineTransform.identity
+        },
+                       completion: { Void in()  }
+        )
     }
 }
