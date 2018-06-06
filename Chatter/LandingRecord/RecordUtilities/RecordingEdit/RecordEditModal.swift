@@ -32,14 +32,17 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     var player : AVAudioPlayer?
     var recordedUrl: URL?
     var multiplier: Float?
+    var currFilter: String!
+    var engine: AVAudioEngine!
+    var filterPlayer: AVAudioPlayerNode!
     
     // Initialize Firebase vars
     let storage = Storage.storage()
     var ref: DatabaseReference!
     
     // Image Asset Items (images and labels must be associated)
-    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "BadMouth")!, UIImage(named: "Plus")!]
-    var filterLabelArr: [String] = ["Robot", "Poop", "Studio", "Normal", "Running", "BadMouth", "Emoji"]
+    var filterImageArr: [UIImage] = [UIImage(named: "Robot")!, UIImage(named: "BadMouth")!, UIImage(named: "Microphone")!, UIImage(named: "SaturnFilter")!, UIImage(named: "RunningMan")!, UIImage(named: "PoopEmoji")!, UIImage(named: "Plus")!]
+    var filterLabelArr: [String] = ["Robot", "BadMouth", "Studio", "Normal", "Running", "Poop", "Emoji"]
     var resizedFilterImageArr: [UIImage] = []
     
     var addIntent: String = ""
@@ -67,6 +70,14 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         // Regulate size of FilterImageArr
         self.sizeControlFilterImageArr()
         self.loadPickerLabelArray()
+        
+        // Initialize normal player
+        self.setupPlayer()
+        
+        // Initialize filter players
+        self.currFilter = "Normal"
+        self.engine = AVAudioEngine()
+        self.filterPlayer = AVAudioPlayerNode()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,24 +91,52 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     @IBAction func playRecording(sender: Any) {
+        self.animateWaveView(sender: self.recordWaveFormView.subviews[0])
+        
+        if (self.currFilter == "Normal") {
+            self.handleNormalPlayer()
+        }   else {
+            self.handleFilterPlayer()
+        }
+    }
+    
+    func setupPlayer() {
         let url = self.recordedUrl!
         do {
             // AVAudioPlayer setting up with the saved file URL
             let sound = try AVAudioPlayer(contentsOf: url)
             self.player = sound
-            
-            // If in the middle of another play
-            sound.stop()
-
-            // Here conforming to AVAudioPlayerDelegate
-            sound.delegate = self
-            sound.prepareToPlay()
-//            sound.numberOfLoops = -1
-            sound.play()
         } catch {
-            print("error loading file")
+            print("error setting up player")
             // couldn't load file :(
         }
+    }
+    
+    func resetFilterPlayer() {
+        // If in the middle of another play
+        self.player?.stop()
+        self.engine = AVAudioEngine()
+        self.filterPlayer = AVAudioPlayerNode()
+    }
+    
+    func handleNormalPlayer() {
+        // If in the middle of another play
+        self.player?.stop()
+        
+        // Here conforming to AVAudioPlayerDelegate
+        self.player?.delegate = self
+        self.player?.prepareToPlay()
+        // Sound.numberOfLoops = -1
+        self.player?.play()
+    }
+    
+    func handleFilterPlayer() {
+        // Re-setup engine first
+        self.engine.stop()
+        self.handleFilterSelected(filterID: self.currFilter!)
+    
+        // Play
+        self.filterPlayer.play()
     }
     
     // Actions --------------------------------------------------------------------------------------
@@ -111,9 +150,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     @IBAction func confirmRecording(sender: AnyObject) {}
     
     @IBAction func animateButton(sender: UIButton) {
-
+        
         sender.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-
+        
         UIView.animate(withDuration: 1.25,
                        delay: 0,
                        usingSpringWithDamping: CGFloat(0.20),
@@ -187,6 +226,9 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
     }
     
     func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int) {
+        // Set current filter reference
+        self.currFilter = self.filterLabelArr[item]
+        
         // Add Emoji picker custom handler
         if (self.filterLabelArr[item] == "Emoji" && self.addIntent != "Emoji") {
             self.addIntent = "Emoji"
@@ -246,5 +288,21 @@ class RecordEditModal: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerD
         for label in self.filterLabelArr {
             self.filtersPickerView.labelArray.append(label)
         }
+    }
+    
+    func animateWaveView(sender: UIView) {
+        
+        sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        
+        UIView.animate(withDuration: 1.0,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.30),
+                       initialSpringVelocity: CGFloat(6.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {
+                        sender.transform = CGAffineTransform.identity
+        },
+                       completion: { Void in()  }
+        )
     }
 }

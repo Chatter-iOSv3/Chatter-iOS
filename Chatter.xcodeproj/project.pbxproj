@@ -44,6 +44,8 @@
 		1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4DA0D42055EE85009E1DC9 /* MenuView.swift */; };
 		1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */; };
 		1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */; };
+		1A74C07D20C5D2D80059303B /* ExternalCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A74C07C20C5D2D80059303B /* ExternalCommandManager.swift */; };
+		1A74C07F20C5D4490059303B /* ExternalCommandDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A74C07E20C5D4490059303B /* ExternalCommandDataSource.swift */; };
 		1A78F5212063731D0040B1A7 /* ChatterLoadingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */; };
 		1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7B20563A4F001434D0 /* InvitesView.swift */; };
 		1A928A7E20563B72001434D0 /* InvitesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */; };
@@ -122,6 +124,8 @@
 		1A4DA0D42055EE85009E1DC9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		1A50570A2057A4940000F070 /* FollowersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersTableViewCell.swift; sourceTree = "<group>"; };
 		1A5C3195206C7FA10056F01F /* LandingFeedSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingFeedSegment.swift; sourceTree = "<group>"; };
+		1A74C07C20C5D2D80059303B /* ExternalCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalCommandManager.swift; sourceTree = "<group>"; };
+		1A74C07E20C5D4490059303B /* ExternalCommandDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalCommandDataSource.swift; sourceTree = "<group>"; };
 		1A78F5202063731D0040B1A7 /* ChatterLoadingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatterLoadingModal.swift; sourceTree = "<group>"; };
 		1A928A7B20563A4F001434D0 /* InvitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesView.swift; sourceTree = "<group>"; };
 		1A928A7D20563B72001434D0 /* InvitesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitesTableViewCell.swift; sourceTree = "<group>"; };
@@ -238,7 +242,7 @@
 			path = UploadUtilities;
 			sourceTree = "<group>";
 		};
-		1A115BD720A5592E005EDC9F /* LandingRecord */ = {
+		1A115BD720A5592E005EDC9F /* LandingRecordUtilities */ = {
 			isa = PBXGroup;
 			children = (
 				1A115BD820A559A3005EDC9F /* LandingRecordUI.swift */,
@@ -246,6 +250,7 @@
 				1A115BDC20A6674E005EDC9F /* LandingUploadAudio.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
 			);
+			name = LandingRecordUtilities;
 			path = LandingRecord;
 			sourceTree = "<group>";
 		};
@@ -288,6 +293,7 @@
 				1A78F5242064B34C0040B1A7 /* LandingRecord */,
 				1A78F5252064B3630040B1A7 /* ChatterFeed */,
 				1A78F5262064B3790040B1A7 /* Profile */,
+				1A74C07920C51C610059303B /* Managers */,
 				1A2E998620420A29009A674C /* AppDelegate.swift */,
 				1A2E998A20420A29009A674C /* Main.storyboard */,
 				1A2E99B82042389F009A674C /* Buttons.xcassets */,
@@ -326,6 +332,15 @@
 			path = ChooseAudience;
 			sourceTree = "<group>";
 		};
+		1A74C07920C51C610059303B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1A74C07C20C5D2D80059303B /* ExternalCommandManager.swift */,
+				1A74C07E20C5D4490059303B /* ExternalCommandDataSource.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		1A78F5222064B3070040B1A7 /* LoginSignup */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,7 +362,7 @@
 		1A78F5242064B34C0040B1A7 /* LandingRecord */ = {
 			isa = PBXGroup;
 			children = (
-				1A115BD720A5592E005EDC9F /* LandingRecord */,
+				1A115BD720A5592E005EDC9F /* LandingRecordUtilities */,
 				1A115BD420A28CD3005EDC9F /* UploadUtilities */,
 				1AB591072083F72E00451AA6 /* RecordUtilities */,
 				1AC61FBC204696CF0016AB83 /* LandingRecord.swift */,
@@ -781,6 +796,7 @@
 				1A0D25042077F60E000BC472 /* ComposeModal.swift in Sources */,
 				1AA4C6A12056181300AD3980 /* FollowModal.swift in Sources */,
 				1AF2BD45204549B500AF1B8A /* SignUp.swift in Sources */,
+				1A74C07F20C5D4490059303B /* ExternalCommandDataSource.swift in Sources */,
 				1A0D24FD206DE8FA000BC472 /* EmojiViewModal.swift in Sources */,
 				1A115BDD20A6674E005EDC9F /* LandingUploadAudio.swift in Sources */,
 				1AB07EA720C2733700EA499B /* FilterHelpers.swift in Sources */,
@@ -809,6 +825,7 @@
 				1A0239E02064B8B3006E2A57 /* BubbleListCell.swift in Sources */,
 				1A0254A82058F3680045B763 /* FollowingTableViewCell.swift in Sources */,
 				1A115BD3209EC534005EDC9F /* DirectChatterSegmentViewSlider.swift in Sources */,
+				1A74C07D20C5D2D80059303B /* ExternalCommandManager.swift in Sources */,
 				1A5C3196206C7FA10056F01F /* LandingFeedSegment.swift in Sources */,
 				1A115BDB20A55B64005EDC9F /* LandingRecordAudio.swift in Sources */,
 				1A0D250A20781C6A000BC472 /* DirectChatterRoomView.swift in Sources */,
