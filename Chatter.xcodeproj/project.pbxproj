@@ -55,6 +55,8 @@
 		1AB5910C208418D900451AA6 /* DirectEmojiViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */; };
 		1AC61FBD204696CF0016AB83 /* LandingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC61FBC204696CF0016AB83 /* LandingRecord.swift */; };
 		1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD7925B20510C8B007131CB /* DrawWaveForm.swift */; };
+		1AE09B0220D03F1100E7BDFC /* LandingRecordBubbleListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE09B0120D03F1100E7BDFC /* LandingRecordBubbleListHelper.swift */; };
+		1AE09B0420D1D29E00E7BDFC /* LandingStarShowerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE09B0320D1D29E00E7BDFC /* LandingStarShowerHelper.swift */; };
 		1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD3C2043F79500AF1B8A /* Login.swift */; };
 		1AF2BD412043F8B500AF1B8A /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */; };
 		1AF2BD432043FA0200AF1B8A /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2BD422043FA0200AF1B8A /* Menu.swift */; };
@@ -135,6 +137,8 @@
 		1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectEmojiViewModal.swift; sourceTree = "<group>"; };
 		1AC61FBC204696CF0016AB83 /* LandingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecord.swift; sourceTree = "<group>"; };
 		1AD7925B20510C8B007131CB /* DrawWaveForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawWaveForm.swift; sourceTree = "<group>"; };
+		1AE09B0120D03F1100E7BDFC /* LandingRecordBubbleListHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingRecordBubbleListHelper.swift; sourceTree = "<group>"; };
+		1AE09B0320D1D29E00E7BDFC /* LandingStarShowerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingStarShowerHelper.swift; sourceTree = "<group>"; };
 		1AF2BD3C2043F79500AF1B8A /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		1AF2BD402043F8B500AF1B8A /* LandingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
 		1AF2BD422043FA0200AF1B8A /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				1A115BDA20A55B64005EDC9F /* LandingRecordAudio.swift */,
 				1A115BDC20A6674E005EDC9F /* LandingUploadAudio.swift */,
 				1A0239DF2064B8B3006E2A57 /* BubbleListCell.swift */,
+				1AE09B0120D03F1100E7BDFC /* LandingRecordBubbleListHelper.swift */,
+				1AE09B0520D1DF7F00E7BDFC /* LandingStars */,
 			);
 			name = LandingRecordUtilities;
 			path = LandingRecord;
@@ -457,6 +463,14 @@
 				1AB5910B208418D900451AA6 /* DirectEmojiViewModal.swift */,
 			);
 			path = RecordUtilities;
+			sourceTree = "<group>";
+		};
+		1AE09B0520D1DF7F00E7BDFC /* LandingStars */ = {
+			isa = PBXGroup;
+			children = (
+				1AE09B0320D1D29E00E7BDFC /* LandingStarShowerHelper.swift */,
+			);
+			path = LandingStars;
 			sourceTree = "<group>";
 		};
 		6BC074ED3A3E9E2376D08FB2 /* Pods */ = {
@@ -815,10 +829,12 @@
 				1A115BCA209ADADA005EDC9F /* FollowersPreLoader.swift in Sources */,
 				1A928A7C20563A4F001434D0 /* InvitesView.swift in Sources */,
 				1AD7925C20510C8B007131CB /* DrawWaveForm.swift in Sources */,
+				1AE09B0220D03F1100E7BDFC /* LandingRecordBubbleListHelper.swift in Sources */,
 				1A0D25022074A3E3000BC472 /* DirectChatter.swift in Sources */,
 				1AF2BD3D2043F79500AF1B8A /* Login.swift in Sources */,
 				1A0254A62058F3580045B763 /* FollowingView.swift in Sources */,
 				1A4DA0D52055EE85009E1DC9 /* MenuView.swift in Sources */,
+				1AE09B0420D1D29E00E7BDFC /* LandingStarShowerHelper.swift in Sources */,
 				1A3D59F5205FA2DF00AD2653 /* RecordEditModal.swift in Sources */,
 				1A386F8420815C4700CB76AB /* DrawDirectWaveForm.swift in Sources */,
 				1A50570B2057A4940000F070 /* FollowersTableViewCell.swift in Sources */,
