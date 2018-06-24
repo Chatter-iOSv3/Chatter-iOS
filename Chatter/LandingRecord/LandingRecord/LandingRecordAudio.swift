@@ -88,7 +88,8 @@ extension LandingRecord {
         self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
         
         // Reorder the bubbles after removal
-        self.reloadBubbleList()
+        self.reloadCurrBubbleList()
+        self.reorderBubbleList()
         
         self.queueList(skip: false)
     }

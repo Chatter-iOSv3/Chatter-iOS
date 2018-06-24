@@ -17,12 +17,12 @@ extension LandingRecord {
         self.bubbleListButton?.layer.cornerRadius = (bubbleListButton?.frame.size.height)! / 2
         
         self.bubbleListPositions = [
-            CGPoint(x:290, y:120),
-            CGPoint(x:310, y:200),
+            CGPoint(x:300, y:120),
+            CGPoint(x:320, y:200),
             CGPoint(x:300, y:280),
-            CGPoint(x:290, y:360),
-            CGPoint(x:310, y:440),
-            CGPoint(x:300, y:520)
+            CGPoint(x:320, y:360),
+            CGPoint(x:300, y:440),
+            CGPoint(x:320, y:520)
         ]
         
         self.currBubbleList = Array(self.landingFeedViewArray.prefix(6))
@@ -31,9 +31,33 @@ extension LandingRecord {
         
         // Add bubble list items into subview behind the bubble list button
         for (index, bubbleView) in self.currBubbleList.enumerated() {
+            
+            if (!self.expanded) {
+                self.decreaseBubbleSize(bubbleView: bubbleView)
+            }
+            
             bubbleView.center = bubbleListButtonCenter
             self.recordButton.insertSubview(bubbleView, at: index)
         }
+    }
+    
+    func reInitializeBubbleList() {
+        let bubbleGroup = DispatchGroup()
+        for bubbleView in self.recordButton.subviews {
+            bubbleGroup.enter()
+            if (bubbleView is LandingFeedSegmentView) {
+                bubbleView.removeFromSuperview()
+            }
+            bubbleGroup.leave()
+        }
+        
+        bubbleGroup.notify(queue: DispatchQueue.main, execute: {
+            self.initializeBubbleList()
+        })
+    }
+    
+    func reloadCurrBubbleList() {
+        self.currBubbleList = Array(self.landingFeedViewArray.prefix(6))
     }
     
     func toggleBubbleListView() {
@@ -47,13 +71,12 @@ extension LandingRecord {
             }
         }
         
-        print(self.expanded)
         if (!self.expanded) {
             self.animator.removeAllBehaviors()
             
             for (index, bubbleView) in bubbleSubviews.enumerated() {
                 bubbleGroup.enter()
-                self.snapBubbleViewToPos(bubbleView: bubbleView, newPos: self.bubbleListPositions[index], damping: CGFloat(0.5), velocity: CGFloat(8.5), group: bubbleGroup)
+                self.snapBubbleViewToPos(bubbleView: bubbleView, newPos: self.bubbleListPositions[index], damping: CGFloat(0.5), velocity: CGFloat(8.5), group: bubbleGroup, queuing: false, expanding: true)
             }
             bubbleGroup.notify(queue: DispatchQueue.main, execute: {
                 self.expanded = true
@@ -62,10 +85,10 @@ extension LandingRecord {
             self.animator.removeAllBehaviors()
             
             for (index, bubbleView) in bubbleSubviews.enumerated() {
-                let collapseCenter = CGPoint(x: self.bubbleListButton.center.x + 10, y: self.bubbleListButton.center.y + 10)
+                let collapseCenter = CGPoint(x: self.bubbleListButton.center.x, y: self.bubbleListButton.center.y)
                 
                 bubbleGroup.enter()
-                self.snapBubbleViewToPos(bubbleView: bubbleView, newPos: collapseCenter, damping: CGFloat(1.5), velocity: CGFloat(12.0), group: bubbleGroup)
+                self.snapBubbleViewToPos(bubbleView: bubbleView, newPos: collapseCenter, damping: CGFloat(1.5), velocity: CGFloat(12.0), group: bubbleGroup, queuing: false, expanding: false)
             }
             bubbleGroup.notify(queue: DispatchQueue.main, execute: {
                 self.expanded = false
@@ -73,7 +96,13 @@ extension LandingRecord {
         }
     }
     
-    func snapBubbleViewToPos(bubbleView: UIView, newPos: CGPoint, damping: CGFloat, velocity: CGFloat, group: DispatchGroup) {
+    func snapBubbleViewToPos(bubbleView: UIView, newPos: CGPoint, damping: CGFloat, velocity: CGFloat, group: DispatchGroup, queuing: Bool, expanding: Bool) {
+        if (expanding) {
+            self.increaseBubbleSize(bubbleView: bubbleView)
+        }   else if (!expanding) {
+            self.decreaseBubbleSize(bubbleView: bubbleView)
+        }
+        
         UIView.animate(withDuration: 1.0,
                        delay: 0,
                        usingSpringWithDamping: damping,
@@ -82,15 +111,15 @@ extension LandingRecord {
                        animations: {
                         bubbleView.center = newPos
                         
-                        if (!self.expanded) {
-                            self.increaseBubbleSize(bubbleView: bubbleView)
-                        }   else {
-                            self.decreaseBubbleSize(bubbleView: bubbleView)
-                        }
-                        
         },
                        completion: { Void in()  }
         )
+        
+        if (!self.expanded && queuing) {
+            self.decreaseBubbleSize(bubbleView: bubbleView)
+        }   else if (self.expanded && queuing) {
+            self.increaseBubbleSize(bubbleView: bubbleView)
+        }
         
         group.leave()
     }
@@ -107,16 +136,76 @@ extension LandingRecord {
         bubbleView.layer.cornerRadius = 15
     }
     
-    func reloadBubbleList() {
+    func reorderBubbleList() {
         if (self.expanded) {
+            
+            var bubbleSubviews: [UIView] = []
+            // Get bubbles from Subviews
+            for view in self.recordButton.subviews {
+                if (view is LandingFeedSegmentView) {
+                    bubbleSubviews.append(view)
+                }
+            }
+            
             // Remove first bubble
-            (self.recordButton.subviews[0] != nil) ? self.recordButton.subviews[0].removeFromSuperview() : print("No more notifications")
+            (bubbleSubviews.count > 0) ? bubbleSubviews[0].removeFromSuperview() : print("No more notifications")
             
-            // Push bubbles up to theon previous to them's position
+            // Push bubbles up to the previous's position
+            let bubbleGroup = DispatchGroup()
             
-            // Cue the 
+            for (index, bubble) in self.currBubbleList.enumerated() {
+                bubbleGroup.enter()
+                snapBubbleViewToPos(bubbleView: bubble, newPos: bubbleListPositions[index], damping: CGFloat(1.0), velocity: CGFloat(8.5), group: bubbleGroup, queuing: true, expanding: true)
+            }
+            
+            // Add the newest bubble to curr list
+            let incomingBubble = (self.landingFeedViewArray.count > 5) ? self.landingFeedViewArray[5] : nil
+            
+            if (incomingBubble != nil) {
+                // Add to the 6th position
+                incomingBubble?.center = self.bubbleListPositions[5]
+                incomingBubble?.alpha = 0.0
+                self.recordButton.insertSubview(incomingBubble!, at: 5)
+                
+                UIView.animate(withDuration: 0.3, delay: 0.4, options:.curveLinear, animations: {
+                    incomingBubble?.alpha = 1.0
+                }, completion:nil)
+            }
         }   else {
             
+            var bubbleSubviews: [UIView] = []
+            // Get Stars from Subviews
+            for view in self.recordButton.subviews {
+                if (view is LandingFeedSegmentView) {
+                    bubbleSubviews.append(view)
+                }
+            }
+            
+            // Remove first bubble
+            (bubbleSubviews.count > 0) ? bubbleSubviews[0].removeFromSuperview() : print("No more notifications")
+            
+            // Push bubbles up to the previous's position
+            let bubbleGroup = DispatchGroup()
+            let collapseCenter = CGPoint(x: self.bubbleListButton.center.x, y: self.bubbleListButton.center.y)
+            
+            for (index, bubble) in self.currBubbleList.enumerated() {
+                bubbleGroup.enter()
+                snapBubbleViewToPos(bubbleView: bubble, newPos: collapseCenter, damping: CGFloat(1.0), velocity: CGFloat(8.5), group: bubbleGroup, queuing: true, expanding: false)
+            }
+            
+            // Add the newest bubble to curr list
+            let incomingBubble = (self.landingFeedViewArray.count > 5) ? self.landingFeedViewArray[5] : nil
+            
+            if (incomingBubble != nil) {
+                self.decreaseBubbleSize(bubbleView: incomingBubble!)
+                incomingBubble?.center = collapseCenter
+                incomingBubble?.alpha = 0.0
+                self.recordButton.insertSubview(incomingBubble!, at: 5)
+                
+                UIView.animate(withDuration: 0.3, delay: 0.4, options:.curveLinear, animations: {
+                    incomingBubble?.alpha = 1.0
+                }, completion:nil)
+            }
         }
     }
 }
