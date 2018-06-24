@@ -53,6 +53,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var currBubbleList: [LandingFeedSegmentView] = []
     // Fixed positions of the bubble list items
     var bubbleListPositions: [CGPoint] = []
+    var collapseCenter: CGPoint!
     var landingFeedAudioArray: [AVAudioPlayer] = []
     
     var toggleTask: DispatchWorkItem?
@@ -131,7 +132,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         // Send notification to stop ChatterFeedChatter
         NotificationCenter.default.post(name: .stopChatterFeedChatter, object: nil)
         
-        self.starShower(num: 5)
+//        self.starShower(num: 5)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -170,6 +171,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             newView.frame.size.width = 30
             newView.frame.size.height = 30
             newView.layer.cornerRadius = 15
+            newView.alpha = 0.0
             newView.layer.backgroundColor = self.generateRandomColor().cgColor
             
             newView.queueNextDelegate = self

@@ -11,6 +11,8 @@ import UIKit
 import Firebase
 import XLPagerTabStrip
 
+// TODO: NOT IMPLEMENTED YET
+
 class SavedChatterViewController: UIViewController, IndicatorInfoProvider {
     
     var ref: DatabaseReference!

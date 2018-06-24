@@ -25,13 +25,14 @@ extension LandingRecord {
             CGPoint(x:320, y:520)
         ]
         
+        self.collapseCenter = CGPoint(x: self.bubbleListButton.center.x, y: self.bubbleListButton.center.y)
+        
         self.currBubbleList = Array(self.landingFeedViewArray.prefix(6))
         
         var bubbleListButtonCenter = self.bubbleListButton.center
         
         // Add bubble list items into subview behind the bubble list button
         for (index, bubbleView) in self.currBubbleList.enumerated() {
-            
             if (!self.expanded) {
                 self.decreaseBubbleSize(bubbleView: bubbleView)
             }
@@ -67,6 +68,7 @@ extension LandingRecord {
         var bubbleSubviews: [UIView] = []
         for bubbleView in self.recordButton.subviews {
             if (bubbleView is LandingFeedSegmentView) {
+                bubbleView.alpha = 1.0
                 bubbleSubviews.append(bubbleView)
             }
         }
@@ -138,74 +140,49 @@ extension LandingRecord {
     
     func reorderBubbleList() {
         if (self.expanded) {
-            
-            var bubbleSubviews: [UIView] = []
-            // Get bubbles from Subviews
-            for view in self.recordButton.subviews {
-                if (view is LandingFeedSegmentView) {
-                    bubbleSubviews.append(view)
-                }
-            }
-            
-            // Remove first bubble
-            (bubbleSubviews.count > 0) ? bubbleSubviews[0].removeFromSuperview() : print("No more notifications")
-            
-            // Push bubbles up to the previous's position
-            let bubbleGroup = DispatchGroup()
-            
-            for (index, bubble) in self.currBubbleList.enumerated() {
-                bubbleGroup.enter()
-                snapBubbleViewToPos(bubbleView: bubble, newPos: bubbleListPositions[index], damping: CGFloat(1.0), velocity: CGFloat(8.5), group: bubbleGroup, queuing: true, expanding: true)
-            }
-            
-            // Add the newest bubble to curr list
-            let incomingBubble = (self.landingFeedViewArray.count > 5) ? self.landingFeedViewArray[5] : nil
-            
-            if (incomingBubble != nil) {
-                // Add to the 6th position
-                incomingBubble?.center = self.bubbleListPositions[5]
-                incomingBubble?.alpha = 0.0
-                self.recordButton.insertSubview(incomingBubble!, at: 5)
-                
-                UIView.animate(withDuration: 0.3, delay: 0.4, options:.curveLinear, animations: {
-                    incomingBubble?.alpha = 1.0
-                }, completion:nil)
-            }
+            self.reorderBubbles(expanded: true)
         }   else {
-            
-            var bubbleSubviews: [UIView] = []
-            // Get Stars from Subviews
-            for view in self.recordButton.subviews {
-                if (view is LandingFeedSegmentView) {
-                    bubbleSubviews.append(view)
-                }
+            self.reorderBubbles(expanded: false)
+        }
+    }
+    
+    func reorderBubbles(expanded: Bool) {
+        var bubbleSubviews: [UIView] = []
+        // Get Bubbles from Subviews
+        for view in self.recordButton.subviews {
+            if (view is LandingFeedSegmentView) {
+                bubbleSubviews.append(view)
             }
+        }
+        
+        // Remove first bubble
+        (bubbleSubviews.count > 0) ? bubbleSubviews[0].removeFromSuperview() : print("No more notifications")
+        
+        // Push bubbles up to the previous's position
+        let bubbleGroup = DispatchGroup()
+        
+        for (index, bubble) in self.currBubbleList.enumerated() {
+            bubbleGroup.enter()
             
-            // Remove first bubble
-            (bubbleSubviews.count > 0) ? bubbleSubviews[0].removeFromSuperview() : print("No more notifications")
+            let newCenter = (expanded) ? bubbleListPositions[index] : self.collapseCenter
+            snapBubbleViewToPos(bubbleView: bubble, newPos: newCenter!, damping: CGFloat(1.0), velocity: CGFloat(8.5), group: bubbleGroup, queuing: true, expanding: false)
+        }
+        
+        // Add the newest bubble to curr list
+        let incomingBubble = (self.landingFeedViewArray.count > 5) ? self.landingFeedViewArray[5] : nil
+        
+        if (incomingBubble != nil) {
             
-            // Push bubbles up to the previous's position
-            let bubbleGroup = DispatchGroup()
-            let collapseCenter = CGPoint(x: self.bubbleListButton.center.x, y: self.bubbleListButton.center.y)
+            let newCenter = (expanded) ? self.bubbleListPositions[5] : self.collapseCenter
+            (expanded) ? self.increaseBubbleSize(bubbleView: incomingBubble!) : self.decreaseBubbleSize(bubbleView: incomingBubble!)
             
-            for (index, bubble) in self.currBubbleList.enumerated() {
-                bubbleGroup.enter()
-                snapBubbleViewToPos(bubbleView: bubble, newPos: collapseCenter, damping: CGFloat(1.0), velocity: CGFloat(8.5), group: bubbleGroup, queuing: true, expanding: false)
-            }
+            incomingBubble?.center = newCenter!
+            incomingBubble?.alpha = 0.0
+            self.recordButton.insertSubview(incomingBubble!, at: 5)
             
-            // Add the newest bubble to curr list
-            let incomingBubble = (self.landingFeedViewArray.count > 5) ? self.landingFeedViewArray[5] : nil
-            
-            if (incomingBubble != nil) {
-                self.decreaseBubbleSize(bubbleView: incomingBubble!)
-                incomingBubble?.center = collapseCenter
-                incomingBubble?.alpha = 0.0
-                self.recordButton.insertSubview(incomingBubble!, at: 5)
-                
-                UIView.animate(withDuration: 0.3, delay: 0.4, options:.curveLinear, animations: {
-                    incomingBubble?.alpha = 1.0
-                }, completion:nil)
-            }
+            UIView.animate(withDuration: 0.3, delay: 0.4, options:.curveLinear, animations: {
+                incomingBubble?.alpha = 1.0
+            }, completion:nil)
         }
     }
 }
