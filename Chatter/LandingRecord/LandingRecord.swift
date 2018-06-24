@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox.AudioServices
 import Firebase
 
-class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, UITableViewDataSource, QueueNextDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, TrashRecordingDelegate, QueueNextDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // Firebase Variables
     var ref: DatabaseReference!
     let storage = Storage.storage()
@@ -49,6 +49,11 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     var expanded = false
     
     var landingFeedViewArray: [LandingFeedSegmentView] = []
+    // First 6 of the current landingFeedViewArray
+    var currBubbleList: [LandingFeedSegmentView] = []
+    // Fixed positions of the bubble list items
+    var bubbleListPositions: [CGPoint] = []
+    var collapseCenter: CGPoint!
     var landingFeedAudioArray: [AVAudioPlayer] = []
     
     var toggleTask: DispatchWorkItem?
@@ -64,6 +69,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     // External Command Data source
     var appDelegate: AppDelegate!
     var externalCommandDataSource: ExternalCommandDataSource!
+    
+    //Animators
+    var animator: UIDynamicAnimator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,8 +98,6 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.initLandingFeed()
         // Style progress bar
         self.styleRecordProgressBar()
-        // Configure bubble list
-        self.configureBubbleListTable()
         // Create task for toggling labels
         self.toggleTask = DispatchWorkItem { self.toggleLabels() }
         // Setup uploading
@@ -108,6 +114,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         self.appDelegate = UIApplication.shared.delegate as! AppDelegate
         // Setup external commands
         self.setupExternalCommands()
+        
+        // Animator -----------------------------------------------------------------
+        animator = UIDynamicAnimator(referenceView: self.recordButton)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,6 +131,8 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
         
         // Send notification to stop ChatterFeedChatter
         NotificationCenter.default.post(name: .stopChatterFeedChatter, object: nil)
+        
+//        self.starShower(num: 5)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -157,9 +168,10 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             // Generate audio file on UIView instance
             newView.generateAudioFile(audioURL: localURL, id: id)
-            newView.frame.size.width = 50
-            newView.frame.size.height = 50
-            newView.layer.cornerRadius = 25
+            newView.frame.size.width = 30
+            newView.frame.size.height = 30
+            newView.layer.cornerRadius = 15
+            newView.alpha = 0.0
             newView.layer.backgroundColor = self.generateRandomColor().cgColor
             
             newView.queueNextDelegate = self
@@ -181,6 +193,9 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
             
             self.landingFeedViewArray.append(newView)
             self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
+            
+            // Configure bubble list
+            self.initializeBubbleList()
         })
     }
     
@@ -219,7 +234,7 @@ class LandingRecord: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     @IBAction func toggleTableViewPressed(sender: Any) {
-        self.toggleTableView()
+        self.toggleBubbleListView()
     }
     
     @IBAction func queueBubbleList() {

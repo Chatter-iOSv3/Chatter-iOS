@@ -28,7 +28,7 @@ class ExternalCommandDataSource: NSObject {
         }
     }
     
-    /// Enumeration of the various commands supported by `MPExternalCommandCenter`.
+    /// Enumeration of the various commands supported by `  `.
     private enum command {
         case nextTrack, previousTrack, seekForward, seekBackward
 //        skipForward, skipBackward, seekForward, seekBackward, changePlaybackPosition, like, dislike, bookmark

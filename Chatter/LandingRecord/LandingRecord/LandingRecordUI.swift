@@ -15,6 +15,7 @@ extension LandingRecord {
         let profileImageDownloadRef = storage.reference(forURL: imageURL)
         var currImage: UIImage?
         
+        print("Querying Image")
         profileImageDownloadRef.downloadURL(completion: { (url, error) in
             var data = Data()
             
@@ -75,84 +76,84 @@ extension LandingRecord {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9.0, execute: self.toggleTask!)
     }
     
-    func configureBubbleListTable() {
-        bubbleListButton?.layer.cornerRadius = (bubbleListButton?.frame.size.height)! / 2
-        
-        self.bubbleListTableView.dataSource = self
-        self.bubbleListTableView.tableFooterView = UIView()
-        
-        self.bubbleListTableView.rowHeight = 80.0
-        self.bubbleListTableView.allowsSelection = false
-        self.bubbleListTableView.separatorStyle = .none
-        
-        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.expanded && self.landingFeedViewArray.count > 6) {
-            return 6
-        } else if (self.expanded) {
-            return self.landingFeedViewArray.count;
-        }   else {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
-        
-        let avatarView = self.landingFeedViewArray[indexPath[1]]
-        
-        if (indexPath[1] % 2 == 0) {
-            avatarView.frame.origin.x = 20
-        }   else {
-            avatarView.frame.origin.x = 0
-        }
-        
-        cell.landingFeedSegment = avatarView
-        cell.addAvatarView()
-        
-        return cell;
-    }
-    
-    func toggleTableView() {
-        self.expanded = !self.expanded
-        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-        let sections = NSIndexSet(indexesIn: range)
-        
-        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
-        
-        print(self.expanded)
-        if (!self.expanded) {
-            self.resetBubbles()
-        }   else {
-            self.animateBubbles()
-        }
-    }
-    
-    func animateBubbles() {
-        let cells = self.bubbleListTableView.visibleCells
-        
-        for cell in cells {
-            let currCell: BubbleListCell = cell as! BubbleListCell
-            currCell.animateAvatarViews()
-        }
-    }
-    
-    func resetBubbles() {
-        let cells = self.landingFeedViewArray
-        
-        for cell in cells {
-            cell.frame.size.width = 50
-            cell.frame.size.height = 50
-            cell.layer.cornerRadius = 25
-        }
-    }
-    
+//    func configureBubbleListTable() {
+//        bubbleListButton?.layer.cornerRadius = (bubbleListButton?.frame.size.height)! / 2
+//
+//        self.bubbleListTableView.dataSource = self
+//        self.bubbleListTableView.tableFooterView = UIView()
+//
+//        self.bubbleListTableView.rowHeight = 80.0
+//        self.bubbleListTableView.allowsSelection = false
+//        self.bubbleListTableView.separatorStyle = .none
+//
+//        self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
+//    }
+//
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if (self.expanded && self.landingFeedViewArray.count > 6) {
+//            return 6
+//        } else if (self.expanded) {
+//            return self.landingFeedViewArray.count;
+//        }   else {
+//            return 0
+//        }
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "bubbleListCell", for: indexPath) as! BubbleListCell;
+//
+//        let avatarView = self.landingFeedViewArray[indexPath[1]]
+//
+//        if (indexPath[1] % 2 == 0) {
+//            avatarView.frame.origin.x = 20
+//        }   else {
+//            avatarView.frame.origin.x = 0
+//        }
+//
+//        cell.landingFeedSegment = avatarView
+//        cell.addAvatarView()
+//
+//        return cell;
+//    }
+//
+//    func toggleTableView() {
+//        self.expanded = !self.expanded
+//        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
+//        let sections = NSIndexSet(indexesIn: range)
+//
+//        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+//
+//        print(self.expanded)
+//        if (!self.expanded) {
+//            self.resetBubbles()
+//        }   else {
+//            self.animateBubbles()
+//        }
+//    }
+//
+//    func animateBubbles() {
+//        let cells = self.bubbleListTableView.visibleCells
+//
+//        for cell in cells {
+//            let currCell: BubbleListCell = cell as! BubbleListCell
+//            currCell.animateAvatarViews()
+//        }
+//    }
+//
+//    func resetBubbles() {
+//        let cells = self.landingFeedViewArray
+//
+//        for cell in cells {
+//            cell.frame.size.width = 50
+//            cell.frame.size.height = 50
+//            cell.layer.cornerRadius = 25
+//        }
+//    }
+//
     @objc func friendsListSetup(notification: NSNotification) {
         if let newFriendItem = notification.userInfo?["userData"] as? friendItem {
             // Checks repetition of friends

@@ -86,9 +86,10 @@ extension LandingRecord {
     func queueNext() {
         self.landingFeedViewArray.removeFirst()
         self.bubbleListButton?.setTitle(String(self.landingFeedViewArray.count), for: .normal)
-        let range = NSMakeRange(0, self.bubbleListTableView.numberOfSections)
-        let sections = NSIndexSet(indexesIn: range)
-        self.bubbleListTableView.reloadSections(sections as IndexSet, with: .automatic)
+        
+        // Reorder the bubbles after removal
+        self.reloadCurrBubbleList()
+        self.reorderBubbleList()
         
         self.queueList(skip: false)
     }
